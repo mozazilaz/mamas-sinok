@@ -29,7 +29,7 @@ body{
 }
 
 /* =========================
-   SPACE BACKGROUND
+   SPACE
 ========================= */
 
 .space{
@@ -52,8 +52,14 @@ body{
 }
 
 @keyframes twinkle{
-  from{opacity:.15;transform:scale(.7)}
-  to{opacity:1;transform:scale(1.5)}
+  from{
+    opacity:.15;
+    transform:scale(.7);
+  }
+  to{
+    opacity:1;
+    transform:scale(1.5);
+  }
 }
 
 .space-heart{
@@ -88,7 +94,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:rgba(0,0,0,.78);
+  background:rgba(0,0,0,.82);
   border-bottom:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(10px);
 }
@@ -127,7 +133,7 @@ body{
 }
 
 /* =========================
-   SCREEN
+   MAIN
 ========================= */
 
 main{
@@ -202,8 +208,12 @@ p{
 }
 
 @keyframes heartPulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.12)}
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.12);
+  }
 }
 
 .date{
@@ -271,7 +281,8 @@ p{
 }
 
 /* =========================
-   STICKER / SEARCH SINOK
+   CARI SINOK
+   FIX: COVER BENAR-BENAR
 ========================= */
 
 .sticker-grid{
@@ -283,60 +294,64 @@ p{
 }
 
 .sticker-card{
-  aspect-ratio:1/1;
-  perspective:800px;
-  cursor:pointer;
-}
-
-.sticker-inner{
   position:relative;
-  width:100%;
-  height:100%;
-  transform-style:preserve-3d;
-  transition:transform .6s;
-}
-
-.sticker-card.flipped .sticker-inner{
-  transform:rotateY(180deg);
-}
-
-.sticker-front,
-.sticker-back{
-  position:absolute;
-  inset:0;
-  backface-visibility:hidden;
+  aspect-ratio:1/1;
   border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   overflow:hidden;
+  cursor:pointer;
   border:1px solid rgba(255,255,255,.15);
-}
-
-.sticker-front{
-  background:
-    radial-gradient(circle,#351329,#100811);
+  background:#fff;
   box-shadow:0 0 20px rgba(255,50,130,.12);
 }
 
-.sticker-front span{
-  font-size:40px;
-  filter:drop-shadow(0 0 10px #ff3d86);
-}
-
-.sticker-back{
-  transform:rotateY(180deg);
-  background:#fff;
-}
-
-.sticker-back img{
+.sticker-image{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:contain;
+  background:white;
+  opacity:1;
+}
+
+.sticker-cover{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 40%,#4a1735,#160b16 70%);
+  transition:
+    opacity .25s ease,
+    transform .25s ease;
+}
+
+.sticker-cover span{
+  font-size:45px;
+  filter:drop-shadow(0 0 12px #ff3d86);
+}
+
+.sticker-card.revealed .sticker-cover{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.15);
+}
+
+.sticker-card.revealed{
+  cursor:default;
+}
+
+.memory-status{
+  color:#ff7cae;
+  font-size:13px;
+  min-height:20px;
 }
 
 /* =========================
    PUZZLE
+   FOTO TERBUKA
 ========================= */
 
 .puzzle{
@@ -361,10 +376,10 @@ p{
 
 .tile{
   position:relative;
-  cursor:pointer;
   overflow:hidden;
-  background-repeat:no-repeat;
+  cursor:pointer;
   border:1px solid rgba(255,255,255,.08);
+  background:#111;
   transition:.15s;
 }
 
@@ -378,10 +393,15 @@ p{
   z-index:2;
 }
 
-.memory-status{
-  color:#ff7cae;
-  font-size:13px;
-  min-height:20px;
+.puzzle-piece-image{
+  position:absolute;
+  width:var(--piece-size);
+  height:var(--piece-size);
+  max-width:none;
+  max-height:none;
+  object-fit:fill;
+  user-select:none;
+  pointer-events:none;
 }
 
 /* =========================
@@ -585,11 +605,21 @@ p{
 }
 
 @keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-12px)}
-  40%{transform:translateX(12px)}
-  60%{transform:translateX(-9px)}
-  80%{transform:translateX(9px)}
+  0%,100%{
+    transform:translateX(0);
+  }
+  20%{
+    transform:translateX(-12px);
+  }
+  40%{
+    transform:translateX(12px);
+  }
+  60%{
+    transform:translateX(-9px);
+  }
+  80%{
+    transform:translateX(9px);
+  }
 }
 
 /* =========================
@@ -603,7 +633,7 @@ p{
   display:none;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,.9);
+  background:rgba(0,0,0,.92);
   padding:20px;
 }
 
@@ -653,7 +683,12 @@ p{
   }
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:500px){
+
   .hud{
     height:58px;
   }
@@ -693,15 +728,7 @@ p{
 
 <body>
 
-<!-- =========================
-     SPACE
-========================= -->
-
 <div class="space" id="space"></div>
-
-<!-- =========================
-     HUD
-========================= -->
 
 <header class="hud">
 
@@ -712,11 +739,19 @@ p{
 
   <div class="lives" id="lives">❤️❤️❤️</div>
 
-  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+  <button
+    class="music-btn"
+    id="musicBtn"
+    onclick="toggleMusic()">
     🔊
   </button>
 
 </header>
+
+<!-- MUSIK -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3?v=3" type="audio/mpeg">
+</audio>
 
 <main>
 
@@ -728,9 +763,13 @@ p{
 
   <div class="card">
 
-    <div class="mission">A SPECIAL ADVENTURE</div>
+    <div class="mission">
+      A SPECIAL ADVENTURE
+    </div>
 
-    <div class="big-heart">❤️</div>
+    <div class="big-heart">
+      ❤️
+    </div>
 
     <h1>MAMAS QUEST</h1>
 
@@ -754,6 +793,16 @@ p{
       MULAI ❤️
     </button>
 
+    <div
+      id="musicStatus"
+      style="
+        color:#888;
+        font-size:11px;
+        min-height:18px;
+        margin-top:8px;
+      ">
+    </div>
+
   </div>
 
 </section>
@@ -767,9 +816,13 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 01</div>
+    <div class="mission">
+      MISSION 01
+    </div>
 
-    <h2>Awalnya cuma sebuah obrolan.</h2>
+    <h2>
+      Awalnya cuma sebuah obrolan.
+    </h2>
 
     <p>
       Semuanya dimulai dari sebuah perkenalan
@@ -805,9 +858,13 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 02</div>
+    <div class="mission">
+      MISSION 02
+    </div>
 
-    <h2>Obrolan yang jadi kebiasaan.</h2>
+    <h2>
+      Obrolan yang jadi kebiasaan.
+    </h2>
 
     <div class="chat">
 
@@ -856,22 +913,32 @@ p{
 
   <div class="card">
 
-    <div class="mission">MINI QUEST</div>
+    <div class="mission">
+      MINI QUEST
+    </div>
 
-    <h2>Cari Sinok ❤️</h2>
+    <h2>
+      Cari Sinok ❤️
+    </h2>
 
     <p>
       Salah satu dari enam kartu ini adalah Sinok.
     </p>
 
     <p>
-      Kartu masih tertutup.<br>
+      Semua kartu masih tertutup.<br>
       Coba temukan Sinok.
     </p>
 
-    <div class="sticker-grid" id="stickerGrid"></div>
+    <div
+      class="sticker-grid"
+      id="stickerGrid">
+    </div>
 
-    <div id="stickerFeedback" class="memory-status"></div>
+    <div
+      id="stickerFeedback"
+      class="memory-status">
+    </div>
 
     <button
       class="btn hidden"
@@ -893,9 +960,13 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 03</div>
+    <div class="mission">
+      MISSION 03
+    </div>
 
-    <h2>Pertemuan pertama.</h2>
+    <h2>
+      Pertemuan pertama.
+    </h2>
 
     <div style="font-size:70px;margin:20px;">
       🏍️
@@ -938,9 +1009,13 @@ p{
 
   <div class="card">
 
-    <div class="mission">MEMORY FRAGMENT 01</div>
+    <div class="mission">
+      MEMORY FRAGMENT 01
+    </div>
 
-    <h2>Susun Kenangan</h2>
+    <h2>
+      Susun Kenangan
+    </h2>
 
     <p>
       Foto ini <b>sudah terbuka</b>.
@@ -951,9 +1026,14 @@ p{
       Susun sampai menjadi foto yang utuh.
     </p>
 
-    <div class="puzzle tile-3" id="puzzle1"></div>
+    <div
+      class="puzzle tile-3"
+      id="puzzle1">
+    </div>
 
-    <div class="memory-status" id="puzzle1Status">
+    <div
+      class="memory-status"
+      id="puzzle1Status">
       Pilih dua keping untuk menukarnya.
     </div>
 
@@ -961,7 +1041,7 @@ p{
       class="btn hidden"
       id="puzzle1Next"
       onclick="go('pantai')">
-      MEMORY UNLOCKED → 
+      MEMORY UNLOCKED →
     </button>
 
   </div>
@@ -977,35 +1057,35 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 04</div>
+    <div class="mission">
+      MISSION 04
+    </div>
 
-    <h2>Pantai Tirang.</h2>
+    <h2>
+      Hari-hari sederhana.
+    </h2>
 
     <div class="beach"></div>
 
     <p>
-      Ada hari-hari sederhana yang
-      justru paling sulit dilupakan.
+      Setelah pertemuan pertama,
+      cerita kita terus berjalan.
     </p>
 
     <p>
       Ngobrol.
       Main.
       Lari-larian.
-      Tertawa.
+      Ketawa bareng.
     </p>
 
     <p>
-      Bahkan sampai Mamas menggendong Sinok.
-    </p>
-
-    <p>
-      Bukan tentang tempatnya.
-      Tapi tentang siapa yang ada di sana.
+      Bahkan ada satu momen
+      ketika Mamas sampai menggendong Sinok. ❤️
     </p>
 
     <button class="btn" onclick="go('foto2')">
-      SUSUN KENANGAN →
+      BUKA KENANGAN →
     </button>
 
   </div>
@@ -1021,21 +1101,31 @@ p{
 
   <div class="card">
 
-    <div class="mission">MEMORY FRAGMENT 02</div>
+    <div class="mission">
+      MEMORY FRAGMENT 02
+    </div>
 
-    <h2>Kenangan Pantai</h2>
+    <h2>
+      Susun Kenangan Lagi
+    </h2>
 
     <p>
-      Foto ini juga langsung terlihat.
+      Foto ini juga sudah terbuka.
     </p>
 
     <p>
-      Susun kembali kepingan fotonya.
+      Susun semua kepingannya
+      sampai kembali menjadi satu.
     </p>
 
-    <div class="puzzle tile-4" id="puzzle2"></div>
+    <div
+      class="puzzle tile-4"
+      id="puzzle2">
+    </div>
 
-    <div class="memory-status" id="puzzle2Status">
+    <div
+      class="memory-status"
+      id="puzzle2Status">
       Pilih dua keping untuk menukarnya.
     </div>
 
@@ -1059,42 +1149,53 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 05</div>
+    <div class="mission">
+      MISSION 05
+    </div>
 
-    <h2>Bukan cuma tentang kita berdua.</h2>
+    <h2>
+      Mulai mengenal dunia Mamas.
+    </h2>
 
     <p>
-      Perlahan-lahan Sinok juga mengenal
+      Pelan-pelan Sinok mulai mengenal
       orang-orang di sekitar Mamas.
     </p>
 
     <p>
-      Berenang.
-      Bermain.
-      Berkumpul.
-      Menghabiskan waktu bersama keluarga.
+      Main.
+      Renang.
+      Ketawa.
+      Lari-larian.
     </p>
 
     <p>
-      Dan sekarang...
-      coba tangkap foto Sinok sebanyak
-      <b>3 kali</b>.
+      Dan akhirnya ada kenangan
+      yang benar-benar terasa seperti
+      bagian dari kehidupan sehari-hari.
     </p>
 
-    <div class="runner" id="runner">
+    <div
+      class="runner"
+      id="runner">
 
       <img
         id="runnerPhoto"
-        src="foto-sinok.jpg"
+        src="foto-sinok.jpg?v=3"
         alt="Sinok">
 
     </div>
 
-    <div class="runner-count" id="runnerCount">
+    <div
+      class="runner-count"
+      id="runnerCount">
       0 / 3
     </div>
 
-    <div id="runnerFeedback" class="memory-status"></div>
+    <div
+      class="memory-status"
+      id="runnerFeedback">
+    </div>
 
     <button
       class="btn hidden"
@@ -1116,32 +1217,33 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 06</div>
+    <div class="mission">
+      MEMORY
+    </div>
+
+    <h2>
+      Calon imam.
+    </h2>
 
     <div style="font-size:75px;margin:20px;">
       🕌
     </div>
 
-    <h2>Calon imam.</h2>
-
     <p>
-      Ada satu momen yang membuat Sinok
-      melihat Mamas dengan cara yang berbeda.
+      Ada satu momen sederhana
+      yang ternyata punya arti besar.
     </p>
 
     <p>
-      Saat berada di mushola di alun-alun,
-      Mamas memimpin sholat.
+      Ketika Mamas memimpin sholat
+      di mushola di alun-alun.
     </p>
 
     <p>
-      Sederhana.
-      Tapi terasa berarti.
-    </p>
-
-    <p>
-      Karena saat itu Sinok melihat seseorang
-      yang ingin menjadi lebih baik.
+      Dari sebuah pemandangan sederhana,
+      Sinok mulai melihat Mamas
+      sebagai seseorang yang bisa menjadi
+      calon imam.
     </p>
 
     <button class="btn" onclick="go('tetapAda')">
@@ -1161,18 +1263,22 @@ p{
 
   <div class="card">
 
-    <div class="mission">MISSION 07</div>
+    <div class="mission">
+      MISSION 06
+    </div>
 
-    <h2>Tetap ada.</h2>
+    <h2>
+      Bukan cuma saat semuanya mudah.
+    </h2>
 
     <p>
-      Tidak semua hari berjalan mudah.
+      Ada juga masa-masa yang tidak selalu mudah.
     </p>
 
     <p>
-      Ada masa ketika keadaan terasa berat.
-      Ada hal-hal yang membuat capek.
-      Ada situasi yang tidak nyaman.
+      Ada capek.
+      Ada masalah.
+      Ada hari ketika semuanya terasa berat.
     </p>
 
     <p>
@@ -1182,21 +1288,17 @@ p{
     <p>
       Membelikan minum.
       Menemani.
-      Menghadapi hal-hal yang tidak selalu mudah.
+      Mendengarkan.
+      Tidak pergi begitu saja.
     </p>
 
     <p>
-      Karena ternyata cinta bukan cuma
-      tentang tertawa bersama.
-    </p>
-
-    <p>
-      Kadang cinta juga tentang
-      <b>tetap tinggal ketika keadaan sedang sulit.</b>
+      Dan mungkin justru dari hal-hal kecil itu,
+      rasa sayang menjadi semakin besar.
     </p>
 
     <button class="btn" onclick="go('kopi')">
-      BONUS QUEST ☕
+      LANJUT →
     </button>
 
   </div>
@@ -1212,35 +1314,54 @@ p{
 
   <div class="card">
 
-    <div class="mission">BONUS ITEM</div>
+    <div class="mission">
+      MINI QUEST
+    </div>
 
-    <h2>Kopi kita ☕</h2>
+    <h2>
+      Kalau Mamas membawakan kopi...
+    </h2>
 
     <p>
-      Kalau Mamas harus memilih satu...
-      mana yang paling cocok?
+      Kopi mana yang paling cocok
+      untuk Sinok?
     </p>
 
     <div class="coffee-options">
 
-      <button class="coffee" onclick="coffeeWrong()">
+      <button
+        class="coffee"
+        onclick="coffeeWrong()">
         ☕
-        <small>Pilihan 1</small>
+        <small>
+          Kopi biasa
+        </small>
       </button>
 
-      <button class="coffee" onclick="coffeeCorrect()">
+      <button
+        class="coffee"
+        onclick="coffeeCorrect()">
         ☕
-        <small>Pilihan 2</small>
+        <small>
+          Kopi kesukaan Sinok
+        </small>
       </button>
 
-      <button class="coffee" onclick="coffeeWrong()">
+      <button
+        class="coffee"
+        onclick="coffeeWrong()">
         ☕
-        <small>Pilihan 3</small>
+        <small>
+          Kopi random
+        </small>
       </button>
 
     </div>
 
-    <div id="coffeeFeedback" class="memory-status"></div>
+    <div
+      class="memory-status"
+      id="coffeeFeedback">
+    </div>
 
     <button
       class="btn hidden"
@@ -1262,9 +1383,13 @@ p{
 
   <div class="card">
 
-    <div class="mission">MEMORY CHECK</div>
+    <div class="mission">
+      MEMORY QUIZ
+    </div>
 
-    <h2>Masih ingat?</h2>
+    <h2>
+      Seberapa ingat Mamas?
+    </h2>
 
     <div id="quizBox"></div>
 
@@ -1281,46 +1406,52 @@ p{
 
   <div class="card">
 
-    <div class="mission">NEXT CHAPTER</div>
+    <div class="mission">
+      NEXT CHAPTER
+    </div>
 
-    <h2>Ke depan...</h2>
+    <h2>
+      Cerita kita ke depan.
+    </h2>
 
     <p>
-      Tidak perlu memikirkan semuanya sekarang.
-    </p>
-
-    <p>
-      Cukup pilih hal-hal yang ingin kita
-      tumbuhkan bersama.
+      Tidak perlu sempurna.
+      Yang penting tetap bersama,
+      saling mendukung,
+      dan terus bertumbuh.
     </p>
 
     <div class="future-grid">
 
-      <button class="future-choice" onclick="toggleFuture(this)">
-        🌱 Berkembang bersama
+      <button
+        class="future-choice"
+        onclick="toggleFuture(this)">
+        ❤️ Saling mendukung
       </button>
 
-      <button class="future-choice" onclick="toggleFuture(this)">
-        📚 Belajar hal baru
+      <button
+        class="future-choice"
+        onclick="toggleFuture(this)">
+        🌱 Terus bertumbuh
       </button>
 
-      <button class="future-choice" onclick="toggleFuture(this)">
-        💼 Mengembangkan bisnis
+      <button
+        class="future-choice"
+        onclick="toggleFuture(this)">
+        😂 Tetap bercanda
       </button>
 
-      <button class="future-choice" onclick="toggleFuture(this)">
-        💰 Kehidupan yang lebih baik
-      </button>
-
-      <button class="future-choice" onclick="toggleFuture(this)">
-        ✈️ Menjelajah tempat baru
-      </button>
-
-      <button class="future-choice" onclick="toggleFuture(this)">
-        🤝 Saling mendukung impian
+      <button
+        class="future-choice"
+        onclick="toggleFuture(this)">
+        ☕ Tetap ngopi
       </button>
 
     </div>
+
+    <p>
+      Pilih sebanyak yang Mamas mau.
+    </p>
 
     <button class="btn" onclick="go('pesan')">
       LANJUT →
@@ -1339,42 +1470,37 @@ p{
 
   <div class="card">
 
-    <div class="mission">FINAL MESSAGE</div>
+    <div class="mission">
+      MESSAGE FROM SINOK
+    </div>
 
-    <h2>Mamas...</h2>
-
-    <p>
-      Makasih ya.
-    </p>
-
-    <p>
-      Sudah sampai sejauh ini.
-    </p>
-
-    <p>
-      Kalau nanti kita menemukan banyak hal baru...
-    </p>
-
-    <p>
-      semoga kita tetap mau belajar satu sama lain.
-    </p>
-
-    <p>
-      Semoga kita tetap bisa saling mendukung.
-    </p>
-
-    <p>
-      Semoga kita tetap bisa tertawa
-      karena hal-hal kecil.
-    </p>
-
-    <p>
-      Dan jangan lupa...
-    </p>
-
-    <h2 style="color:#ff6fa6;">
-      Sinok masih sayang. ❤️
+    <h2>
+      Untuk Mamas. ❤️
     </h2>
+
+    <p>
+      Terima kasih sudah menjadi bagian
+      dari cerita Sinok.
+    </p>
+
+    <p>
+      Terima kasih untuk setiap obrolan,
+      setiap pertemuan,
+      setiap tawa,
+      setiap perhatian kecil,
+      dan setiap kali Mamas memilih untuk tetap ada.
+    </p>
+
+    <p>
+      Satu tahun mungkin terdengar singkat.
+      Tapi ternyata sudah banyak sekali
+      kenangan yang kita punya.
+    </p>
+
+    <p>
+      Dan Sinok masih ingin melihat
+      cerita ini terus bertumbuh.
+    </p>
 
     <button class="btn" onclick="go('pilihan')">
       SATU PERTANYAAN TERAKHIR →
@@ -1393,33 +1519,55 @@ p{
 
   <div class="card">
 
-    <div class="mission">FINAL QUESTION</div>
+    <div class="mission">
+      FINAL QUESTION
+    </div>
 
     <h2>
       Kalau bisa kembali ke awal...
     </h2>
 
     <p>
-      apakah Mamas masih akan memilih
+      Saat semuanya masih cuma obrolan biasa...
+    </p>
+
+    <p>
+      Apakah Mamas tetap akan memilih
       untuk mengenal Sinok?
     </p>
 
-    <button class="btn secondary" onclick="finalAnswer('no')">
-      Tidak
-    </button>
+    <div
+      style="
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:5px;
+        margin-top:25px;
+      ">
 
-    <button class="btn secondary" onclick="finalAnswer('maybe')">
-      Mungkin 😭
-    </button>
+      <button
+        class="btn secondary"
+        onclick="finalAnswer('no')">
+        Tidak 😭
+      </button>
 
-    <button class="btn" onclick="finalAnswer('yes')">
-      IYA ❤️
-    </button>
+      <button
+        class="btn secondary"
+        onclick="finalAnswer('maybe')">
+        Mungkin 😭
+      </button>
+
+      <button
+        class="btn"
+        onclick="finalAnswer('yes')">
+        IYA ❤️
+      </button>
+
+    </div>
 
     <div
-      id="finalFeedback"
       class="memory-status"
-      style="margin-top:15px;">
+      id="finalFeedback">
     </div>
 
   </div>
@@ -1435,55 +1583,62 @@ p{
 
   <div class="card">
 
-    <div class="ending-title">
+    <div class="mission">
       QUEST COMPLETE
+    </div>
+
+    <div class="big-heart">
+      ❤️
+    </div>
+
+    <div class="ending-title">
+      MAMAS QUEST
+    </div>
+
+    <h1>
+      CERITA KITA
+    </h1>
+
+    <div class="date">
+      22.11.2025 → ∞
     </div>
 
     <div class="infinity">
       ∞
     </div>
 
-    <h2>
-      CERITA KITA MASIH BERLANJUT.
-    </h2>
-
-    <div class="date">
-      22.11.2025 → ∞
-    </div>
-
     <p>
-      Satu tahun ternyata cuma awal.
+      Satu tahun sudah dilewati.
     </p>
 
     <p>
-      Masih ada banyak hal yang belum kita tahu.
+      Tapi ini bukan akhir cerita.
     </p>
 
     <p>
-      Banyak hal yang ingin kita pelajari.
+      Cerita kita masih berlanjut.
     </p>
 
     <p>
-      Banyak mimpi yang ingin kita bangun.
+      Terima kasih sudah memilih
+      untuk mengenal Sinok.
     </p>
 
     <p>
-      Dan banyak cerita yang belum ditulis.
+      Terima kasih sudah tetap ada.
     </p>
-
-    <p>
-      Jadi...
-    </p>
-
-    <h2 style="color:#ff6fa6;">
-      mari terus bertumbuh bersama. ❤️
-    </h2>
 
     <h2>
-      Happy 1st Anniversary, Mamas.
+      Happy 1st Anniversary, Mamas. ❤️
     </h2>
 
-    <button class="btn" onclick="heartExplosion()">
+    <p>
+      — Sinok
+    </p>
+
+    <button
+      class="btn"
+      onclick="heartExplosion()">
       ❤️
     </button>
 
@@ -1498,25 +1653,32 @@ p{
      GAME OVER
 ========================= -->
 
-<div class="gameover" id="gameover">
+<div
+  class="gameover"
+  id="gameover">
 
   <div class="gameover-box">
 
-    <div style="font-size:70px;">
+    <div style="font-size:65px;">
       💔
     </div>
 
-    <h2>GAME OVER</h2>
+    <h2>
+      GAME OVER
+    </h2>
 
     <p>
-      Love nyawanya habis 😭
+      Love kamu habis. 😭
     </p>
 
     <p>
-      Coba lagi, Sinok.
+      Tapi jangan menyerah.
+      Cerita kita harus lanjut.
     </p>
 
-    <button class="btn" onclick="restartGame()">
+    <button
+      class="btn"
+      onclick="restartGame()">
       COBA LAGI ❤️
     </button>
 
@@ -1525,63 +1687,60 @@ p{
 </div>
 
 
-<!-- =========================
-     MUSIC
-========================= -->
-
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-
 <script>
 
-/* =========================================
+/* =========================
    SPACE STARS
-========================================= */
+========================= */
 
-const space = document.getElementById("space");
+const space =
+  document.getElementById("space");
 
-for(let i=0;i<100;i++){
+for(let i=0;i<90;i++){
 
-  const star = document.createElement("div");
+  const star =
+    document.createElement("div");
 
   star.className = "star";
 
-  star.style.left = Math.random()*100 + "%";
-  star.style.top = Math.random()*100 + "%";
+  star.style.left =
+    Math.random()*100 + "%";
+
+  star.style.top =
+    Math.random()*100 + "%";
 
   star.style.animationDelay =
-    (Math.random()*3) + "s";
+    Math.random()*2 + "s";
 
   space.appendChild(star);
 }
 
+for(let i=0;i<12;i++){
 
-for(let i=0;i<18;i++){
-
-  const heart = document.createElement("div");
+  const heart =
+    document.createElement("div");
 
   heart.className = "space-heart";
 
-  heart.textContent = "♥";
+  heart.textContent =
+    Math.random() > .5 ? "♥" : "♡";
 
-  heart.style.left = Math.random()*100 + "%";
-  heart.style.top = Math.random()*100 + "%";
+  heart.style.left =
+    Math.random()*100 + "%";
+
+  heart.style.top =
+    Math.random()*100 + "%";
 
   heart.style.animationDelay =
-    (Math.random()*8) + "s";
-
-  heart.style.fontSize =
-    (15 + Math.random()*25) + "px";
+    Math.random()*8 + "s";
 
   space.appendChild(heart);
 }
 
 
-/* =========================================
-   ROUTE
-========================================= */
+/* =========================
+   ORDER
+========================= */
 
 const order = [
 
@@ -1605,35 +1764,53 @@ const order = [
 
 ];
 
+
 const names = {
 
-  prolog:"AWAL",
-  awal:"PERTAMA KENAL",
+  prolog:"START",
+
+  awal:"AWAL",
+
   obrolan:"OBROLAN",
+
   sticker:"CARI SINOK",
+
   pertemuan:"PERTEMUAN",
+
   foto1:"MEMORY 01",
-  pantai:"PANTAI TIRANG",
+
+  pantai:"PANTAI",
+
   foto2:"MEMORY 02",
+
   keluarga:"KELUARGA",
+
   imam:"CALON IMAM",
+
   tetapAda:"TETAP ADA",
+
   kopi:"KOPI",
-  quiz:"MEMORY CHECK",
+
+  quiz:"QUIZ",
+
   masaDepan:"MASA DEPAN",
+
   pesan:"PESAN",
-  pilihan:"PERTANYAAN",
-  ending:"QUEST COMPLETE"
+
+  pilihan:"FINAL",
+
+  ending:"COMPLETE"
 
 };
+
 
 let current = "prolog";
 let unlocked = 0;
 
 
-/* =========================================
+/* =========================
    LIVES
-========================================= */
+========================= */
 
 let lives = 3;
 
@@ -1643,21 +1820,25 @@ function updateLives(){
 
   for(let i=0;i<3;i++){
 
-    result +=
-      i < lives ? "❤️" : "🖤";
+    if(i < lives){
+      result += "❤️";
+    }else{
+      result += "🖤";
+    }
 
   }
 
-  document.getElementById("lives").textContent = result;
+  document.getElementById("lives")
+    .textContent = result;
 
 }
 
 
-function wrongAnswer(message){
+/* =========================
+   WRONG ANSWER
+========================= */
 
-  if(lives <= 0){
-    return;
-  }
+function wrongAnswer(message){
 
   lives--;
 
@@ -1689,13 +1870,14 @@ function wrongAnswer(message){
   if(message){
 
     const feedback =
-      document.querySelector(
-        ".screen.active .memory-status"
-      );
+      active
+      ? active.querySelector(".memory-status,.quiz-feedback")
+      : null;
 
     if(feedback){
 
-      feedback.textContent = message;
+      feedback.textContent =
+        message;
 
     }
 
@@ -1704,9 +1886,11 @@ function wrongAnswer(message){
   if(lives <= 0){
 
     setTimeout(()=>{
+
       document
         .getElementById("gameover")
         .classList.add("show");
+
     },500);
 
   }
@@ -1714,60 +1898,154 @@ function wrongAnswer(message){
 }
 
 
-/* =========================================
-   START GAME
-========================================= */
-
-function startGame(){
-
-  const music =
-    document.getElementById("bgMusic");
-
-  music.volume = .35;
-
-  music.play().catch(()=>{});
-
-  lives = 3;
-
-  updateLives();
-
-  go("awal");
-
-}
-
-
-/* =========================================
+/* =========================
    MUSIC
-========================================= */
+========================= */
 
-function toggleMusic(){
+const music =
+  document.getElementById("bgMusic");
 
-  const music =
-    document.getElementById("bgMusic");
+const musicBtn =
+  document.getElementById("musicBtn");
 
-  const btn =
-    document.getElementById("musicBtn");
+const musicStatus =
+  document.getElementById("musicStatus");
 
-  if(music.paused){
 
-    music.play().catch(()=>{});
+music.volume = 0.35;
 
-    btn.textContent = "🔊";
 
-  }else{
+music.addEventListener("error",()=>{
 
-    music.pause();
+  if(musicStatus){
 
-    btn.textContent = "🔇";
+    musicStatus.textContent =
+      "Musik belum tersedia. Upload file music.mp3 asli.";
+
+  }
+
+});
+
+
+music.addEventListener("playing",()=>{
+
+  if(musicStatus){
+
+    musicStatus.textContent =
+      "🎵 Musik aktif";
+
+  }
+
+  musicBtn.textContent = "🔊";
+
+});
+
+
+music.addEventListener("pause",()=>{
+
+  if(musicStatus){
+
+    musicStatus.textContent =
+      "Musik dijeda";
+
+  }
+
+  musicBtn.textContent = "🔇";
+
+});
+
+
+function startMusic(){
+
+  music.load();
+
+  music.volume = 0.35;
+
+  const promise =
+    music.play();
+
+  if(promise){
+
+    promise.then(()=>{
+
+      musicBtn.textContent = "🔊";
+
+      if(musicStatus){
+
+        musicStatus.textContent =
+          "🎵 Musik aktif";
+
+      }
+
+    }).catch(()=>{
+
+      if(musicStatus){
+
+        musicStatus.textContent =
+          "Tidak bisa memutar musik. Pastikan music.mp3 adalah file MP3 asli.";
+
+      }
+
+    });
 
   }
 
 }
 
 
-/* =========================================
+function startGame(){
+
+  lives = 3;
+
+  updateLives();
+
+  startMusic();
+
+  go("awal");
+
+}
+
+
+function toggleMusic(){
+
+  if(music.paused){
+
+    const promise =
+      music.play();
+
+    if(promise){
+
+      promise.then(()=>{
+
+        musicBtn.textContent = "🔊";
+
+      }).catch(()=>{
+
+        if(musicStatus){
+
+          musicStatus.textContent =
+            "Musik gagal diputar. Cek file music.mp3.";
+
+        }
+
+      });
+
+    }
+
+  }else{
+
+    music.pause();
+
+    musicBtn.textContent = "🔇";
+
+  }
+
+}
+
+
+/* =========================
    NAVIGATION
-========================================= */
+========================= */
 
 function go(id){
 
@@ -1803,7 +2081,8 @@ function go(id){
 
   current = id;
 
-  document.getElementById("route").textContent =
+  document.getElementById("route")
+    .textContent =
     names[id] || id.toUpperCase();
 
   window.scrollTo({
@@ -1813,9 +2092,7 @@ function go(id){
 
 
   if(id === "sticker"){
-
     makeStickers();
-
   }
 
 
@@ -1824,7 +2101,7 @@ function go(id){
     makePuzzle(
       "puzzle1",
       3,
-      "foto-1.jpg"
+      "foto-1.jpg?v=3"
     );
 
   }
@@ -1835,31 +2112,27 @@ function go(id){
     makePuzzle(
       "puzzle2",
       4,
-      "foto-2.jpg"
+      "foto-2.jpg?v=3"
     );
 
   }
 
 
   if(id === "keluarga"){
-
     startRunner();
-
   }
 
 
   if(id === "quiz"){
-
     startQuiz();
-
   }
 
 }
 
 
-/* =========================================
+/* =========================
    RESTART
-========================================= */
+========================= */
 
 function restartGame(){
 
@@ -1867,23 +2140,48 @@ function restartGame(){
 
   unlocked = 0;
 
+  stickerFinished = false;
+
+  puzzles.puzzle1 = null;
+
+  puzzles.puzzle2 = null;
+
+  runnerStarted = false;
+
+  runnerCount = 0;
+
+  coffeeDone = false;
+
   updateLives();
 
   document
     .getElementById("gameover")
     .classList.remove("show");
 
+  document
+    .getElementById("stickerGrid")
+    .innerHTML = "";
+
+  document
+    .getElementById("puzzle1")
+    .innerHTML = "";
+
+  document
+    .getElementById("puzzle2")
+    .innerHTML = "";
+
   go("prolog");
 
 }
 
 
-/* =========================================
+/* =========================
    CARI SINOK
-   KARTU TERTUTUP
-========================================= */
+   COVERED CARDS
+========================= */
 
 let stickerFinished = false;
+
 
 function makeStickers(){
 
@@ -1896,9 +2194,11 @@ function makeStickers(){
   const next =
     document.getElementById("stickerNext");
 
+
   if(stickerFinished){
     return;
   }
+
 
   grid.innerHTML = "";
 
@@ -1906,79 +2206,90 @@ function makeStickers(){
 
   next.classList.add("hidden");
 
+
   const cards = [
 
     {
-      image:"artis-1.png",
+      image:"artis-1.png?v=3",
       correct:false
     },
 
     {
-      image:"artis-2.png",
+      image:"artis-2.png?v=3",
       correct:false
     },
 
     {
-      image:"sinok.png",
+      image:"sinok.png?v=3",
       correct:true
     },
 
     {
-      image:"artis-3.png",
+      image:"artis-3.png?v=3",
       correct:false
     },
 
     {
-      image:"artis-4.png",
+      image:"artis-4.png?v=3",
       correct:false
     },
 
     {
-      image:"artis-5.png",
+      image:"artis-5.png?v=3",
       correct:false
     }
 
   ];
 
+
   cards.sort(()=>{
     return Math.random() - .5;
   });
 
-  cards.forEach((item,index)=>{
+
+  cards.forEach(item=>{
 
     const card =
       document.createElement("div");
 
-    card.className = "sticker-card";
+    card.className =
+      "sticker-card";
+
+
+    /*
+      GAMBAR ADA DI BAWAH.
+      COVER OPAQUE ADA DI ATAS.
+      JADI GAMBAR MUSTAHIL TERLIHAT
+      SEBELUM CARD DIKLIK.
+    */
 
     card.innerHTML = `
 
-      <div class="sticker-inner">
+      <img
+        class="sticker-image"
+        src="${item.image}"
+        alt="">
 
-        <div class="sticker-front">
-          <span>❤️</span>
-        </div>
-
-        <div class="sticker-back">
-          <img
-            src="${item.image}"
-            alt="">
-        </div>
-
+      <div class="sticker-cover">
+        <span>❤️</span>
       </div>
 
     `;
 
+
     card.addEventListener("click",()=>{
 
       if(
-        card.classList.contains("flipped") ||
-        stickerFinished
+        card.classList.contains("revealed") ||
+        stickerFinished ||
+        lives <= 0
       ){
         return;
       }
 
-      card.classList.add("flipped");
+
+      card.classList.add("revealed");
+
 
       if(item.correct){
 
@@ -2001,6 +2312,7 @@ function makeStickers(){
 
     });
 
+
     grid.appendChild(card);
 
   });
@@ -2008,12 +2320,13 @@ function makeStickers(){
 }
 
 
-/* =========================================
+/* =========================
    PUZZLE
-   FOTO TERBUKA DARI AWAL
-========================================= */
+   IMAGE AS REAL IMG ELEMENT
+========================= */
 
 const puzzles = {};
+
 
 function makePuzzle(id,size,image){
 
@@ -2024,23 +2337,28 @@ function makePuzzle(id,size,image){
     return;
   }
 
-  if(puzzles[id] && puzzles[id].started){
+
+  if(
+    puzzles[id] &&
+    puzzles[id].started
+  ){
     return;
   }
 
+
   container.innerHTML = "";
 
-  const total = size * size;
+  const total =
+    size * size;
+
 
   let pieces = [];
 
+
   for(let i=0;i<total;i++){
-
     pieces.push(i);
-
   }
 
-  /* SHUFFLE */
 
   do{
 
@@ -2049,19 +2367,28 @@ function makePuzzle(id,size,image){
     });
 
   }while(
-    pieces.every((value,index)=>{
-      return value === index;
-    })
+
+    pieces.every(
+      (value,index)=>{
+        return value === index;
+      }
+    )
+
   );
 
 
   puzzles[id] = {
 
     started:true,
+
     size:size,
+
     image:image,
+
     pieces:pieces,
+
     selected:null,
+
     solved:false
 
   };
@@ -2078,29 +2405,82 @@ function makePuzzle(id,size,image){
 
 function renderPuzzle(id){
 
-  const data = puzzles[id];
+  const data =
+    puzzles[id];
 
   const container =
     document.getElementById(id);
 
   container.innerHTML = "";
 
+
   const size =
     data.size;
+
 
   data.pieces.forEach(
     (piece,index)=>{
 
+
       const tile =
         document.createElement("div");
 
-      tile.className = "tile";
+      tile.className =
+        "tile";
+
 
       if(data.selected === index){
 
-        tile.classList.add("selected");
+        tile.classList.add(
+          "selected"
+        );
 
       }
+
+
+      /*
+        piece = posisi asli gambar.
+        index = posisi sekarang.
+
+        Kita menggunakan IMG asli.
+        Tidak lagi menggunakan
+        CSS background-image.
+      */
+
+      const img =
+        document.createElement("img");
+
+      img.className =
+        "puzzle-piece-image";
+
+      img.src =
+        data.image;
+
+      img.alt =
+        "Potongan kenangan";
+
+
+      /*
+        Ukuran IMG = seluruh gambar
+        dikali jumlah grid.
+
+        Contoh 3x3:
+        ukuran gambar = 300% x 300%
+
+        Setiap tile hanya menampilkan
+        bagian yang sesuai.
+      */
+
+      img.style.setProperty(
+        "--piece-size",
+        (size * 100) + "%"
+      );
+
+
+      /*
+        Posisi berdasarkan potongan
+        gambar ASLINYA.
+      */
 
       const correctRow =
         Math.floor(piece / size);
@@ -2108,26 +2488,39 @@ function renderPuzzle(id){
       const correctCol =
         piece % size;
 
-      tile.style.backgroundImage =
-        `url("${data.image}")`;
 
-      tile.style.backgroundSize =
-        `${size*100}% ${size*100}%`;
+      img.style.left =
+        (-correctCol * 100) + "%";
 
-      tile.style.backgroundPosition =
-        `${(correctCol/(size-1))*100}% ${(correctRow/(size-1))*100}%`;
+      img.style.top =
+        (-correctRow * 100) + "%";
+
 
       /*
-        PENTING:
-        Tidak ada cover.
-        Tidak ada tanda ?.
-        Foto langsung terlihat.
+        Lebar/tinggi gambar relatif
+        terhadap tile.
       */
+
+      img.style.width =
+        (size * 100) + "%";
+
+      img.style.height =
+        (size * 100) + "%";
+
+
+      tile.appendChild(img);
+
 
       tile.addEventListener(
         "click",
-        ()=>selectPuzzleTile(id,index)
+        ()=>{
+          selectPuzzleTile(
+            id,
+            index
+          );
+        }
       );
+
 
       container.appendChild(tile);
 
@@ -2142,29 +2535,35 @@ function selectPuzzleTile(id,index){
   const data =
     puzzles[id];
 
+
   if(data.solved){
     return;
   }
 
+
   if(data.selected === null){
 
-    data.selected = index;
+    data.selected =
+      index;
 
     renderPuzzle(id);
 
     return;
 
   }
+
 
   if(data.selected === index){
 
-    data.selected = null;
+    data.selected =
+      null;
 
     renderPuzzle(id);
 
     return;
 
   }
+
 
   const first =
     data.selected;
@@ -2172,8 +2571,10 @@ function selectPuzzleTile(id,index){
   const second =
     index;
 
+
   const temp =
     data.pieces[first];
+
 
   data.pieces[first] =
     data.pieces[second];
@@ -2181,7 +2582,10 @@ function selectPuzzleTile(id,index){
   data.pieces[second] =
     temp;
 
-  data.selected = null;
+
+  data.selected =
+    null;
+
 
   renderPuzzle(id);
 
@@ -2195,6 +2599,7 @@ function checkPuzzle(id){
   const data =
     puzzles[id];
 
+
   const solved =
     data.pieces.every(
       (piece,index)=>{
@@ -2202,21 +2607,26 @@ function checkPuzzle(id){
       }
     );
 
+
   if(!solved){
     return;
   }
 
+
   data.solved = true;
+
 
   const status =
     document.getElementById(
       id + "Status"
     );
 
+
   const next =
     document.getElementById(
       id + "Next"
     );
+
 
   if(status){
 
@@ -2225,11 +2635,15 @@ function checkPuzzle(id){
 
   }
 
+
   if(next){
 
-    next.classList.remove("hidden");
+    next.classList.remove(
+      "hidden"
+    );
 
   }
+
 
   const container =
     document.getElementById(id);
@@ -2240,12 +2654,13 @@ function checkPuzzle(id){
 }
 
 
-/* =========================================
+/* =========================
    RUNNER FOTO
-========================================= */
+========================= */
 
 let runnerCount = 0;
 let runnerStarted = false;
+
 
 function startRunner(){
 
@@ -2253,71 +2668,105 @@ function startRunner(){
     return;
   }
 
+
   runnerStarted = true;
 
   runnerCount = 0;
 
+
   const photo =
-    document.getElementById("runnerPhoto");
+    document.getElementById(
+      "runnerPhoto"
+    );
+
 
   const count =
-    document.getElementById("runnerCount");
+    document.getElementById(
+      "runnerCount"
+    );
+
 
   const feedback =
-    document.getElementById("runnerFeedback");
+    document.getElementById(
+      "runnerFeedback"
+    );
+
 
   const next =
-    document.getElementById("runnerNext");
+    document.getElementById(
+      "runnerNext"
+    );
 
-  count.textContent = "0 / 3";
+
+  photo.style.display =
+    "block";
+
+
+  count.textContent =
+    "0 / 3";
+
 
   feedback.textContent = "";
 
   next.classList.add("hidden");
 
+
   moveRunnerPhoto();
 
 
-  photo.onclick = function(e){
+  photo.onclick =
+    function(e){
 
-    e.stopPropagation();
+      e.stopPropagation();
 
-    runnerCount++;
 
-    count.textContent =
-      runnerCount + " / 3";
+      runnerCount++;
 
-    if(runnerCount >= 3){
 
-      photo.style.display = "none";
+      count.textContent =
+        runnerCount + " / 3";
 
-      feedback.textContent =
-        "Berhasil menangkap Sinok 3 kali! ❤️";
 
-      next.classList.remove("hidden");
+      if(runnerCount >= 3){
 
-      return;
+        photo.style.display =
+          "none";
 
-    }
 
-    moveRunnerPhoto();
+        feedback.textContent =
+          "Berhasil menangkap Sinok 3 kali! ❤️";
 
-  };
+
+        next.classList.remove(
+          "hidden"
+        );
+
+        return;
+
+      }
+
+
+      moveRunnerPhoto();
+
+    };
 
 
   document
     .getElementById("runner")
-    .onclick = function(){
+    .onclick =
+    function(){
 
       if(runnerCount >= 3){
         return;
       }
+
 
       wrongAnswer(
         Math.random() > .5
           ? "Hayoloo..."
           : "Hmph.."
       );
+
 
       feedback.textContent =
         Math.random() > .5
@@ -2332,37 +2781,47 @@ function startRunner(){
 function moveRunnerPhoto(){
 
   const photo =
-    document.getElementById("runnerPhoto");
+    document.getElementById(
+      "runnerPhoto"
+    );
+
 
   const runner =
-    document.getElementById("runner");
+    document.getElementById(
+      "runner"
+    );
+
 
   const maxX =
     runner.clientWidth - 110;
 
+
   const maxY =
     runner.clientHeight - 110;
+
 
   photo.style.left =
     Math.max(
       5,
-      Math.random()*maxX
+      Math.random() * maxX
     ) + "px";
+
 
   photo.style.top =
     Math.max(
       5,
-      Math.random()*maxY
+      Math.random() * maxY
     ) + "px";
 
 }
 
 
-/* =========================================
+/* =========================
    COFFEE
-========================================= */
+========================= */
 
 let coffeeDone = false;
+
 
 function coffeeWrong(){
 
@@ -2370,15 +2829,18 @@ function coffeeWrong(){
     return;
   }
 
+
   const feedback =
     document.getElementById(
       "coffeeFeedback"
     );
 
+
   feedback.textContent =
     Math.random() > .5
       ? "Hayoloo..."
       : "Hmph..";
+
 
   wrongAnswer(
     feedback.textContent
@@ -2393,27 +2855,37 @@ function coffeeCorrect(){
     return;
   }
 
+
   coffeeDone = true;
 
-  document.getElementById(
-    "coffeeFeedback"
-  ).textContent =
-    "Nah... ini baru Mamas. ☕❤️";
 
   document
-    .getElementById("coffeeNext")
-    .classList.remove("hidden");
+    .getElementById(
+      "coffeeFeedback"
+    )
+    .textContent =
+      "Nah... ini baru Mamas. ☕❤️";
+
+
+  document
+    .getElementById(
+      "coffeeNext"
+    )
+    .classList.remove(
+      "hidden"
+    );
 
 }
 
 
-/* =========================================
+/* =========================
    QUIZ
-========================================= */
+========================= */
 
 const quizQuestions = [
 
   {
+
     question:
       "Kita pertama kali kenal lewat mana?",
 
@@ -2427,6 +2899,7 @@ const quizQuestions = [
     answer:1
 
   },
+
 
   {
 
@@ -2444,6 +2917,7 @@ const quizQuestions = [
 
   },
 
+
   {
 
     question:
@@ -2460,6 +2934,7 @@ const quizQuestions = [
 
   },
 
+
   {
 
     question:
@@ -2475,6 +2950,7 @@ const quizQuestions = [
     answer:2
 
   },
+
 
   {
 
@@ -2494,8 +2970,10 @@ const quizQuestions = [
 
 ];
 
+
 let quizIndex = 0;
 let quizLocked = false;
+
 
 function startQuiz(){
 
@@ -2511,9 +2989,15 @@ function startQuiz(){
 function renderQuiz(){
 
   const box =
-    document.getElementById("quizBox");
+    document.getElementById(
+      "quizBox"
+    );
 
-  if(quizIndex >= quizQuestions.length){
+
+  if(
+    quizIndex >=
+    quizQuestions.length
+  ){
 
     box.innerHTML = `
 
@@ -2530,16 +3014,17 @@ function renderQuiz(){
     `;
 
     return;
-
   }
+
 
   const q =
     quizQuestions[quizIndex];
 
+
   box.innerHTML = `
 
     <h3>
-      ${quizIndex+1}.
+      ${quizIndex + 1}.
       ${q.question}
     </h3>
 
@@ -2577,13 +3062,16 @@ function answerQuiz(answer){
     return;
   }
 
+
   const q =
     quizQuestions[quizIndex];
+
 
   const feedback =
     document.getElementById(
       "quizFeedback"
     );
+
 
   if(answer !== q.answer){
 
@@ -2592,18 +3080,23 @@ function answerQuiz(answer){
         ? "Hayoloo..."
         : "Hmph..";
 
+
     wrongAnswer(
       feedback.textContent
     );
+
 
     return;
 
   }
 
+
   quizLocked = true;
+
 
   feedback.textContent =
     "Benar! ❤️";
+
 
   setTimeout(()=>{
 
@@ -2618,20 +3111,22 @@ function answerQuiz(answer){
 }
 
 
-/* =========================================
+/* =========================
    FUTURE
-========================================= */
+========================= */
 
 function toggleFuture(button){
 
-  button.classList.toggle("selected");
+  button.classList.toggle(
+    "selected"
+  );
 
 }
 
 
-/* =========================================
+/* =========================
    FINAL QUESTION
-========================================= */
+========================= */
 
 function finalAnswer(answer){
 
@@ -2640,6 +3135,7 @@ function finalAnswer(answer){
       "finalFeedback"
     );
 
+
   if(answer === "yes"){
 
     go("ending");
@@ -2647,6 +3143,7 @@ function finalAnswer(answer){
     return;
 
   }
+
 
   if(answer === "maybe"){
 
@@ -2657,10 +3154,12 @@ function finalAnswer(answer){
 
   }
 
+
   if(answer === "no"){
 
     feedback.textContent =
       "Hmph.. jawaban itu salah. 😭";
+
 
     wrongAnswer(
       "Hmph.."
@@ -2671,45 +3170,62 @@ function finalAnswer(answer){
 }
 
 
-/* =========================================
+/* =========================
    HEART EXPLOSION
-========================================= */
+========================= */
 
 function heartExplosion(){
 
   for(let i=0;i<80;i++){
 
     const heart =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     heart.className =
       "explosion-heart";
+
 
     heart.textContent =
       Math.random() > .5
         ? "❤️"
         : "💖";
 
-    heart.style.left = "50%";
-    heart.style.top = "50%";
+
+    heart.style.left =
+      "50%";
+
+    heart.style.top =
+      "50%";
+
 
     heart.style.setProperty(
       "--x",
       Math.random()
     );
 
+
     heart.style.setProperty(
       "--y",
       Math.random()
     );
 
-    heart.style.animationDelay =
-      Math.random()*.5 + "s";
 
-    document.body.appendChild(heart);
+    heart.style.animationDelay =
+      Math.random() * .5 + "s";
+
+
+    document.body.appendChild(
+      heart
+    );
+
 
     setTimeout(()=>{
+
       heart.remove();
+
     },2200);
 
   }
@@ -2717,9 +3233,9 @@ function heartExplosion(){
 }
 
 
-/* =========================================
+/* =========================
    INITIAL
-========================================= */
+========================= */
 
 updateLives();
 
