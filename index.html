@@ -3,36 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAMAS QUEST — Cerita Kita</title>
+<title>MAMAS QUEST: CERITA KITA</title>
 
 <style>
-*{box-sizing:border-box}
-
-html,body{
+*{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  width:100%;
-  min-height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#000;
-  color:white
 }
 
 body{
+  font-family:Arial, sans-serif;
+  background:#02020a;
+  color:white;
+  min-height:100vh;
   overflow-x:hidden;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(100,50,180,.15),transparent 30%),
-    radial-gradient(circle at 80% 70%,rgba(255,50,130,.12),transparent 30%),
-    #000
 }
 
-.space{
+/* =========================
+   GALAXY BACKGROUND
+========================= */
+
+body::before{
+  content:"";
   position:fixed;
   inset:0;
-  z-index:-5;
-  overflow:hidden;
   background:
-    radial-gradient(circle at 50% 50%,#171020 0%,#08060d 45%,#000 100%)
+    radial-gradient(circle at 20% 20%,rgba(255,0,130,.12),transparent 25%),
+    radial-gradient(circle at 80% 70%,rgba(80,0,255,.15),transparent 30%),
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.03),transparent 50%);
+  pointer-events:none;
+  z-index:-2;
+}
+
+.stars{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
 }
 
 .star{
@@ -41,600 +49,504 @@ body{
   height:2px;
   background:white;
   border-radius:50%;
-  opacity:.7;
-  animation:twinkle 2s infinite alternate
+  opacity:.8;
+  animation:twinkle 2s infinite alternate;
 }
 
 @keyframes twinkle{
-  from{opacity:.15;transform:scale(.7)}
-  to{opacity:1;transform:scale(1.5)}
+  from{opacity:.2}
+  to{opacity:1}
 }
 
-.space-heart{
-  position:absolute;
-  color:#ff4f91;
-  opacity:.12;
-  font-size:25px;
-  animation:floatHeart 8s infinite ease-in-out
-}
-
-@keyframes floatHeart{
-  0%,100%{transform:translateY(0) rotate(-8deg)}
-  50%{transform:translateY(-35px) rotate(8deg)}
-}
-
-/* HUD */
+/* =========================
+   HUD
+========================= */
 
 .hud{
   position:fixed;
   top:0;
   left:0;
   right:0;
-  z-index:100;
-  height:64px;
-  padding:10px 15px;
+  height:65px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,.82);
-  border-bottom:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(10px)
+  padding:10px 18px;
+  background:rgba(0,0,0,.75);
+  border-bottom:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);
+  z-index:100;
 }
 
-.hud-left{
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-
-.logo-small{
-  font-weight:900;
-  letter-spacing:1px;
+.logo{
   font-size:13px;
-  color:#ff78ad
-}
-
-.route{
-  font-size:11px;
-  color:#aaa
+  font-weight:bold;
+  letter-spacing:1px;
 }
 
 .lives{
-  font-size:20px;
-  letter-spacing:3px;
-  white-space:nowrap
+  display:flex;
+  gap:5px;
+  font-size:23px;
 }
 
 .music-btn{
-  border:1px solid rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.3);
   background:rgba(255,255,255,.08);
   color:white;
   border-radius:20px;
-  padding:7px 11px;
-  cursor:pointer
+  padding:7px 12px;
+  cursor:pointer;
 }
 
-/* MAIN */
-
-main{
-  width:100%;
-  min-height:100vh;
-  padding-top:64px
-}
+/* =========================
+   SCREEN
+========================= */
 
 .screen{
   display:none;
-  min-height:calc(100vh - 64px);
-  padding:35px 18px 60px;
+  min-height:100vh;
+  padding:95px 20px 50px;
   align-items:center;
-  justify-content:center
+  justify-content:center;
+  text-align:center;
 }
 
-.screen.active{display:flex}
-
-.card{
-  width:min(760px,100%);
-  padding:30px 22px;
-  border-radius:28px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.08),
-      rgba(255,255,255,.025)
-    );
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:
-    0 0 40px rgba(255,30,110,.08),
-    inset 0 0 30px rgba(255,255,255,.02);
-  backdrop-filter:blur(12px);
-  text-align:center
+.screen.active{
+  display:flex;
 }
 
-.mission{
-  color:#ff5d9b;
-  font-size:12px;
-  font-weight:bold;
-  letter-spacing:3px;
-  margin-bottom:12px
+.content{
+  width:min(700px,94vw);
+  margin:auto;
 }
 
 h1{
-  font-size:clamp(34px,8vw,72px);
-  margin:10px 0;
-  line-height:1
+  font-size:clamp(28px,7vw,55px);
+  margin-bottom:18px;
 }
 
 h2{
-  font-size:clamp(25px,5vw,42px);
-  margin:8px 0 18px
+  font-size:clamp(24px,6vw,40px);
+  margin-bottom:18px;
 }
-
-h3{margin:8px 0}
 
 p{
+  font-size:17px;
+  line-height:1.7;
   color:#ddd;
-  line-height:1.8
+  margin-bottom:18px;
 }
+
+.small{
+  font-size:14px;
+  color:#aaa;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+  border:none;
+  background:linear-gradient(135deg,#ff3f91,#7b3cff);
+  color:white;
+  padding:13px 25px;
+  border-radius:30px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:8px;
+  box-shadow:0 0 20px rgba(255,50,150,.25);
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px) scale(1.02);
+}
+
+.btn:active{
+  transform:scale(.96);
+}
+
+/* =========================
+   HEART
+========================= */
 
 .big-heart{
-  font-size:90px;
-  margin:10px 0;
-  filter:drop-shadow(0 0 25px #ff3e88);
-  animation:heartPulse 1.5s infinite
+  font-size:85px;
+  animation:pulse 1.5s infinite;
+  margin-bottom:20px;
 }
 
-@keyframes heartPulse{
+@keyframes pulse{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.12)}
 }
 
-.date{
-  color:#ff78ad;
-  font-weight:bold;
-  letter-spacing:3px;
-  margin:20px 0
-}
-
-.btn{
-  border:0;
-  border-radius:18px;
-  padding:13px 20px;
-  margin:7px;
-  cursor:pointer;
-  color:white;
-  font-size:14px;
-  font-weight:bold;
-  background:linear-gradient(135deg,#ff357d,#b72cff);
-  box-shadow:0 8px 25px rgba(255,40,120,.25);
-  transition:.2s
-}
-
-.btn:hover{
-  transform:translateY(-2px) scale(1.02)
-}
-
-.btn.secondary{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  box-shadow:none
-}
-
-.btn.green{
-  background:linear-gradient(135deg,#24c88a,#2776ff)
-}
-
-.hidden{display:none!important}
-
-/* CHAT */
+/* =========================
+   CHAT
+========================= */
 
 .chat{
-  max-width:430px;
-  margin:20px auto;
-  text-align:left
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin:25px auto;
+  text-align:left;
 }
 
 .chat-bubble{
   padding:12px 15px;
   border-radius:17px;
-  margin:8px 0;
-  width:max-content;
   max-width:80%;
-  background:#211a28;
-  border:1px solid rgba(255,255,255,.08)
+  line-height:1.5;
 }
 
-.chat-bubble.me{
-  margin-left:auto;
-  background:linear-gradient(135deg,#bd286a,#7525a7)
+.chat-left{
+  align-self:flex-start;
+  background:#222;
 }
 
-/* CARI SINOK */
+.chat-right{
+  align-self:flex-end;
+  background:#7735a8;
+}
+
+/* =========================
+   STICKER
+========================= */
 
 .sticker-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
-  max-width:500px;
-  margin:25px auto
+  margin:25px auto;
 }
 
-.sticker-card{
-  position:relative;
-  aspect-ratio:1/1;
-  border-radius:20px;
-  overflow:hidden;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.15);
-  background:#fff;
-  box-shadow:0 0 20px rgba(255,50,130,.12)
-}
-
-.sticker-image{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:white;
-  opacity:1
-}
-
-.sticker-cover{
-  position:absolute;
-  inset:0;
-  z-index:5;
+.sticker{
+  min-height:90px;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at 50% 40%,#4a1735,#160b16 70%);
-  transition:opacity .25s ease,transform .25s ease
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:18px;
+  font-size:35px;
 }
 
-.sticker-cover span{
-  font-size:45px;
-  filter:drop-shadow(0 0 12px #ff3d86)
+/* =========================
+   PHOTO
+========================= */
+
+.story-photo{
+  width:min(500px,90vw);
+  max-height:65vh;
+  object-fit:contain;
+  border-radius:20px;
+  border:3px solid rgba(255,255,255,.2);
+  box-shadow:0 0 35px rgba(255,50,150,.25);
+  margin:20px auto;
 }
 
-.sticker-card.revealed .sticker-cover{
-  opacity:0;
-  pointer-events:none;
-  transform:scale(1.15)
-}
+/* =========================
+   CARI SINOK
+========================= */
 
-.sticker-card.revealed{cursor:default}
-
-.memory-status{
-  color:#ff7cae;
-  font-size:13px;
-  min-height:20px
-}
-
-/* PUZZLE 6 KEPING */
-
-.puzzle{
-  width:min(600px,92vw);
-  aspect-ratio:3/2;
-  margin:25px auto;
+.card-grid{
+  width:min(600px,94vw);
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(2,1fr);
-  gap:3px;
-  background:#111;
-  border:2px solid rgba(255,255,255,.18);
-  border-radius:12px;
-  overflow:hidden
-}
-
-.puzzle.tile-6{
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(2,1fr)
-}
-
-.tile{
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.08);
-  background:#111;
-  transition:.15s
-}
-
-.tile:hover{
-  filter:brightness(1.2);
-  transform:scale(.98)
-}
-
-.tile.selected{
-  outline:3px solid #ff579b;
-  z-index:2
-}
-
-.puzzle-piece-image{
-  position:absolute;
-  width:300%;
-  height:200%;
-  max-width:none;
-  max-height:none;
-  object-fit:fill;
-  user-select:none;
-  pointer-events:none
-}
-
-/* BEACH */
-
-.beach{
-  height:230px;
-  border-radius:25px;
+  gap:12px;
   margin:25px auto;
-  max-width:600px;
-  position:relative;
+}
+
+.find-card{
+  aspect-ratio:1;
+  border:none;
+  border-radius:18px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#27114c,#09091a);
+  color:white;
+  font-size:38px;
   overflow:hidden;
-  background:
-    linear-gradient(
-      to bottom,
-      #120d25 0%,
-      #30153f 38%,
-      #e65f84 62%,
-      #222 63%,
-      #071018 100%
-    )
+  position:relative;
+  border:2px solid rgba(255,255,255,.15);
 }
 
-.beach:before{
-  content:"☀";
-  position:absolute;
-  font-size:60px;
-  left:50%;
-  top:30px;
-  transform:translateX(-50%);
-  color:#ffd58a;
-  filter:drop-shadow(0 0 20px #ff8a7a)
+.find-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
 }
 
-.beach:after{
-  content:"〰〰〰〰〰〰〰";
-  position:absolute;
-  bottom:45px;
-  left:0;
-  right:0;
-  font-size:30px;
-  color:#66b7cf
+.find-card.revealed img{
+  display:block;
 }
 
-/* RUNNER */
+.find-card.revealed .question{
+  display:none;
+}
+
+.question{
+  display:block;
+}
+
+/* =========================
+   PUZZLE
+========================= */
+
+.puzzle{
+  width:min(500px,90vw);
+  aspect-ratio:2/3;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:5px;
+  margin:20px auto;
+  border:3px solid rgba(255,255,255,.35);
+  border-radius:16px;
+  overflow:hidden;
+  background:#111;
+  box-shadow:0 0 25px rgba(255,80,150,.3);
+}
+
+.puzzle-piece{
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  background-repeat:no-repeat;
+  border:2px solid rgba(255,255,255,.35);
+  transition:.2s;
+}
+
+.puzzle-piece:hover{
+  transform:scale(.98);
+}
+
+.puzzle-piece.selected{
+  outline:4px solid #ff4f9a;
+  z-index:2;
+}
+
+.puzzle-piece.correct{
+  outline:2px solid #55ff99;
+}
+
+/* =========================
+   RUNNER
+========================= */
 
 .runner{
-  width:min(500px,90vw);
-  height:300px;
-  margin:25px auto;
-  border-radius:25px;
-  border:1px solid rgba(255,255,255,.15);
+  width:min(600px,94vw);
+  height:180px;
+  border:2px solid rgba(255,255,255,.15);
+  border-radius:20px;
+  background:
+    linear-gradient(to top,rgba(255,255,255,.06) 2px,transparent 2px);
   position:relative;
   overflow:hidden;
-  background:
-    linear-gradient(
-      to bottom,
-      #24123d,
-      #452253 50%,
-      #12131e 50%,
-      #090a0e
-    )
+  margin:25px auto;
 }
 
-.runner img{
+.runner-character{
   position:absolute;
-  width:100px;
-  height:100px;
-  object-fit:cover;
-  border-radius:50%;
-  border:5px solid white;
-  cursor:pointer;
-  box-shadow:0 0 25px rgba(255,255,255,.3);
-  transition:.25s
+  bottom:20px;
+  left:40px;
+  font-size:55px;
+  transition:left 1s linear;
 }
 
-.runner-count{
-  font-size:14px;
-  color:#ff8ab6
+.runner-goal{
+  position:absolute;
+  right:30px;
+  bottom:20px;
+  font-size:40px;
 }
 
-/* COFFEE */
+/* =========================
+   COFFEE
+========================= */
 
 .coffee-options{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
   gap:15px;
-  margin:25px 0
+  width:min(650px,94vw);
+  margin:25px auto;
 }
 
 .coffee{
-  width:130px;
   min-height:130px;
-  border-radius:25px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.05);
+  border:2px solid rgba(255,255,255,.15);
+  border-radius:20px;
+  background:rgba(255,255,255,.07);
   color:white;
   cursor:pointer;
   font-size:45px;
-  transition:.2s
+  transition:.2s;
 }
 
 .coffee:hover{
-  transform:translateY(-5px);
-  background:rgba(255,255,255,.1)
+  transform:translateY(-4px);
+  border-color:#ff4f9a;
 }
 
 .coffee small{
   display:block;
-  font-size:12px;
-  color:#aaa
+  font-size:14px;
+  margin-top:10px;
 }
 
-/* QUIZ */
+/* =========================
+   QUIZ
+========================= */
 
 .quiz-options{
-  display:grid;
-  gap:10px;
-  max-width:600px;
-  margin:20px auto
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:min(550px,94vw);
+  margin:25px auto;
 }
 
 .quiz-option{
-  width:100%;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.07);
+  color:white;
   padding:15px;
   border-radius:15px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.05);
-  color:white;
   cursor:pointer;
-  text-align:left
 }
 
 .quiz-option:hover{
-  background:rgba(255,255,255,.1)
+  background:rgba(255,255,255,.13);
 }
 
-.quiz-feedback{
-  min-height:28px;
-  color:#ff7cae;
-  font-weight:bold
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback{
+  min-height:30px;
+  margin:15px 0;
+  font-weight:bold;
+  color:#ff7eb8;
 }
 
-/* FUTURE */
-
-.future-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  max-width:600px;
-  margin:20px auto
+.hidden{
+  display:none !important;
 }
 
-.future-choice{
-  padding:17px 10px;
-  border-radius:17px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
-  color:white;
-  cursor:pointer
+/* =========================
+   SHAKE
+========================= */
+
+.shake{
+  animation:shake .35s;
 }
-
-.future-choice.selected{
-  border-color:#ff5e9b;
-  background:rgba(255,50,130,.15);
-  box-shadow:0 0 20px rgba(255,50,130,.12)
-}
-
-/* ENDING */
-
-.infinity{
-  font-size:100px;
-  color:#ff579c;
-  text-shadow:0 0 30px #ff579c
-}
-
-.ending-title{
-  color:#ff78ad;
-  letter-spacing:4px;
-  font-weight:900
-}
-
-/* SHAKE */
-
-.shake{animation:shake .45s}
 
 @keyframes shake{
   0%,100%{transform:translateX(0)}
   20%{transform:translateX(-12px)}
   40%{transform:translateX(12px)}
-  60%{transform:translateX(-9px)}
-  80%{transform:translateX(9px)}
+  60%{transform:translateX(-8px)}
+  80%{transform:translateX(8px)}
 }
 
-/* GAME OVER */
+/* =========================
+   GAME OVER
+========================= */
 
 .gameover{
   position:fixed;
   inset:0;
-  z-index:999;
+  background:rgba(0,0,0,.92);
   display:none;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,.92);
-  padding:20px
+  text-align:center;
+  z-index:999;
+  padding:20px;
 }
 
-.gameover.show{display:flex}
+.gameover.active{
+  display:flex;
+}
 
 .gameover-box{
-  width:min(500px,100%);
-  text-align:center;
-  padding:35px 20px;
-  border-radius:30px;
-  border:1px solid #ff3f83;
-  background:#100811;
-  box-shadow:0 0 60px rgba(255,40,120,.25)
+  width:min(450px,90vw);
+  padding:35px 25px;
+  border-radius:25px;
+  border:1px solid rgba(255,255,255,.2);
+  background:linear-gradient(145deg,#120818,#05050b);
+  box-shadow:0 0 40px rgba(255,0,100,.2);
 }
 
-.gameover-box h2{color:#ff4e91}
-
-/* HEART EXPLOSION */
+/* =========================
+   HEART EXPLOSION
+========================= */
 
 .explosion-heart{
   position:fixed;
-  z-index:1000;
   pointer-events:none;
-  font-size:25px;
-  animation:explode 1.5s forwards
+  font-size:30px;
+  animation:explode 1s forwards;
+  z-index:500;
 }
 
 @keyframes explode{
-  from{
+  0%{
+    transform:translate(0,0) scale(.5);
     opacity:1;
-    transform:translate(0,0) scale(.5)
   }
-  to{
+  100%{
+    transform:translate(var(--x),var(--y)) scale(1.5);
     opacity:0;
-    transform:
-      translate(
-        calc((var(--x) - .5) * 100vw),
-        calc((var(--y) - .5) * 100vh)
-      )
-      scale(1.5)
   }
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:500px){
+@media(max-width:600px){
 
-  .hud{height:58px}
-
-  main{padding-top:58px}
-
-  .screen{
-    min-height:calc(100vh - 58px);
-    padding-top:25px
+  .hud{
+    padding:8px 10px;
   }
 
-  .card{padding:25px 15px}
-
-  .sticker-grid{gap:8px}
-
-  .future-grid{grid-template-columns:1fr}
+  .logo{
+    font-size:10px;
+  }
 
   .lives{
-    font-size:17px;
-    letter-spacing:1px
+    font-size:19px;
   }
 
-  .route{display:none}
+  .music-btn{
+    font-size:11px;
+    padding:6px 9px;
+  }
+
+  .sticker-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .card-grid{
+    gap:8px;
+  }
+
+  .coffee-options{
+    grid-template-columns:1fr;
+  }
+
+  .coffee{
+    min-height:100px;
+  }
 
   .puzzle{
-    width:94vw;
-    max-width:500px
+    width:min(400px,88vw);
   }
 }
 </style>
@@ -642,1064 +554,823 @@ p{
 
 <body>
 
-<div class="space" id="space"></div>
+<div class="stars" id="stars"></div>
 
-<header class="hud">
+<!-- =========================
+     HUD
+========================= -->
 
-  <div class="hud-left">
-    <div class="logo-small">MAMAS QUEST</div>
-    <div class="route" id="route">AWAL</div>
+<div class="hud">
+
+  <div class="logo">
+    MAMAS QUEST ❤️
   </div>
 
-  <div class="lives" id="lives">❤️❤️❤️</div>
+  <div class="lives" id="lives">
+    ❤️❤️❤️
+  </div>
 
-  <button
-    class="music-btn"
-    id="musicBtn"
-    onclick="toggleMusic()">
-    🔊
+  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+    🎵 MUSIC
   </button>
 
-</header>
+</div>
 
 <audio id="bgMusic" loop preload="auto">
   <source src="music.mp3?v=3" type="audio/mpeg">
 </audio>
 
-<main>
 
-<!-- PROLOG -->
+<!-- =========================
+     PROLOG
+========================= -->
 
 <section class="screen active" id="prolog">
-<div class="card">
 
-<div class="mission">A SPECIAL ADVENTURE</div>
+  <div class="content">
 
-<div class="big-heart">❤️</div>
+    <div class="big-heart">❤️</div>
 
-<h1>MAMAS QUEST</h1>
-<h2>CERITA KITA</h2>
+    <h1>MAMAS QUEST</h1>
 
-<p>dan cinta yang terus bertumbuh.</p>
+    <p>
+      Sebuah perjalanan kecil tentang dua manusia
+      yang bertemu, mengenal, lalu memilih untuk
+      terus berjalan bersama.
+    </p>
 
-<div class="date">22 NOVEMBER 2026</div>
+    <p class="small">
+      22 November 2025 — 22 November 2026
+    </p>
 
-<p>
-Satu tahun perjalanan.<br>
-Banyak kenangan kecil.<br>
-Dan masih banyak cerita yang belum ditulis.
-</p>
+    <button class="btn" onclick="startGame()">
+      MULAI CERITA ❤️
+    </button>
 
-<button class="btn" onclick="startGame()">
-MULAI ❤️
-</button>
+  </div>
 
-<div id="musicStatus"
-style="color:#888;font-size:11px;min-height:18px;margin-top:8px">
-</div>
-
-</div>
 </section>
 
 
-<!-- AWAL -->
+<!-- =========================
+     AWAL
+========================= -->
 
 <section class="screen" id="awal">
-<div class="card">
 
-<div class="mission">MISSION 01</div>
+  <div class="content">
 
-<h2>Awalnya cuma sebuah obrolan.</h2>
+    <h2>MISSION 01</h2>
 
-<p>
-Semuanya dimulai dari sebuah perkenalan
-di Telegram melalui Leo.
-</p>
+    <p>
+      Semua bermula dari sebuah perkenalan sederhana.
+    </p>
 
-<p>
-Awalnya cuma ngobrol biasa.
-Bercanda.
-Saling membalas pesan.
-</p>
+    <p>
+      Waktu itu kita pertama kali saling mengenal
+      lewat Leo Telegram.
+    </p>
 
-<p>
-Tidak ada yang tahu kalau obrolan sederhana
-itu nantinya akan menjadi bagian penting
-dari sebuah cerita.
-</p>
+    <p>
+      Tidak ada yang menyangka bahwa percakapan
+      sederhana itu akan membawa kita sejauh ini.
+    </p>
 
-<button class="btn" onclick="go('obrolan')">
-LANJUT →
-</button>
+    <button class="btn" onclick="go('obrolan')">
+      LANJUT →
+    </button>
 
-</div>
+  </div>
+
 </section>
 
 
-<!-- OBROLAN -->
+<!-- =========================
+     OBROLAN
+========================= -->
 
 <section class="screen" id="obrolan">
-<div class="card">
 
-<div class="mission">MISSION 02</div>
+  <div class="content">
 
-<h2>Obrolan yang jadi kebiasaan.</h2>
+    <h2>MISSION 02</h2>
 
-<div class="chat">
+    <p>
+      Awalnya cuma ngobrol biasa...
+      tapi ternyata semakin lama semakin nyaman.
+    </p>
 
-<div class="chat-bubble">Hai...</div>
+    <div class="chat">
 
-<div class="chat-bubble me">
-Ngobrol?
-</div>
+      <div class="chat-bubble chat-left">
+        "Hai..."
+      </div>
 
-<div class="chat-bubble">
-Boleh 😆
-</div>
+      <div class="chat-bubble chat-right">
+        "Hai juga 😄"
+      </div>
 
-<div class="chat-bubble me">
-Hehehe.
-</div>
+      <div class="chat-bubble chat-left">
+        "Lagi apa?"
+      </div>
 
-</div>
+      <div class="chat-bubble chat-right">
+        "Lagi santai. Kamu?"
+      </div>
 
-<p>
-Lama-lama obrolan itu menjadi kebiasaan.
-</p>
+      <div class="chat-bubble chat-left">
+        "Sama..."
+      </div>
 
-<p>
-Tidak tahu persis kapan perasaan itu mulai muncul.
-Tapi setiap melihat pesan masuk,
-rasanya selalu senang.
-</p>
+    </div>
 
-<button class="btn" onclick="go('sticker')">
-CARI SINOK ❤️
-</button>
+    <p>
+      Dari obrolan kecil, perlahan muncul rasa ingin
+      mengenal satu sama lain lebih jauh.
+    </p>
 
-</div>
+    <button class="btn" onclick="go('sticker')">
+      LANJUT →
+    </button>
+
+  </div>
+
 </section>
 
 
-<!-- CARI SINOK -->
+<!-- =========================
+     STICKER
+========================= -->
 
 <section class="screen" id="sticker">
-<div class="card">
 
-<div class="mission">MINI QUEST</div>
+  <div class="content">
 
-<h2>Cari Sinok ❤️</h2>
+    <h2>MISSION 03</h2>
 
-<p>
-Salah satu dari enam kartu ini adalah Sinok.
-</p>
+    <p>
+      Kadang hubungan dimulai dari hal-hal kecil.
+    </p>
 
-<p>
-Semua kartu masih tertutup.<br>
-Coba temukan Sinok.
-</p>
+    <div class="sticker-grid">
 
-<div class="sticker-grid" id="stickerGrid"></div>
+      <div class="sticker">❤️</div>
+      <div class="sticker">😊</div>
+      <div class="sticker">🥰</div>
+      <div class="sticker">💬</div>
+      <div class="sticker">✨</div>
+      <div class="sticker">💕</div>
 
-<div id="stickerFeedback" class="memory-status"></div>
+    </div>
 
-<button
-class="btn hidden"
-id="stickerNext"
-onclick="go('pertemuan')">
-LANJUT →
-</button>
+    <p>
+      Sampai akhirnya kita memutuskan untuk bertemu.
+    </p>
 
-</div>
+    <button class="btn" onclick="go('pertemuan')">
+      LANJUT →
+    </button>
+
+  </div>
+
 </section>
 
 
-<!-- PERTEMUAN -->
+<!-- =========================
+     PERTEMUAN
+========================= -->
 
 <section class="screen" id="pertemuan">
-<div class="card">
 
-<div class="mission">MISSION 03</div>
+  <div class="content">
 
-<h2>Pertemuan pertama.</h2>
+    <h2>MISSION 04</h2>
 
-<div style="font-size:70px;margin:20px">
-🏍️
-</div>
+    <p>
+      Setelah kurang lebih dua bulan mengenal,
+      akhirnya tiba waktunya untuk bertemu.
+    </p>
 
-<p>
-Setelah kurang lebih dua bulan ngobrol,
-akhirnya tiba waktunya untuk bertemu.
-</p>
+    <p>
+      Mamas menjemput Sinok menggunakan motor.
+    </p>
 
-<p>
-Mamas datang menjemput Sinok
-menggunakan motor.
-</p>
+    <p>
+      Walaupun Mamas sempat terlambat,
+      ternyata pertemuan itu menjadi salah satu
+      awal paling berarti dalam cerita kita.
+    </p>
 
-<p>
-Walaupun...
-Mamas sempat terlambat. 😭
-</p>
+    <button class="btn" onclick="go('foto1')">
+      BUKA KENANGAN 📸
+    </button>
 
-<p>
-Tapi tidak apa-apa.
-Yang penting akhirnya ketemu juga.
-</p>
+  </div>
 
-<button class="btn" onclick="go('foto1')">
-BUKA KENANGAN →
-</button>
-
-</div>
 </section>
 
 
-<!-- FOTO 1 -->
+<!-- =========================
+     FOTO 1 PUZZLE
+========================= -->
 
 <section class="screen" id="foto1">
-<div class="card">
 
-<div class="mission">MEMORY FRAGMENT 01</div>
+  <div class="content">
 
-<h2>Susun Kenangan</h2>
+    <h2>SUSUN KENANGAN</h2>
 
-<p>
-Foto ini <b>sudah terbuka</b>.
-</p>
+    <p>
+      Foto ini tidak tertutup.
+      Susun kembali keenam keping kenangan
+      sampai menjadi foto yang utuh. ❤️
+    </p>
 
-<p>
-Tapi kepingannya berantakan.
-Susun sampai menjadi foto yang utuh.
-</p>
+    <div id="puzzle1"></div>
 
-<div class="puzzle tile-6" id="puzzle1"></div>
+    <div id="puzzleFeedback1" class="feedback"></div>
 
-<div class="memory-status" id="puzzle1Status">
-Pilih dua keping untuk menukarnya.
-</div>
+  </div>
 
-<button
-class="btn hidden"
-id="puzzle1Next"
-onclick="go('pantai')">
-MEMORY UNLOCKED →
-</button>
-
-</div>
 </section>
 
 
-<!-- PANTAI -->
+<!-- =========================
+     PANTAI
+========================= -->
 
 <section class="screen" id="pantai">
-<div class="card">
 
-<div class="mission">MISSION 04</div>
+  <div class="content">
 
-<h2>Hari-hari sederhana.</h2>
+    <h2>MEMORY UNLOCKED ❤️</h2>
 
-<div class="beach"></div>
+    <p>
+      Setelah itu, banyak hal kecil yang kita lalui.
+    </p>
 
-<p>
-Setelah pertemuan pertama,
-cerita kita terus berjalan.
-</p>
+    <p>
+      Ada perjalanan, ada cerita,
+      ada tawa, dan ada banyak momen
+      yang perlahan menjadi kenangan.
+    </p>
 
-<p>
-Ngobrol.
-Main.
-Lari-larian.
-Ketawa bareng.
-</p>
+    <p>
+      Salah satunya adalah waktu kita bersama
+      menikmati suasana pantai.
+    </p>
 
-<p>
-Bahkan ada satu momen
-ketika Mamas sampai menggendong Sinok. ❤️
-</p>
+    <button class="btn" onclick="go('foto2')">
+      LANJUT →
+    </button>
 
-<button class="btn" onclick="go('foto2')">
-BUKA KENANGAN →
-</button>
+  </div>
 
-</div>
 </section>
 
 
-<!-- FOTO 2 -->
+<!-- =========================
+     FOTO 2 PUZZLE
+========================= -->
 
 <section class="screen" id="foto2">
-<div class="card">
 
-<div class="mission">MEMORY FRAGMENT 02</div>
+  <div class="content">
 
-<h2>Susun Kenangan Lagi</h2>
+    <h2>SUSUN KENANGAN</h2>
 
-<p>
-Foto ini juga sudah terbuka.
-</p>
+    <p>
+      Satu kenangan lagi.
+      Enam keping besar menunggu untuk disatukan. ❤️
+    </p>
 
-<p>
-Susun semua kepingannya
-sampai kembali menjadi satu.
-</p>
+    <div id="puzzle2"></div>
 
-<div class="puzzle tile-6" id="puzzle2"></div>
+    <div id="puzzleFeedback2" class="feedback"></div>
 
-<div class="memory-status" id="puzzle2Status">
-Pilih dua keping untuk menukarnya.
-</div>
+  </div>
 
-<button
-class="btn hidden"
-id="puzzle2Next"
-onclick="go('keluarga')">
-MEMORY UNLOCKED →
-</button>
-
-</div>
 </section>
 
 
-<!-- KELUARGA -->
+<!-- =========================
+     KELUARGA
+========================= -->
 
 <section class="screen" id="keluarga">
-<div class="card">
 
-<div class="mission">MISSION 05</div>
+  <div class="content">
 
-<h2>Mulai mengenal dunia Mamas.</h2>
+    <h2>MISSION 05</h2>
 
-<p>
-Pelan-pelan Sinok mulai mengenal
-orang-orang di sekitar Mamas.
-</p>
+    <p>
+      Dalam perjalanan ini bukan hanya tentang
+      kita berdua.
+    </p>
 
-<p>
-Main.
-Renang.
-Ketawa.
-Lari-larian.
-</p>
+    <p>
+      Ada keluarga, orang-orang yang kita sayangi,
+      dan kehidupan yang perlahan mulai kita kenal.
+    </p>
 
-<p>
-Dan akhirnya ada kenangan
-yang benar-benar terasa seperti
-bagian dari kehidupan sehari-hari.
-</p>
+    <img
+      src="foto-sinok.jpg?v=3"
+      class="story-photo"
+      alt="Kenangan">
 
-<div class="runner" id="runner">
+    <button class="btn" onclick="go('imam')">
+      LANJUT →
+    </button>
 
-<img
-id="runnerPhoto"
-src="foto-sinok.jpg?v=3"
-alt="Sinok">
+  </div>
 
-</div>
-
-<div class="runner-count" id="runnerCount">
-0 / 3
-</div>
-
-<div class="memory-status" id="runnerFeedback"></div>
-
-<button
-class="btn hidden"
-id="runnerNext"
-onclick="go('imam')">
-LANJUT →
-</button>
-
-</div>
 </section>
 
 
-<!-- IMAM -->
+<!-- =========================
+     IMAM
+========================= -->
 
 <section class="screen" id="imam">
-<div class="card">
 
-<div class="mission">MEMORY</div>
+  <div class="content">
 
-<h2>Calon imam.</h2>
+    <h2>MISSION 06</h2>
 
-<div style="font-size:75px;margin:20px">
-🕌
-</div>
+    <p>
+      Ada juga momen sederhana yang terasa begitu berarti.
+    </p>
 
-<p>
-Ada satu momen sederhana
-yang ternyata punya arti besar.
-</p>
+    <p>
+      Saat Mamas memimpin salat di mushola
+      di alun-alun.
+    </p>
 
-<p>
-Ketika Mamas memimpin sholat
-di mushola di alun-alun.
-</p>
+    <p>
+      Mungkin terlihat sederhana,
+      tapi bagi Sinok, momen seperti itu
+      selalu punya tempat tersendiri.
+    </p>
 
-<p>
-Dari sebuah pemandangan sederhana,
-Sinok mulai melihat Mamas
-sebagai seseorang yang bisa menjadi
-calon imam.
-</p>
+    <button class="btn" onclick="go('tetapAda')">
+      LANJUT →
+    </button>
 
-<button class="btn" onclick="go('tetapAda')">
-LANJUT →
-</button>
+  </div>
 
-</div>
 </section>
 
 
-<!-- TETAP ADA -->
+<!-- =========================
+     TETAP ADA
+========================= -->
 
 <section class="screen" id="tetapAda">
-<div class="card">
 
-<div class="mission">MISSION 06</div>
+  <div class="content">
 
-<h2>Bukan cuma saat semuanya mudah.</h2>
+    <div class="big-heart">❤️</div>
 
-<p>
-Ada juga masa-masa yang tidak selalu mudah.
-</p>
+    <h2>TETAP ADA</h2>
 
-<p>
-Ada capek.
-Ada masalah.
-Ada hari ketika semuanya terasa berat.
-</p>
+    <p>
+      Hubungan bukan selalu tentang hari-hari yang sempurna.
+    </p>
 
-<p> Tapi Mamas tetap ada. </p>
+    <p>
+      Kadang ada capek.
+      Kadang ada salah paham.
+      Kadang ada hari yang tidak mudah.
+    </p>
 
-<p>
-Membelikan minum.
-Menemani.
-Mendengarkan.
-Tidak pergi begitu saja.
-</p>
+    <p>
+      Tapi yang paling penting adalah
+      tetap memilih untuk ada.
+    </p>
 
-<p>
-Dan mungkin justru dari hal-hal kecil itu,
-rasa sayang menjadi semakin besar.
-</p>
+    <button class="btn" onclick="go('kopi')">
+      LANJUT →
+    </button>
 
-<button class="btn" onclick="go('kopi')">
-LANJUT →
-</button>
+  </div>
 
-</div>
 </section>
 
 
-<!-- KOPI -->
+<!-- =========================
+     KOPI
+========================= -->
 
 <section class="screen" id="kopi">
-<div class="card">
 
-<div class="mission">MINI QUEST</div>
+  <div class="content">
 
-<h2>
-Kalau Mamas membawakan kopi...
-</h2>
+    <h2>MISSION 07</h2>
 
-<p>
-Kopi mana yang paling cocok
-untuk Sinok?
-</p>
+    <p>
+      Sekarang waktunya memilih minuman
+      untuk Sinok. ☕
+    </p>
 
-<div class="coffee-options">
+    <p class="small">
+      Tenang... semuanya benar. 😆❤️
+    </p>
 
-<button
-class="coffee"
-onclick="coffeeCorrect('Americano')">
-☕
-<small>Americano</small>
-</button>
+    <div class="coffee-options">
 
-<button
-class="coffee"
-onclick="coffeeCorrect('Ice Cream')">
-🍦
-<small>Ice Cream</small>
-</button>
+      <button
+        class="coffee"
+        onclick="coffeeCorrect('Americano')">
 
-<button
-class="coffee"
-onclick="coffeeCorrect('Jus Buah')">
-🧃
-<small>Jus Buah</small>
-</button>
+        ☕
+        <small>Americano</small>
 
-</div>
+      </button>
 
-<div
-class="memory-status"
-id="coffeeFeedback">
-</div>
+      <button
+        class="coffee"
+        onclick="coffeeCorrect('Ice Cream')">
 
-<button
-class="btn hidden"
-id="coffeeNext"
-onclick="go('quiz')">
-LANJUT →
-</button>
+        🍨
+        <small>Ice Cream</small>
 
-</div>
+      </button>
+
+      <button
+        class="coffee"
+        onclick="coffeeCorrect('Jus Buah')">
+
+        🧃
+        <small>Jus Buah</small>
+
+      </button>
+
+    </div>
+
+    <div id="coffeeFeedback" class="feedback"></div>
+
+    <button
+      id="coffeeNext"
+      class="btn hidden"
+      onclick="go('quiz')">
+
+      LANJUT →
+    </button>
+
+  </div>
+
 </section>
 
 
-<!-- QUIZ -->
+<!-- =========================
+     QUIZ
+========================= -->
 
 <section class="screen" id="quiz">
-<div class="card">
 
-<div class="mission">MEMORY QUIZ</div>
+  <div class="content">
 
-<h2>Seberapa ingat Mamas?</h2>
+    <h2>LOVE QUIZ ❤️</h2>
 
-<div id="quizBox"></div>
+    <p id="quizQuestion"></p>
 
-</div>
+    <div
+      class="quiz-options"
+      id="quizOptions">
+    </div>
+
+    <div
+      class="feedback"
+      id="quizFeedback">
+    </div>
+
+    <button
+      id="quizNext"
+      class="btn hidden"
+      onclick="nextQuiz()">
+
+      LANJUT →
+    </button>
+
+  </div>
+
 </section>
 
 
-<!-- MASA DEPAN -->
+<!-- =========================
+     MASA DEPAN
+========================= -->
 
 <section class="screen" id="masaDepan">
-<div class="card">
 
-<div class="mission">NEXT CHAPTER</div>
+  <div class="content">
 
-<h2>Cerita kita ke depan.</h2>
+    <h2>MISSION 08</h2>
 
-<p>
-Tidak perlu sempurna.
-Yang penting tetap bersama,
-saling mendukung,
-dan terus bertumbuh.
-</p>
+    <p>
+      Kalau perjalanan kita sampai di sini,
+      tentu masih banyak halaman yang belum ditulis.
+    </p>
 
-<div class="future-grid">
+    <p>
+      Masih banyak tempat yang ingin dikunjungi,
+      makanan yang ingin dicoba,
+      cerita yang ingin dibuat,
+      dan hari-hari yang ingin dilewati bersama.
+    </p>
 
-<button
-class="future-choice"
-onclick="toggleFuture(this)">
-❤️ Saling mendukung
-</button>
+    <div class="runner">
 
-<button
-class="future-choice"
-onclick="toggleFuture(this)">
-🌱 Terus bertumbuh
-</button>
+      <div
+        class="runner-character"
+        id="runnerCharacter">
+        🧑🏻
+      </div>
 
-<button
-class="future-choice"
-onclick="toggleFuture(this)">
-😂 Tetap bercanda
-</button>
+      <div class="runner-goal">
+        ❤️
+      </div>
 
-<button
-class="future-choice"
-onclick="toggleFuture(this)">
-☕ Tetap ngopi
-</button>
+    </div>
 
-</div>
+    <button class="btn" onclick="runTogether()">
+      JALAN BARENG →
+    </button>
 
-<p>
-Pilih sebanyak yang Mamas mau.
-</p>
+    <button
+      class="btn hidden"
+      id="futureNext"
+      onclick="go('pesan')">
 
-<button class="btn" onclick="go('pesan')">
-LANJUT →
-</button>
+      LANJUT →
+    </button>
 
-</div>
+  </div>
+
 </section>
 
 
-<!-- PESAN -->
+<!-- =========================
+     PESAN
+========================= -->
 
 <section class="screen" id="pesan">
-<div class="card">
 
-<div class="mission">MESSAGE FROM SINOK</div>
+  <div class="content">
 
-<h2>Untuk Mamas. ❤️</h2>
+    <h2>UNTUK MAMAS ❤️</h2>
 
-<p>
-Terima kasih sudah menjadi bagian
-dari cerita Sinok.
-</p>
+    <p>
+      Terima kasih sudah menjadi bagian
+      dari perjalanan Sinok.
+    </p>
 
-<p>
-Terima kasih untuk setiap obrolan,
-setiap pertemuan,
-setiap tawa,
-setiap perhatian kecil,
-dan setiap kali Mamas memilih untuk tetap ada.
-</p>
+    <p>
+      Terima kasih untuk setiap perhatian,
+      kesabaran, tawa, cerita,
+      dan semua hal kecil yang mungkin
+      kadang tidak sempat Sinok ucapkan.
+    </p>
 
-<p>
-Satu tahun mungkin terdengar singkat.
-Tapi ternyata sudah banyak sekali
-kenangan yang kita punya.
-</p>
+    <p>
+      Satu tahun mungkin terdengar singkat,
+      tapi ternyata sudah begitu banyak
+      cerita yang kita punya.
+    </p>
 
-<p>
-Dan Sinok masih ingin melihat
-cerita ini terus bertumbuh.
-</p>
+    <p>
+      Semoga setelah ini,
+      kita masih terus menemukan alasan
+      untuk tersenyum bersama.
+    </p>
 
-<button class="btn" onclick="go('pilihan')">
-SATU PERTANYAAN TERAKHIR →
-</button>
+    <button class="btn" onclick="go('pilihan')">
+      SATU PERTANYAAN TERAKHIR ❤️
+    </button>
 
-</div>
+  </div>
+
 </section>
 
 
-<!-- PILIHAN -->
+<!-- =========================
+     PILIHAN
+========================= -->
 
 <section class="screen" id="pilihan">
-<div class="card">
 
-<div class="mission">FINAL QUESTION</div>
+  <div class="content">
 
-<h2>Kalau bisa kembali ke awal...</h2>
+    <div class="big-heart">❤️</div>
 
-<p>
-Saat semuanya masih cuma obrolan biasa...
-</p>
+    <h2>
+      MAU LANJUT<br>
+      CERITA INI BARENG SINOK?
+    </h2>
 
-<p>
-Apakah Mamas tetap akan memilih
-untuk mengenal Sinok?
-</p>
+    <p>
+      Pilih jawabanmu dengan jujur. 😆
+    </p>
 
-<div style="
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:5px;
-margin-top:25px">
+    <button class="btn" onclick="finalAnswer(true)">
+      MAU ❤️
+    </button>
 
-<button
-class="btn secondary"
-onclick="finalAnswer('no')">
-Tidak 😭
-</button>
+    <button class="btn" onclick="finalAnswer(false)">
+      NGGAK 😭
+    </button>
 
-<button
-class="btn secondary"
-onclick="finalAnswer('maybe')">
-Mungkin 😭
-</button>
+    <div
+      id="finalFeedback"
+      class="feedback">
+    </div>
 
-<button
-class="btn"
-onclick="finalAnswer('yes')">
-IYA ❤️
-</button>
+  </div>
 
-</div>
-
-<div
-class="memory-status"
-id="finalFeedback">
-</div>
-
-</div>
 </section>
 
 
-<!-- ENDING -->
+<!-- =========================
+     ENDING
+========================= -->
 
 <section class="screen" id="ending">
-<div class="card">
 
-<div class="mission">QUEST COMPLETE</div>
+  <div class="content">
 
-<div class="big-heart">❤️</div>
+    <div class="big-heart">❤️</div>
 
-<div class="ending-title">
-MAMAS QUEST
-</div>
+    <h1>QUEST COMPLETE</h1>
 
-<h1>CERITA KITA</h1>
+    <h2>
+      CERITA KITA DAN CINTA
+      YANG TERUS BERTUMBUH
+    </h2>
 
-<div class="date">
-22.11.2025 → ∞
-</div>
+    <p>
+      Happy 1st Anniversary,
+      Mamas. ❤️
+    </p>
 
-<div class="infinity">∞</div>
+    <p>
+      22 November 2025
+      —
+      22 November 2026
+    </p>
 
-<p>Satu tahun sudah dilewati.</p>
+    <p>
+      Dari Sinok,
+      yang masih ingin terus berjalan
+      bersama Mamas.
+    </p>
 
-<p>Tapi ini bukan akhir cerita.</p>
+    <button class="btn" onclick="heartExplosion()">
+      ❤️ UNTUK MAMAS
+    </button>
 
-<p>Cerita kita masih berlanjut.</p>
+  </div>
 
-<p>
-Terima kasih sudah memilih
-untuk mengenal Sinok.
-</p>
-
-<p>
-Terima kasih sudah tetap ada.
-</p>
-
-<h2>
-Happy 1st Anniversary, Mamas. ❤️
-</h2>
-
-<p>— Sinok</p>
-
-<button
-class="btn"
-onclick="heartExplosion()">
-❤️
-</button>
-
-</div>
 </section>
 
-</main>
 
+<!-- =========================
+     GAME OVER
+========================= -->
 
-<!-- GAME OVER -->
+<div class="gameover" id="gameOver">
 
-<div class="gameover" id="gameover">
+  <div class="gameover-box">
 
-<div class="gameover-box">
+    <div class="big-heart">
+      💔
+    </div>
 
-<div style="font-size:65px">
-💔
-</div>
+    <h2>GAME OVER</h2>
 
-<h2>GAME OVER</h2>
+    <p>
+      Hayoloo... nyawanya habis. 😭
+    </p>
 
-<p>
-Love kamu habis. 😭
-</p>
+    <p>
+      Coba lagi dari awal.
+    </p>
 
-<p>
-Tapi jangan menyerah.
-Cerita kita harus lanjut.
-</p>
+    <button
+      class="btn"
+      onclick="restartGame()">
 
-<button
-class="btn"
-onclick="restartGame()">
-COBA LAGI ❤️
-</button>
+      COBA LAGI ❤️
 
-</div>
+    </button>
+
+  </div>
+
 </div>
 
 
 <script>
 
 /* =========================
-   SPACE STARS
+   STARS
 ========================= */
 
-const space=document.getElementById("space");
+const stars = document.getElementById("stars");
 
-for(let i=0;i<90;i++){
+for(let i=0;i<100;i++){
 
-  const star=document.createElement("div");
+  const star = document.createElement("div");
 
-  star.className="star";
+  star.className = "star";
 
-  star.style.left=Math.random()*100+"%";
-  star.style.top=Math.random()*100+"%";
-  star.style.animationDelay=Math.random()*2+"s";
+  star.style.left =
+    Math.random()*100 + "%";
 
-  space.appendChild(star);
-}
+  star.style.top =
+    Math.random()*100 + "%";
 
-for(let i=0;i<12;i++){
+  star.style.animationDelay =
+    Math.random()*2 + "s";
 
-  const heart=document.createElement("div");
-
-  heart.className="space-heart";
-
-  heart.textContent=
-    Math.random()>.5?"♥":"♡";
-
-  heart.style.left=Math.random()*100+"%";
-  heart.style.top=Math.random()*100+"%";
-  heart.style.animationDelay=Math.random()*8+"s";
-
-  space.appendChild(heart);
+  stars.appendChild(star);
 }
 
 
 /* =========================
-   ORDER
+   GAME DATA
 ========================= */
 
-const order=[
-  "prolog",
-  "awal",
-  "obrolan",
-  "sticker",
-  "pertemuan",
-  "foto1",
-  "pantai",
-  "foto2",
-  "keluarga",
-  "imam",
-  "tetapAda",
-  "kopi",
-  "quiz",
-  "masaDepan",
-  "pesan",
-  "pilihan",
-  "ending"
-];
+let currentScreen = "prolog";
 
-const names={
+let lives = 3;
 
-  prolog:"START",
-  awal:"AWAL",
-  obrolan:"OBROLAN",
-  sticker:"CARI SINOK",
-  pertemuan:"PERTEMUAN",
-  foto1:"MEMORY 01",
-  pantai:"PANTAI",
-  foto2:"MEMORY 02",
-  keluarga:"KELUARGA",
-  imam:"CALON IMAM",
-  tetapAda:"TETAP ADA",
-  kopi:"KOPI",
-  quiz:"QUIZ",
-  masaDepan:"MASA DEPAN",
-  pesan:"PESAN",
-  pilihan:"FINAL",
-  ending:"COMPLETE"
+let coffeeDone = false;
 
-};
+let puzzle1Done = false;
 
-let current="prolog";
-let unlocked=0;
+let puzzle2Done = false;
 
+let selectedFindCards = [];
 
-/* =========================
-   LIVES
-========================= */
+let quizIndex = 0;
 
-let lives=3;
-
-function updateLives(){
-
-  let result="";
-
-  for(let i=0;i<3;i++){
-
-    if(i<lives){
-      result+="❤️";
-    }else{
-      result+="🖤";
-    }
-
-  }
-
-  document.getElementById("lives").textContent=result;
-}
-
-
-/* =========================
-   WRONG ANSWER
-========================= */
-
-function wrongAnswer(message){
-
-  lives--;
-
-  updateLives();
-
-  const active=
-    document.querySelector(".screen.active");
-
-  if(active){
-
-    active.classList.remove("shake");
-
-    void active.offsetWidth;
-
-    active.classList.add("shake");
-
-  }
-
-  if(navigator.vibrate){
-
-    navigator.vibrate([
-      80,
-      40,
-      80
-    ]);
-
-  }
-
-  if(message){
-
-    const feedback=
-      active
-      ? active.querySelector(
-          ".memory-status,.quiz-feedback"
-        )
-      : null;
-
-    if(feedback){
-      feedback.textContent=message;
-    }
-
-  }
-
-  if(lives<=0){
-
-    setTimeout(()=>{
-
-      document
-        .getElementById("gameover")
-        .classList.add("show");
-
-    },500);
-
-  }
-
-}
+let musicStarted = false;
 
 
 /* =========================
    MUSIC
 ========================= */
 
-const music=
+const bgMusic =
   document.getElementById("bgMusic");
-
-const musicBtn=
-  document.getElementById("musicBtn");
-
-const musicStatus=
-  document.getElementById("musicStatus");
-
-music.volume=.35;
-
-music.addEventListener("error",()=>{
-
-  if(musicStatus){
-
-    musicStatus.textContent=
-      "Musik belum tersedia. Upload file music.mp3 asli.";
-
-  }
-
-});
-
-music.addEventListener("playing",()=>{
-
-  if(musicStatus){
-    musicStatus.textContent="🎵 Musik aktif";
-  }
-
-  musicBtn.textContent="🔊";
-
-});
-
-music.addEventListener("pause",()=>{
-
-  if(musicStatus){
-    musicStatus.textContent="Musik dijeda";
-  }
-
-  musicBtn.textContent="🔇";
-
-});
 
 function startMusic(){
 
-  music.load();
+  if(musicStarted) return;
 
-  music.volume=.35;
+  bgMusic.volume = 0.45;
 
-  const promise=music.play();
+  bgMusic.play()
+    .then(()=>{
+      musicStarted = true;
 
-  if(promise){
-
-    promise.then(()=>{
-
-      musicBtn.textContent="🔊";
-
-      if(musicStatus){
-        musicStatus.textContent="🎵 Musik aktif";
-      }
-
-    }).catch(()=>{
-
-      if(musicStatus){
-
-        musicStatus.textContent=
-          "Tidak bisa memutar musik. Pastikan music.mp3 adalah file MP3 asli.";
-
-      }
-
+      document.getElementById("musicBtn")
+        .textContent = "🔊 MUSIC";
+    })
+    .catch(()=>{
+      document.getElementById("musicBtn")
+        .textContent = "🎵 MUSIC";
     });
-
-  }
-
-}
-
-function startGame(){
-
-  lives=3;
-
-  updateLives();
-
-  startMusic();
-
-  go("awal");
-
 }
 
 function toggleMusic(){
 
-  if(music.paused){
+  if(bgMusic.paused){
 
-    const promise=music.play();
+    bgMusic.play();
 
-    if(promise){
-
-      promise.then(()=>{
-
-        musicBtn.textContent="🔊";
-
-      }).catch(()=>{
-
-        if(musicStatus){
-
-          musicStatus.textContent=
-            "Musik gagal diputar. Cek file music.mp3.";
-
-        }
-
-      });
-
-    }
+    document.getElementById("musicBtn")
+      .textContent = "🔊 MUSIC";
 
   }else{
 
-    music.pause();
+    bgMusic.pause();
 
-    musicBtn.textContent="🔇";
+    document.getElementById("musicBtn")
+      .textContent = "🔇 MUSIC";
 
   }
+}
 
+
+/* =========================
+   START GAME
+========================= */
+
+function startGame(){
+
+  startMusic();
+
+  go("awal");
 }
 
 
@@ -1709,74 +1380,147 @@ function toggleMusic(){
 
 function go(id){
 
-  const targetIndex=order.indexOf(id);
-
-  if(targetIndex===-1){
-    return;
-  }
-
-  if(targetIndex>unlocked+1){
-    return;
-  }
-
-  if(targetIndex>unlocked){
-    unlocked=targetIndex;
-  }
-
-  document
-    .querySelectorAll(".screen")
+  document.querySelectorAll(".screen")
     .forEach(screen=>{
       screen.classList.remove("active");
     });
 
-  const target=document.getElementById(id);
+  const target =
+    document.getElementById(id);
 
-  if(!target){
-    return;
+  if(target){
+    target.classList.add("active");
   }
 
-  target.classList.add("active");
-
-  current=id;
-
-  document.getElementById("route").textContent=
-    names[id]||id.toUpperCase();
+  currentScreen = id;
 
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
 
-  if(id==="sticker"){
-    makeStickers();
-  }
 
-  if(id==="foto1"){
+  /* Puzzle 1 */
 
-    makePuzzle(
-      "puzzle1",
-      6,
-      "foto-1.jpg?v=3"
-    );
+  if(id === "foto1"){
 
-  }
+    if(!puzzle1Done){
 
-  if(id==="foto2"){
+      makePuzzle(
+        "puzzle1",
+        2,
+        3,
+        "foto-1.jpg?v=3"
+      );
 
-    makePuzzle(
-      "puzzle2",
-      6,
-      "foto-2.jpg?v=3"
-    );
+    }
 
   }
 
-  if(id==="keluarga"){
-    startRunner();
+
+  /* Puzzle 2 */
+
+  if(id === "foto2"){
+
+    if(!puzzle2Done){
+
+      makePuzzle(
+        "puzzle2",
+        2,
+        3,
+        "foto-2.jpg?v=3"
+      );
+
+    }
+
   }
 
-  if(id==="quiz"){
-    startQuiz();
+
+  /* Cari Sinok */
+
+  if(id === "cariSinok"){
+
+    createFindCards();
+
+  }
+
+
+  /* Quiz */
+
+  if(id === "quiz"){
+
+    quizIndex = 0;
+
+    showQuiz();
+
+  }
+
+}
+
+
+/* =========================
+   LIVES
+========================= */
+
+function updateLives(){
+
+  let result = "";
+
+  for(let i=0;i<3;i++){
+
+    if(i < lives){
+      result += "❤️";
+    }else{
+      result += "🖤";
+    }
+
+  }
+
+  document.getElementById("lives")
+    .textContent = result;
+}
+
+
+/* =========================
+   WRONG ANSWER
+========================= */
+
+function wrongAnswer(message="Hayoloo..."){
+
+  lives--;
+
+  updateLives();
+
+  document.body.classList.remove("shake");
+
+  void document.body.offsetWidth;
+
+  document.body.classList.add("shake");
+
+  setTimeout(()=>{
+    document.body.classList.remove("shake");
+  },400);
+
+  if(message){
+
+    const feedback =
+      document.querySelector(".feedback");
+
+    if(feedback){
+      feedback.textContent = message;
+    }
+
+  }
+
+  if(lives <= 0){
+
+    setTimeout(()=>{
+
+      document.getElementById("gameOver")
+        .classList.add("active");
+
+    },400);
+
   }
 
 }
@@ -1788,62 +1532,25 @@ function go(id){
 
 function restartGame(){
 
-  lives=3;
-
-  unlocked=0;
-
-  stickerFinished=false;
-
-  puzzles.puzzle1=null;
-  puzzles.puzzle2=null;
-
-  runnerStarted=false;
-  runnerCount=0;
-
-  coffeeDone=false;
+  lives = 3;
 
   updateLives();
 
-  document
-    .getElementById("gameover")
-    .classList.remove("show");
+  coffeeDone = false;
 
-  document
-    .getElementById("stickerGrid")
-    .innerHTML="";
+  puzzle1Done = false;
 
-  document
-    .getElementById("puzzle1")
-    .innerHTML="";
+  puzzle2Done = false;
 
-  document
-    .getElementById("puzzle2")
-    .innerHTML="";
+  quizIndex = 0;
 
-  document
-    .getElementById("puzzle1Status")
-    .textContent=
-      "Pilih dua keping untuk menukarnya.";
+  document.getElementById("gameOver")
+    .classList.remove("active");
 
-  document
-    .getElementById("puzzle2Status")
-    .textContent=
-      "Pilih dua keping untuk menukarnya.";
+  document.getElementById("coffeeFeedback")
+    .textContent = "";
 
-  document
-    .getElementById("puzzle1Next")
-    .classList.add("hidden");
-
-  document
-    .getElementById("puzzle2Next")
-    .classList.add("hidden");
-
-  document
-    .getElementById("coffeeFeedback")
-    .textContent="";
-
-  document
-    .getElementById("coffeeNext")
+  document.getElementById("coffeeNext")
     .classList.add("hidden");
 
   go("prolog");
@@ -1852,380 +1559,268 @@ function restartGame(){
 
 
 /* =========================
-   CARI SINOK
-========================= */
-
-let stickerFinished=false;
-
-function makeStickers(){
-
-  const grid=
-    document.getElementById("stickerGrid");
-
-  const feedback=
-    document.getElementById("stickerFeedback");
-
-  const next=
-    document.getElementById("stickerNext");
-
-  if(stickerFinished){
-    return;
-  }
-
-  grid.innerHTML="";
-
-  feedback.textContent="";
-
-  next.classList.add("hidden");
-
-  const cards=[
-
-    {
-      image:"artis-1.png?v=3",
-      correct:false
-    },
-
-    {
-      image:"artis-2.png?v=3",
-      correct:false
-    },
-
-    {
-      image:"sinok.png?v=3",
-      correct:true
-    },
-
-    {
-      image:"artis-3.png?v=3",
-      correct:false
-    },
-
-    {
-      image:"artis-4.png?v=3",
-      correct:false
-    },
-
-    {
-      image:"artis-5.png?v=3",
-      correct:false
-    }
-
-  ];
-
-  cards.sort(()=>{
-    return Math.random()-.5;
-  });
-
-  cards.forEach(item=>{
-
-    const card=
-      document.createElement("div");
-
-    card.className="sticker-card";
-
-    card.innerHTML=`
-
-      <img
-        class="sticker-image"
-        src="${item.image}"
-        alt="">
-
-      <div class="sticker-cover">
-        <span>❤️</span>
-      </div>
-
-    `;
-
-    card.addEventListener("click",()=>{
-
-      if(
-        card.classList.contains("revealed")||
-        stickerFinished||
-        lives<=0
-      ){
-        return;
-      }
-
-      card.classList.add("revealed");
-
-      if(item.correct){
-
-        stickerFinished=true;
-
-        feedback.textContent=
-          "Nah, itu Sinok. ❤️";
-
-        next.classList.remove("hidden");
-
-      }else{
-
-        wrongAnswer(
-          Math.random()>.5
-            ?"Hayoloo..."
-            :"Hmph.."
-        );
-
-      }
-
-    });
-
-    grid.appendChild(card);
-
-  });
-
-}
-
-
-/* =========================
    PUZZLE
-   6 KEPING
-   3 KOLOM × 2 BARIS
+   2 COLUMNS x 3 ROWS
+   = EXACTLY 6 PIECES
 ========================= */
 
-const puzzles={};
+function makePuzzle(id, cols, rows, image){
 
-function makePuzzle(id,pieceCount,image){
-
-  const container=
+  const container =
     document.getElementById(id);
 
-  if(!container){
-    return;
-  }
+  container.innerHTML = "";
 
-  if(
-    puzzles[id]&&
-    puzzles[id].started
-  ){
-    return;
-  }
+  container.className = "puzzle";
 
-  const cols=3;
-  const rows=2;
-  const total=6;
+  const total =
+    cols * rows;
 
-  container.innerHTML="";
-
-  let pieces=[];
+  let pieces = [];
 
   for(let i=0;i<total;i++){
+
     pieces.push(i);
+
   }
+
+  /* Acak posisi */
 
   do{
 
-    pieces.sort(()=>{
-      return Math.random()-.5;
-    });
-
-  }while(
-    pieces.every((value,index)=>{
-      return value===index;
-    })
-  );
-
-  puzzles[id]={
-
-    started:true,
-
-    cols:cols,
-
-    rows:rows,
-
-    image:image,
-
-    pieces:pieces,
-
-    selected:null,
-
-    solved:false
-
-  };
-
-  container.className="puzzle tile-6";
-
-  renderPuzzle(id);
-
-}
-
-
-function renderPuzzle(id){
-
-  const data=puzzles[id];
-
-  const container=
-    document.getElementById(id);
-
-  if(!container){
-    return;
-  }
-
-  container.innerHTML="";
-
-  const cols=data.cols;
-  const rows=data.rows;
-
-  data.pieces.forEach((piece,index)=>{
-
-    const tile=
-      document.createElement("div");
-
-    tile.className="tile";
-
-    if(data.selected===index){
-
-      tile.classList.add("selected");
-
-    }
-
-    const img=
-      document.createElement("img");
-
-    img.className="puzzle-piece-image";
-
-    img.src=data.image;
-
-    img.alt="Potongan kenangan";
-
-    /*
-      Foto dibagi menjadi:
-      3 kolom × 2 baris.
-    */
-
-    img.style.width=(cols*100)+"%";
-    img.style.height=(rows*100)+"%";
-
-    /*
-      Posisi potongan berdasarkan
-      posisi asli foto.
-    */
-
-    const correctRow=
-      Math.floor(piece/cols);
-
-    const correctCol=
-      piece%cols;
-
-    img.style.left=
-      (-correctCol*100)+"%";
-
-    img.style.top=
-      (-correctRow*100)+"%";
-
-    tile.appendChild(img);
-
-    tile.addEventListener(
-      "click",
-      ()=>{
-        selectPuzzleTile(id,index);
-      }
+    pieces.sort(
+      ()=>Math.random() - 0.5
     );
 
-    container.appendChild(tile);
+  }while(
+    pieces.every(
+      (value,index)=>value === index
+    )
+  );
+
+
+  let selected = null;
+
+
+  pieces.forEach((pieceNumber)=>{
+
+    const piece =
+      document.createElement("div");
+
+    piece.className =
+      "puzzle-piece";
+
+    /*
+      Piece asli:
+      0 1
+      2 3
+      4 5
+    */
+
+    const originalRow =
+      Math.floor(pieceNumber / cols);
+
+    const originalCol =
+      pieceNumber % cols;
+
+
+    piece.dataset.number =
+      pieceNumber;
+
+
+    piece.style.backgroundImage =
+      `url("${image}")`;
+
+
+    /*
+      Karena puzzle 2 x 3,
+      gambar diperbesar 2 x 3
+      supaya setiap keping
+      mengambil bagian yang tepat.
+    */
+
+    piece.style.backgroundSize =
+      `${cols * 100}% ${rows * 100}%`;
+
+
+    /*
+      Posisi gambar
+    */
+
+    const x =
+      cols === 1
+      ? 0
+      : (originalCol / (cols - 1)) * 100;
+
+    const y =
+      rows === 1
+      ? 0
+      : (originalRow / (rows - 1)) * 100;
+
+
+    piece.style.backgroundPosition =
+      `${x}% ${y}%`;
+
+
+    piece.onclick = function(){
+
+      if(
+        piece.classList.contains("correct")
+      ){
+        return;
+      }
+
+
+      /* Klik pertama */
+
+      if(selected === null){
+
+        selected = piece;
+
+        piece.classList.add("selected");
+
+        return;
+
+      }
+
+
+      /* Klik keping yang sama */
+
+      if(selected === piece){
+
+        piece.classList.remove(
+          "selected"
+        );
+
+        selected = null;
+
+        return;
+
+      }
+
+
+      /*
+        Tukar nomor kepingan
+      */
+
+      const firstNumber =
+        selected.dataset.number;
+
+      const secondNumber =
+        piece.dataset.number;
+
+
+      selected.dataset.number =
+        secondNumber;
+
+      piece.dataset.number =
+        firstNumber;
+
+
+      /*
+        Tukar posisi gambar
+      */
+
+      const firstBg =
+        selected.style.backgroundPosition;
+
+      const secondBg =
+        piece.style.backgroundPosition;
+
+
+      selected.style.backgroundPosition =
+        secondBg;
+
+      piece.style.backgroundPosition =
+        firstBg;
+
+
+      selected.classList.remove(
+        "selected"
+      );
+
+
+      selected = null;
+
+
+      checkPuzzle(id);
+
+    };
+
+
+    container.appendChild(piece);
 
   });
 
 }
 
 
-function selectPuzzleTile(id,index){
-
-  const data=puzzles[id];
-
-  if(!data||data.solved){
-    return;
-  }
-
-  if(data.selected===null){
-
-    data.selected=index;
-
-    renderPuzzle(id);
-
-    return;
-
-  }
-
-  if(data.selected===index){
-
-    data.selected=null;
-
-    renderPuzzle(id);
-
-    return;
-
-  }
-
-  const first=data.selected;
-  const second=index;
-
-  const temp=data.pieces[first];
-
-  data.pieces[first]=
-    data.pieces[second];
-
-  data.pieces[second]=temp;
-
-  data.selected=null;
-
-  renderPuzzle(id);
-
-  checkPuzzle(id);
-
-}
-
+/* =========================
+   CHECK PUZZLE
+========================= */
 
 function checkPuzzle(id){
 
-  const data=puzzles[id];
-
-  if(!data){
-    return;
-  }
-
-  const solved=
-    data.pieces.every(
-      (piece,index)=>{
-        return piece===index;
-      }
-    );
-
-  if(!solved){
-    return;
-  }
-
-  data.solved=true;
-
-  const status=
-    document.getElementById(
-      id+"Status"
-    );
-
-  const next=
-    document.getElementById(
-      id+"Next"
-    );
-
-  if(status){
-
-    status.textContent=
-      "Memory Unlocked ❤️ Foto berhasil disusun!";
-
-  }
-
-  if(next){
-
-    next.classList.remove("hidden");
-
-  }
-
-  const container=
+  const container =
     document.getElementById(id);
 
-  if(container){
+  const pieces =
+    container.querySelectorAll(
+      ".puzzle-piece"
+    );
 
-    container.style.boxShadow=
-      "0 0 35px rgba(255,70,150,.4)";
+
+  let benar = true;
+
+
+  pieces.forEach(
+    (piece,index)=>{
+
+      if(
+        Number(piece.dataset.number)
+        !== index
+      ){
+
+        benar = false;
+
+      }
+
+    }
+  );
+
+
+  if(!benar) return;
+
+
+  pieces.forEach(piece=>{
+
+    piece.classList.add("correct");
+
+  });
+
+
+  if(id === "puzzle1"){
+
+    puzzle1Done = true;
+
+    setTimeout(()=>{
+
+      go("pantai");
+
+    },700);
+
+  }
+
+
+  if(id === "puzzle2"){
+
+    puzzle2Done = true;
+
+    setTimeout(()=>{
+
+      go("keluarga");
+
+    },700);
 
   }
 
@@ -2233,163 +1828,121 @@ function checkPuzzle(id){
 
 
 /* =========================
-   RUNNER FOTO
+   CARI SINOK
 ========================= */
 
-let runnerCount=0;
-let runnerStarted=false;
+function createFindCards(){
 
-function startRunner(){
-
-  if(runnerStarted){
-    return;
-  }
-
-  runnerStarted=true;
-  runnerCount=0;
-
-  const photo=
+  const grid =
     document.getElementById(
-      "runnerPhoto"
+      "findCards"
     );
 
-  const count=
-    document.getElementById(
-      "runnerCount"
-    );
+  if(!grid) return;
 
-  const feedback=
-    document.getElementById(
-      "runnerFeedback"
-    );
+  grid.innerHTML = "";
 
-  const next=
-    document.getElementById(
-      "runnerNext"
-    );
+  const images = [
+    "sinok.png?v=3",
+    "artis-1.png?v=3",
+    "artis-2.png?v=3",
+    "artis-3.png?v=3",
+    "artis-4.png?v=3",
+    "artis-5.png?v=3"
+  ];
 
-  photo.style.display="block";
+  images.sort(
+    ()=>Math.random()-0.5
+  );
 
-  count.textContent="0 / 3";
 
-  feedback.textContent="";
+  images.forEach(
+    (image,index)=>{
 
-  next.classList.add("hidden");
+      const card =
+        document.createElement("button");
 
-  moveRunnerPhoto();
+      card.className =
+        "find-card";
 
-  photo.onclick=function(e){
+      card.innerHTML = `
+        <span class="question">?</span>
+        <img src="${image}" alt="">
+      `;
 
-    e.stopPropagation();
 
-    if(lives<=0){
-      return;
+      card.onclick = function(){
+
+        if(
+          card.classList.contains(
+            "revealed"
+          )
+        ) return;
+
+
+        card.classList.add(
+          "revealed"
+        );
+
+
+        const img =
+          card.querySelector("img");
+
+
+        if(
+          image.startsWith("sinok")
+        ){
+
+          setTimeout(()=>{
+
+            document.getElementById(
+              "findFeedback"
+            ).textContent =
+              "Nah, itu Sinok. ❤️";
+
+            setTimeout(()=>{
+              go("pertemuan");
+            },700);
+
+          },500);
+
+        }else{
+
+          wrongAnswer(
+            "Hmph.. bukan Sinok 😤"
+          );
+
+        }
+
+      };
+
+
+      grid.appendChild(card);
+
     }
-
-    runnerCount++;
-
-    count.textContent=
-      runnerCount+" / 3";
-
-    if(runnerCount>=3){
-
-      photo.style.display="none";
-
-      feedback.textContent=
-        "Berhasil menangkap Sinok 3 kali! ❤️";
-
-      next.classList.remove("hidden");
-
-      return;
-
-    }
-
-    moveRunnerPhoto();
-
-  };
-
-  document
-    .getElementById("runner")
-    .onclick=function(){
-
-      if(
-        runnerCount>=3||
-        lives<=0
-      ){
-        return;
-      }
-
-      const message=
-        Math.random()>.5
-          ?"Hayoloo..."
-          :"Hmph..";
-
-      wrongAnswer(message);
-
-      feedback.textContent=message;
-
-    };
-
-}
-
-
-function moveRunnerPhoto(){
-
-  const photo=
-    document.getElementById(
-      "runnerPhoto"
-    );
-
-  const runner=
-    document.getElementById(
-      "runner"
-    );
-
-  const maxX=
-    runner.clientWidth-110;
-
-  const maxY=
-    runner.clientHeight-110;
-
-  photo.style.left=
-    Math.max(
-      5,
-      Math.random()*maxX
-    )+"px";
-
-  photo.style.top=
-    Math.max(
-      5,
-      Math.random()*maxY
-    )+"px";
+  );
 
 }
 
 
 /* =========================
    COFFEE
-   SEMUA BENAR
 ========================= */
-
-let coffeeDone=false;
 
 function coffeeCorrect(choice){
 
-  if(coffeeDone){
-    return;
-  }
+  if(coffeeDone) return;
 
-  coffeeDone=true;
+  coffeeDone = true;
 
-  document
-    .getElementById("coffeeFeedback")
-    .textContent=
-      choice+
-      " juga pilihan Sinok. ❤️";
+  document.getElementById(
+    "coffeeFeedback"
+  ).textContent =
+    `Pilihan ${choice}. Semuanya cocok buat Sinok. ❤️`;
 
-  document
-    .getElementById("coffeeNext")
-    .classList.remove("hidden");
+  document.getElementById(
+    "coffeeNext"
+  ).classList.remove("hidden");
 
 }
 
@@ -2398,242 +1951,234 @@ function coffeeCorrect(choice){
    QUIZ
 ========================= */
 
-const quizQuestions=[
+const quizData = [
 
   {
     question:
-      "Kita pertama kali kenal lewat mana?",
+      "Siapa yang pertama kali mengajak bertemu?",
     options:[
-      "Instagram",
-      "Leo Telegram",
-      "Facebook",
-      "TikTok"
+      "Mamas",
+      "Sinok",
+      "Teman",
+      "Tidak ingat"
     ],
-    answer:1
+    correct:0
   },
 
   {
     question:
-      "Mamas pertama kali menjemput Sinok di mana?",
+      "Mamas menjemput Sinok menggunakan apa?",
     options:[
-      "Pantai",
-      "Sekolah",
-      "Stasiun",
-      "Rumah"
+      "Mobil",
+      "Motor",
+      "Sepeda",
+      "Bus"
     ],
-    answer:2
+    correct:1
   },
 
   {
     question:
-      "Apa yang membuat Sinok melihat Mamas sebagai calon imam?",
+      "Berapa lama kira-kira kita saling mengenal sebelum bertemu?",
     options:[
-      "Jago masak",
-      "Memimpin sholat",
-      "Suka olahraga",
-      "Suka traveling"
+      "1 minggu",
+      "1 bulan",
+      "2 bulan",
+      "1 tahun"
     ],
-    answer:1
+    correct:2
   },
 
   {
     question:
-      "Bagaimana perasaan Sinok saat awal sering ngobrol?",
+      "Apa yang paling penting dalam perjalanan kita?",
     options:[
-      "Selalu mengantuk",
-      "Selalu bingung",
-      "Selalu senang",
-      "Selalu takut"
+      "Selalu sempurna",
+      "Tidak pernah bertengkar",
+      "Tetap memilih untuk ada",
+      "Selalu pergi jalan-jalan"
     ],
-    answer:2
+    correct:2
   },
 
   {
     question:
-      "Apa yang paling penting untuk cerita kita ke depan?",
+      "Tanggal anniversary kita?",
     options:[
-      "Menang sendiri",
-      "Saling mendukung dan bertumbuh",
-      "Tidak perlu berubah",
-      "Bersaing"
+      "22 November",
+      "17 Agustus",
+      "14 Februari",
+      "1 Januari"
     ],
-    answer:1
+    correct:0
   }
 
 ];
 
-let quizIndex=0;
-let quizLocked=false;
 
-function startQuiz(){
+function showQuiz(){
 
-  quizIndex=0;
+  const data =
+    quizData[quizIndex];
 
-  quizLocked=false;
 
-  renderQuiz();
+  document.getElementById(
+    "quizQuestion"
+  ).textContent =
+    data.question;
 
-}
 
-function renderQuiz(){
-
-  const box=
+  const options =
     document.getElementById(
-      "quizBox"
+      "quizOptions"
     );
 
-  if(
-    quizIndex>=
-    quizQuestions.length
-  ){
 
-    box.innerHTML=`
-
-      <p>
-        Semua kenangan berhasil diingat. ❤️
-      </p>
-
-      <button
-        class="btn"
-        onclick="go('masaDepan')">
-        LANJUT →
-      </button>
-
-    `;
-
-    return;
-  }
-
-  const q=
-    quizQuestions[quizIndex];
-
-  box.innerHTML=`
-
-    <h3>
-      ${quizIndex+1}.
-      ${q.question}
-    </h3>
-
-    <div class="quiz-options">
-
-      ${q.options.map(
-        (option,index)=>`
-
-          <button
-            class="quiz-option"
-            onclick="answerQuiz(${index})">
-
-            ${option}
-
-          </button>
-
-        `
-      ).join("")}
-
-    </div>
-
-    <div
-      id="quizFeedback"
-      class="quiz-feedback">
-    </div>
-
-  `;
-
-}
-
-
-function answerQuiz(answer){
-
-  if(quizLocked){
-    return;
-  }
-
-  const q=
-    quizQuestions[quizIndex];
-
-  const feedback=
+  const feedback =
     document.getElementById(
       "quizFeedback"
     );
 
-  if(answer!==q.answer){
 
-    const message=
-      Math.random()>.5
-        ?"Hayoloo..."
-        :"Hmph..";
+  const next =
+    document.getElementById(
+      "quizNext"
+    );
 
-    feedback.textContent=message;
 
-    wrongAnswer(message);
+  options.innerHTML = "";
 
-    return;
+  feedback.textContent = "";
+
+  next.classList.add("hidden");
+
+
+  data.options.forEach(
+    (option,index)=>{
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "quiz-option";
+
+      button.textContent =
+        option;
+
+
+      button.onclick = function(){
+
+        if(
+          index === data.correct
+        ){
+
+          feedback.textContent =
+            "Benar! ❤️";
+
+          options
+            .querySelectorAll("button")
+            .forEach(btn=>{
+              btn.disabled = true;
+            });
+
+          next.classList.remove(
+            "hidden"
+          );
+
+        }else{
+
+          wrongAnswer(
+            "Hmph.. coba ingat lagi 😤"
+          );
+
+        }
+
+      };
+
+
+      options.appendChild(button);
+
+    }
+  );
+
+}
+
+
+function nextQuiz(){
+
+  quizIndex++;
+
+  if(
+    quizIndex >= quizData.length
+  ){
+
+    go("masaDepan");
+
+  }else{
+
+    showQuiz();
 
   }
 
-  quizLocked=true;
+}
 
-  feedback.textContent=
-    "Benar! ❤️";
+
+/* =========================
+   FUTURE RUNNER
+========================= */
+
+function runTogether(){
+
+  const character =
+    document.getElementById(
+      "runnerCharacter"
+    );
+
+  character.style.left =
+    "calc(100% - 100px)";
+
 
   setTimeout(()=>{
 
-    quizIndex++;
+    document.getElementById(
+      "futureNext"
+    ).classList.remove(
+      "hidden"
+    );
 
-    quizLocked=false;
-
-    renderQuiz();
-
-  },600);
-
-}
-
-
-/* =========================
-   FUTURE
-========================= */
-
-function toggleFuture(button){
-
-  button.classList.toggle("selected");
+  },1000);
 
 }
 
 
 /* =========================
-   FINAL QUESTION
+   FINAL ANSWER
 ========================= */
 
 function finalAnswer(answer){
 
-  const feedback=
+  const feedback =
     document.getElementById(
       "finalFeedback"
     );
 
-  if(answer==="yes"){
 
-    go("ending");
+  if(answer){
 
-    return;
+    feedback.textContent =
+      "Sinok juga mau terus sama Mamas. ❤️";
 
-  }
 
-  if(answer==="maybe"){
+    setTimeout(()=>{
 
-    feedback.textContent=
-      "Mungkin? Hmph.. Sinok tunggu jawaban yang lebih yakin. 😌";
+      go("ending");
 
-    return;
+    },1000);
 
-  }
+  }else{
 
-  if(answer==="no"){
-
-    feedback.textContent=
-      "Hmph.. jawaban itu salah. 😭";
-
-    wrongAnswer("Hmph..");
+    feedback.textContent =
+      "Hayoloo... jawabannya nggak boleh itu 😭❤️";
 
   }
 
@@ -2646,52 +2191,53 @@ function finalAnswer(answer){
 
 function heartExplosion(){
 
-  for(let i=0;i<80;i++){
+  for(let i=0;i<35;i++){
 
-    const heart=
+    const heart =
       document.createElement("div");
 
-    heart.className="explosion-heart";
+    heart.className =
+      "explosion-heart";
 
-    heart.textContent=
-      Math.random()>.5
-        ?"❤️"
-        :"💖";
+    heart.textContent =
+      Math.random() > .5
+      ? "❤️"
+      : "💕";
 
-    heart.style.left="50%";
-    heart.style.top="50%";
+
+    heart.style.left =
+      "50%";
+
+    heart.style.top =
+      "50%";
+
 
     heart.style.setProperty(
       "--x",
-      Math.random()
+      `${(Math.random()-.5)*500}px`
     );
+
 
     heart.style.setProperty(
       "--y",
-      Math.random()
+      `${(Math.random()-.5)*500}px`
     );
 
-    heart.style.animationDelay=
-      Math.random()*.5+"s";
 
-    document.body.appendChild(heart);
+    document.body.appendChild(
+      heart
+    );
+
 
     setTimeout(()=>{
 
       heart.remove();
 
-    },2200);
+    },1000);
 
   }
 
 }
-
-
-/* =========================
-   INITIAL
-========================= */
-
-updateLives();
 
 </script>
 
