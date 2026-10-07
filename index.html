@@ -7,11 +7,6 @@
 <title>MAMAS QUEST: CERITA KITA</title>
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -23,49 +18,26 @@ html{
 }
 
 body{
-  font-family:Arial, Helvetica, sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   background:#020208;
   color:white;
   min-height:100vh;
   overflow-x:hidden;
 }
 
-
-/* =========================================================
-   GALAXY BACKGROUND
-========================================================= */
-
 body::before{
   content:"";
   position:fixed;
   inset:0;
-
   background:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(255,0,130,.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(80,0,255,.14),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(255,255,255,.025),
-      transparent 50%
-    );
-
+    radial-gradient(circle at 20% 20%,rgba(255,0,130,.12),transparent 28%),
+    radial-gradient(circle at 80% 70%,rgba(80,0,255,.14),transparent 32%),
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.025),transparent 50%);
   pointer-events:none;
   z-index:-3;
 }
 
-
-/* =========================================================
-   STARS
-========================================================= */
-
+/* STARS */
 .stars{
   position:fixed;
   inset:0;
@@ -80,52 +52,34 @@ body::before{
   border-radius:50%;
   background:white;
   opacity:.7;
-
-  animation:
-    twinkle 2s infinite alternate;
+  animation:twinkle 2s infinite alternate;
 }
 
 @keyframes twinkle{
-
   from{
     opacity:.2;
     transform:scale(.7);
   }
-
   to{
     opacity:1;
     transform:scale(1.4);
   }
-
 }
 
-
-/* =========================================================
-   HUD
-========================================================= */
-
+/* HUD */
 .hud{
   position:fixed;
-
   top:0;
   left:0;
   right:0;
-
   height:65px;
-
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   padding:10px 18px;
-
   background:rgba(0,0,0,.78);
-
-  border-bottom:
-    1px solid rgba(255,255,255,.14);
-
+  border-bottom:1px solid rgba(255,255,255,.14);
   backdrop-filter:blur(12px);
-
   z-index:100;
 }
 
@@ -144,41 +98,22 @@ body::before{
 }
 
 .music-btn{
-  border:
-    1px solid rgba(255,255,255,.25);
-
-  background:
-    rgba(255,255,255,.07);
-
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.07);
   color:white;
-
   border-radius:20px;
-
   padding:7px 12px;
-
   cursor:pointer;
-
   font-size:12px;
 }
 
-
-/* =========================================================
-   SCREEN
-========================================================= */
-
+/* SCREEN */
 .screen{
   display:none;
-
   min-height:100vh;
-
-  padding:
-    95px
-    20px
-    50px;
-
+  padding:95px 20px 50px;
   align-items:center;
   justify-content:center;
-
   text-align:center;
 }
 
@@ -192,20 +127,14 @@ body::before{
 }
 
 h1{
-  font-size:
-    clamp(30px,7vw,58px);
-
+  font-size:clamp(30px,7vw,58px);
   line-height:1.1;
-
   margin-bottom:18px;
 }
 
 h2{
-  font-size:
-    clamp(25px,6vw,42px);
-
+  font-size:clamp(25px,6vw,42px);
   line-height:1.2;
-
   margin-bottom:18px;
 }
 
@@ -221,101 +150,53 @@ p{
   color:#aaa;
 }
 
-
-/* =========================================================
-   BUTTON
-========================================================= */
-
+/* BUTTON */
 .btn{
   border:none;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff3f91,
-      #7b3cff
-    );
-
+  background:linear-gradient(135deg,#ff3f91,#7b3cff);
   color:white;
-
-  padding:
-    13px
-    25px;
-
+  padding:13px 25px;
   border-radius:30px;
-
   font-weight:bold;
-
   cursor:pointer;
-
   margin:8px;
-
-  box-shadow:
-    0 0 20px
-    rgba(255,50,150,.25);
-
+  box-shadow:0 0 20px rgba(255,50,150,.25);
   transition:.2s;
 }
 
 .btn:hover{
-  transform:
-    translateY(-2px)
-    scale(1.02);
+  transform:translateY(-2px) scale(1.02);
 }
 
 .btn:active{
   transform:scale(.96);
 }
 
-
-/* =========================================================
-   HEART
-========================================================= */
-
+/* HEART */
 .big-heart{
   font-size:85px;
   margin-bottom:20px;
-
-  animation:
-    pulse 1.5s infinite;
+  animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
-
-  0%,100%{
-    transform:scale(1);
-  }
-
-  50%{
-    transform:scale(1.12);
-  }
-
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.12)}
 }
 
-
-/* =========================================================
-   CHAT
-========================================================= */
-
+/* CHAT */
 .chat{
   display:flex;
   flex-direction:column;
   gap:10px;
-
-  margin:
-    25px
-    auto;
-
+  margin:25px auto;
   text-align:left;
 }
 
 .chat-bubble{
   padding:12px 15px;
-
   border-radius:17px;
-
   max-width:80%;
-
   line-height:1.5;
 }
 
@@ -329,72 +210,36 @@ p{
   background:#7735a8;
 }
 
-
-/* =========================================================
-   STICKER
-========================================================= */
-
+/* STICKER */
 .sticker-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:12px;
-
-  margin:
-    25px
-    auto;
+  margin:25px auto;
 }
 
 .sticker{
   min-height:90px;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
-  background:
-    rgba(255,255,255,.08);
-
-  border:
-    1px solid
-    rgba(255,255,255,.15);
-
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
   border-radius:18px;
-
   font-size:35px;
 }
 
-
-/* =========================================================
-   STORY PHOTO
-========================================================= */
-
+/* STORY PHOTO */
 .story-photo{
   width:min(500px,90vw);
-
   max-height:65vh;
-
   object-fit:contain;
-
   border-radius:20px;
-
-  border:
-    3px solid
-    rgba(255,255,255,.2);
-
-  box-shadow:
-    0 0 35px
-    rgba(255,50,150,.25);
-
-  margin:
-    20px
-    auto;
-
+  border:3px solid rgba(255,255,255,.2);
+  box-shadow:0 0 35px rgba(255,50,150,.25);
+  margin:20px auto;
   display:block;
 }
-
 
 /* =========================================================
    CARI SINOK
@@ -402,56 +247,43 @@ p{
 
 .card-grid{
   width:min(600px,94vw);
-
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:12px;
-
-  margin:
-    25px
-    auto;
+  margin:25px auto;
 }
 
 .find-card{
   aspect-ratio:1;
-
   border:none;
-
   border-radius:18px;
-
   cursor:pointer;
-
-  background:
-    linear-gradient(
-      135deg,
-      #27114c,
-      #09091a
-    );
-
+  background:linear-gradient(135deg,#27114c,#09091a);
   color:white;
-
   font-size:38px;
-
   overflow:hidden;
-
   position:relative;
-
-  border:
-    2px solid
-    rgba(255,255,255,.15);
-
+  border:2px solid rgba(255,255,255,.15);
   padding:0;
+}
+
+.find-card .question{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  background:
+    radial-gradient(circle at 30% 25%,rgba(255,80,170,.22),transparent 30%),
+    linear-gradient(135deg,#27114c,#09091a);
+  z-index:2;
 }
 
 .find-card img{
   width:100%;
   height:100%;
-
   object-fit:cover;
-
   display:none;
 }
 
@@ -463,75 +295,49 @@ p{
   display:none;
 }
 
-.question{
-  display:block;
+.find-card.revealed{
+  cursor:default;
 }
-
 
 /* =========================================================
    PUZZLE
-   2 KOLOM × 3 BARIS
+   FOTO TERBUKA
    TEPAT 6 KEPING
-
-   RASIO CONTAINER AKAN DIUBAH
-   OTOMATIS MENGIKUTI FOTO ASLI
+   2 KOLOM × 3 BARIS
 ========================================================= */
 
 .puzzle{
   width:min(500px,90vw);
 
-  /*
-    Aspect ratio awal.
-    JavaScript akan menggantinya
-    dengan rasio foto asli.
-  */
-
-  aspect-ratio:2 / 3;
-
   display:grid;
 
-  grid-template-columns:
-    repeat(2,1fr);
-
-  grid-template-rows:
-    repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows:repeat(3,1fr);
 
   gap:4px;
 
-  margin:
-    22px
-    auto;
+  margin:22px auto;
 
-  border:
-    3px solid
-    rgba(255,255,255,.35);
-
+  border:3px solid rgba(255,255,255,.35);
   border-radius:16px;
 
   overflow:hidden;
 
   background:#111;
 
-  box-shadow:
-    0 0 25px
-    rgba(255,80,150,.3);
+  box-shadow:0 0 25px rgba(255,80,150,.3);
 }
 
 .puzzle-piece{
   position:relative;
-
   width:100%;
   height:100%;
-
   cursor:pointer;
-
   overflow:hidden;
 
-  background-repeat:no-repeat;
+  border:2px solid rgba(255,255,255,.35);
 
-  border:
-    2px solid
-    rgba(255,255,255,.35);
+  background:#111;
 
   transition:
     transform .2s,
@@ -541,194 +347,165 @@ p{
 
 .puzzle-piece:hover{
   transform:scale(.98);
-
-  box-shadow:
-    0 0 15px
-    rgba(255,255,255,.3);
+  box-shadow:0 0 15px rgba(255,255,255,.3);
 }
 
 .puzzle-piece.selected{
-  outline:
-    4px solid
-    #ff4f9a;
-
-  z-index:2;
-
-  box-shadow:
-    0 0 20px
-    rgba(255,79,154,.7);
+  outline:4px solid #ff4f9a;
+  z-index:5;
+  box-shadow:0 0 20px rgba(255,79,154,.7);
 }
 
 .puzzle-piece.correct{
-  outline:
-    2px solid
-    #55ff99;
+  outline:2px solid #55ff99;
 }
 
+.puzzle-piece img{
+  position:absolute;
 
-/* =========================================================
-   RUNNER
-========================================================= */
+  width:200%;
+  height:300%;
 
+  max-width:none;
+  max-height:none;
+
+  object-fit:fill;
+
+  user-select:none;
+  pointer-events:none;
+}
+
+/*
+  Posisi gambar di setiap keping.
+  Karena keping = 1/2 lebar dan 1/3 tinggi
+  dari puzzle, gambar diperbesar 200% × 300%.
+*/
+
+.piece-0 img{
+  left:0;
+  top:0;
+}
+
+.piece-1 img{
+  left:-100%;
+  top:0;
+}
+
+.piece-2 img{
+  left:0;
+  top:-100%;
+}
+
+.piece-3 img{
+  left:-100%;
+  top:-100%;
+}
+
+.piece-4 img{
+  left:0;
+  top:-200%;
+}
+
+.piece-5 img{
+  left:-100%;
+  top:-200%;
+}
+
+/* RUNNER */
 .runner{
   width:min(600px,94vw);
-
   height:180px;
-
-  border:
-    2px solid
-    rgba(255,255,255,.15);
-
+  border:2px solid rgba(255,255,255,.15);
   border-radius:20px;
-
   background:
     linear-gradient(
       to top,
       rgba(255,255,255,.06) 2px,
       transparent 2px
     );
-
   position:relative;
-
   overflow:hidden;
-
-  margin:
-    25px
-    auto;
+  margin:25px auto;
 }
 
 .runner-character{
   position:absolute;
-
   bottom:20px;
   left:40px;
-
   font-size:55px;
-
-  transition:
-    left 1s linear;
+  transition:left 1s linear;
 }
 
 .runner-goal{
   position:absolute;
-
   right:30px;
   bottom:20px;
-
   font-size:40px;
 }
 
-
-/* =========================================================
-   COFFEE
-========================================================= */
-
+/* COFFEE */
 .coffee-options{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:15px;
-
   width:min(650px,94vw);
-
-  margin:
-    25px
-    auto;
+  margin:25px auto;
 }
 
 .coffee{
   min-height:130px;
-
-  border:
-    2px solid
-    rgba(255,255,255,.15);
-
+  border:2px solid rgba(255,255,255,.15);
   border-radius:20px;
-
-  background:
-    rgba(255,255,255,.07);
-
+  background:rgba(255,255,255,.07);
   color:white;
-
   cursor:pointer;
-
   font-size:45px;
-
   transition:.2s;
 }
 
 .coffee:hover{
-  transform:
-    translateY(-4px);
-
+  transform:translateY(-4px);
   border-color:#ff4f9a;
 }
 
 .coffee small{
   display:block;
-
   font-size:14px;
-
   margin-top:10px;
 }
 
-
-/* =========================================================
-   QUIZ
-========================================================= */
-
+/* QUIZ */
 .quiz-options{
   display:flex;
-
   flex-direction:column;
-
   gap:12px;
-
   width:min(550px,94vw);
-
-  margin:
-    25px
-    auto;
+  margin:25px auto;
 }
 
 .quiz-option{
-  border:
-    1px solid
-    rgba(255,255,255,.2);
-
-  background:
-    rgba(255,255,255,.07);
-
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.07);
   color:white;
-
   padding:15px;
-
   border-radius:15px;
-
   cursor:pointer;
 }
 
 .quiz-option:hover{
-  background:
-    rgba(255,255,255,.13);
+  background:rgba(255,255,255,.13);
 }
 
+.quiz-option:disabled{
+  opacity:.75;
+  cursor:default;
+}
 
-/* =========================================================
-   FEEDBACK
-========================================================= */
-
+/* FEEDBACK */
 .feedback{
   min-height:30px;
-
-  margin:
-    15px
-    0;
-
+  margin:15px 0;
   font-weight:bold;
-
   color:#ff7eb8;
 }
 
@@ -736,62 +513,29 @@ p{
   display:none !important;
 }
 
-
-/* =========================================================
-   SHAKE
-========================================================= */
-
+/* SHAKE */
 .shake{
-  animation:
-    shake .35s;
+  animation:shake .35s;
 }
 
 @keyframes shake{
-
-  0%,100%{
-    transform:translateX(0);
-  }
-
-  20%{
-    transform:translateX(-12px);
-  }
-
-  40%{
-    transform:translateX(12px);
-  }
-
-  60%{
-    transform:translateX(-8px);
-  }
-
-  80%{
-    transform:translateX(8px);
-  }
-
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-12px)}
+  40%{transform:translateX(12px)}
+  60%{transform:translateX(-8px)}
+  80%{transform:translateX(8px)}
 }
 
-
-/* =========================================================
-   GAME OVER
-========================================================= */
-
+/* GAME OVER */
 .gameover{
   position:fixed;
-
   inset:0;
-
-  background:
-    rgba(0,0,0,.92);
-
+  background:rgba(0,0,0,.92);
   display:none;
-
   align-items:center;
   justify-content:center;
-
   text-align:center;
-
   z-index:999;
-
   padding:20px;
 }
 
@@ -801,78 +545,39 @@ p{
 
 .gameover-box{
   width:min(450px,90vw);
-
-  padding:
-    35px
-    25px;
-
+  padding:35px 25px;
   border-radius:25px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.2);
-
-  background:
-    linear-gradient(
-      145deg,
-      #120818,
-      #05050b
-    );
-
-  box-shadow:
-    0 0 40px
-    rgba(255,0,100,.2);
+  border:1px solid rgba(255,255,255,.2);
+  background:linear-gradient(145deg,#120818,#05050b);
+  box-shadow:0 0 40px rgba(255,0,100,.2);
 }
 
-
-/* =========================================================
-   HEART EXPLOSION
-========================================================= */
-
+/* HEART EXPLOSION */
 .explosion-heart{
   position:fixed;
-
   pointer-events:none;
-
   font-size:30px;
-
-  animation:
-    explode 1s forwards;
-
+  animation:explode 1s forwards;
   z-index:500;
 }
 
 @keyframes explode{
-
   0%{
-    transform:
-      translate(0,0)
-      scale(.5);
-
+    transform:translate(0,0) scale(.5);
     opacity:1;
   }
 
   100%{
-    transform:
-      translate(var(--x),var(--y))
-      scale(1.5);
-
+    transform:translate(var(--x),var(--y)) scale(1.5);
     opacity:0;
   }
-
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
+/* MOBILE */
 @media(max-width:600px){
 
   .hud{
-    padding:
-      8px
-      10px;
+    padding:8px 10px;
   }
 
   .logo{
@@ -885,15 +590,11 @@ p{
 
   .music-btn{
     font-size:11px;
-
-    padding:
-      6px
-      9px;
+    padding:6px 9px;
   }
 
   .sticker-grid{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   .card-grid{
@@ -911,39 +612,23 @@ p{
   .puzzle{
     width:min(420px,88vw);
   }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
+<!-- STARS -->
+<div class="stars" id="stars"></div>
 
-<!-- =========================================================
-     STARS
-========================================================= -->
-
-<div
-  class="stars"
-  id="stars">
-</div>
-
-
-<!-- =========================================================
-     HUD
-========================================================= -->
-
+<!-- HUD -->
 <div class="hud">
 
   <div class="logo">
     MAMAS QUEST ❤️
   </div>
 
-  <div
-    class="lives"
-    id="lives">
+  <div class="lives" id="lives">
     ❤️❤️❤️
   </div>
 
@@ -951,27 +636,14 @@ p{
     class="music-btn"
     onclick="toggleMusic()"
     id="musicBtn">
-
     🎵 MUSIC
-
   </button>
 
 </div>
 
-
-<!-- =========================================================
-     MUSIC
-========================================================= -->
-
-<audio
-  id="bgMusic"
-  loop
-  preload="auto">
-
-  <source
-    src="music.mp3?v=3"
-    type="audio/mpeg">
-
+<!-- MUSIC -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3?v=3" type="audio/mpeg">
 </audio>
 
 
@@ -979,19 +651,13 @@ p{
      PROLOG
 ========================================================= -->
 
-<section
-  class="screen active"
-  id="prolog">
+<section class="screen active" id="prolog">
 
   <div class="content">
 
-    <div class="big-heart">
-      ❤️
-    </div>
+    <div class="big-heart">❤️</div>
 
-    <h1>
-      MAMAS QUEST
-    </h1>
+    <h1>MAMAS QUEST</h1>
 
     <p>
       Sebuah perjalanan kecil tentang dua manusia
@@ -1000,17 +666,11 @@ p{
     </p>
 
     <p class="small">
-      22 November 2025
-      —
-      22 November 2026
+      22 November 2025 — 22 November 2026
     </p>
 
-    <button
-      class="btn"
-      onclick="startGame()">
-
+    <button class="btn" onclick="startGame()">
       MULAI CERITA ❤️
-
     </button>
 
   </div>
@@ -1022,15 +682,11 @@ p{
      AWAL
 ========================================================= -->
 
-<section
-  class="screen"
-  id="awal">
+<section class="screen" id="awal">
 
   <div class="content">
 
-    <h2>
-      MISSION 01
-    </h2>
+    <h2>MISSION 01</h2>
 
     <p>
       Semua bermula dari sebuah perkenalan sederhana.
@@ -1046,12 +702,8 @@ p{
       sederhana itu akan membawa kita sejauh ini.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('obrolan')">
-
+    <button class="btn" onclick="go('obrolan')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1063,15 +715,11 @@ p{
      OBROLAN
 ========================================================= -->
 
-<section
-  class="screen"
-  id="obrolan">
+<section class="screen" id="obrolan">
 
   <div class="content">
 
-    <h2>
-      MISSION 02
-    </h2>
+    <h2>MISSION 02</h2>
 
     <p>
       Awalnya cuma ngobrol biasa...
@@ -1107,12 +755,8 @@ p{
       mengenal satu sama lain lebih jauh.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('sticker')">
-
+    <button class="btn" onclick="go('sticker')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1124,15 +768,11 @@ p{
      STICKER
 ========================================================= -->
 
-<section
-  class="screen"
-  id="sticker">
+<section class="screen" id="sticker">
 
   <div class="content">
 
-    <h2>
-      MISSION 03
-    </h2>
+    <h2>MISSION 03</h2>
 
     <p>
       Kadang hubungan dimulai dari hal-hal kecil.
@@ -1140,29 +780,12 @@ p{
 
     <div class="sticker-grid">
 
-      <div class="sticker">
-        ❤️
-      </div>
-
-      <div class="sticker">
-        😊
-      </div>
-
-      <div class="sticker">
-        🥰
-      </div>
-
-      <div class="sticker">
-        💬
-      </div>
-
-      <div class="sticker">
-        ✨
-      </div>
-
-      <div class="sticker">
-        💕
-      </div>
+      <div class="sticker">❤️</div>
+      <div class="sticker">😊</div>
+      <div class="sticker">🥰</div>
+      <div class="sticker">💬</div>
+      <div class="sticker">✨</div>
+      <div class="sticker">💕</div>
 
     </div>
 
@@ -1170,12 +793,8 @@ p{
       Sampai akhirnya kita memutuskan untuk bertemu.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('pertemuan')">
-
+    <button class="btn" onclick="go('pertemuan')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1187,15 +806,11 @@ p{
      PERTEMUAN
 ========================================================= -->
 
-<section
-  class="screen"
-  id="pertemuan">
+<section class="screen" id="pertemuan">
 
   <div class="content">
 
-    <h2>
-      MISSION 04
-    </h2>
+    <h2>MISSION 04</h2>
 
     <p>
       Setelah kurang lebih dua bulan mengenal,
@@ -1212,13 +827,43 @@ p{
       awal paling berarti dalam cerita kita.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('foto1')">
-
-      BUKA KENANGAN 📸
-
+    <button class="btn" onclick="go('cariSinok')">
+      CARI SINOK ❤️
     </button>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CARI SINOK
+========================================================= -->
+
+<section class="screen" id="cariSinok">
+
+  <div class="content">
+
+    <h2>CARI SINOK ❤️</h2>
+
+    <p>
+      Sebelum membuka kenangan pertama,
+      temukan dulu Sinok di antara enam kartu ini.
+    </p>
+
+    <p class="small">
+      Hati-hati... kalau salah, satu nyawa hilang. 😤
+    </p>
+
+    <div
+      class="card-grid"
+      id="findCards">
+    </div>
+
+    <div
+      class="feedback"
+      id="findFeedback">
+    </div>
 
   </div>
 
@@ -1229,15 +874,11 @@ p{
      PUZZLE 1
 ========================================================= -->
 
-<section
-  class="screen"
-  id="foto1">
+<section class="screen" id="foto1">
 
   <div class="content">
 
-    <h2>
-      SUSUN KENANGAN
-    </h2>
+    <h2>SUSUN KENANGAN</h2>
 
     <p>
       Foto ini langsung terlihat.
@@ -1261,15 +902,11 @@ p{
      PANTAI
 ========================================================= -->
 
-<section
-  class="screen"
-  id="pantai">
+<section class="screen" id="pantai">
 
   <div class="content">
 
-    <h2>
-      MEMORY UNLOCKED ❤️
-    </h2>
+    <h2>MEMORY UNLOCKED ❤️</h2>
 
     <p>
       Setelah itu, banyak hal kecil yang kita lalui.
@@ -1286,12 +923,8 @@ p{
       menikmati suasana pantai.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('foto2')">
-
+    <button class="btn" onclick="go('foto2')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1303,15 +936,11 @@ p{
      PUZZLE 2
 ========================================================= -->
 
-<section
-  class="screen"
-  id="foto2">
+<section class="screen" id="foto2">
 
   <div class="content">
 
-    <h2>
-      SUSUN KENANGAN
-    </h2>
+    <h2>SUSUN KENANGAN</h2>
 
     <p>
       Satu kenangan lagi.
@@ -1334,15 +963,11 @@ p{
      KELUARGA
 ========================================================= -->
 
-<section
-  class="screen"
-  id="keluarga">
+<section class="screen" id="keluarga">
 
   <div class="content">
 
-    <h2>
-      MISSION 05
-    </h2>
+    <h2>MISSION 05</h2>
 
     <p>
       Dalam perjalanan ini bukan hanya tentang
@@ -1359,12 +984,8 @@ p{
       class="story-photo"
       alt="Kenangan">
 
-    <button
-      class="btn"
-      onclick="go('imam')">
-
+    <button class="btn" onclick="go('imam')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1376,15 +997,11 @@ p{
      IMAM
 ========================================================= -->
 
-<section
-  class="screen"
-  id="imam">
+<section class="screen" id="imam">
 
   <div class="content">
 
-    <h2>
-      MISSION 06
-    </h2>
+    <h2>MISSION 06</h2>
 
     <p>
       Ada juga momen sederhana yang terasa begitu berarti.
@@ -1401,12 +1018,8 @@ p{
       selalu punya tempat tersendiri.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('tetapAda')">
-
+    <button class="btn" onclick="go('tetapAda')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1418,19 +1031,13 @@ p{
      TETAP ADA
 ========================================================= -->
 
-<section
-  class="screen"
-  id="tetapAda">
+<section class="screen" id="tetapAda">
 
   <div class="content">
 
-    <div class="big-heart">
-      ❤️
-    </div>
+    <div class="big-heart">❤️</div>
 
-    <h2>
-      TETAP ADA
-    </h2>
+    <h2>TETAP ADA</h2>
 
     <p>
       Hubungan bukan selalu tentang hari-hari yang sempurna.
@@ -1447,12 +1054,8 @@ p{
       tetap memilih untuk ada.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('kopi')">
-
+    <button class="btn" onclick="go('kopi')">
       LANJUT →
-
     </button>
 
   </div>
@@ -1464,15 +1067,11 @@ p{
      KOPI
 ========================================================= -->
 
-<section
-  class="screen"
-  id="kopi">
+<section class="screen" id="kopi">
 
   <div class="content">
 
-    <h2>
-      MISSION 07
-    </h2>
+    <h2>MISSION 07</h2>
 
     <p>
       Sekarang waktunya memilih minuman
@@ -1488,57 +1087,36 @@ p{
       <button
         class="coffee"
         onclick="coffeeCorrect('Americano')">
-
         ☕
-
-        <small>
-          Americano
-        </small>
-
+        <small>Americano</small>
       </button>
-
 
       <button
         class="coffee"
         onclick="coffeeCorrect('Ice Cream')">
-
         🍨
-
-        <small>
-          Ice Cream
-        </small>
-
+        <small>Ice Cream</small>
       </button>
-
 
       <button
         class="coffee"
         onclick="coffeeCorrect('Jus Buah')">
-
         🧃
-
-        <small>
-          Jus Buah
-        </small>
-
+        <small>Jus Buah</small>
       </button>
 
     </div>
-
 
     <div
       id="coffeeFeedback"
       class="feedback">
     </div>
 
-
     <button
       id="coffeeNext"
       class="btn hidden"
       onclick="go('quiz')">
-
       LANJUT →
-
     </button>
 
   </div>
@@ -1550,15 +1128,11 @@ p{
      QUIZ
 ========================================================= -->
 
-<section
-  class="screen"
-  id="quiz">
+<section class="screen" id="quiz">
 
   <div class="content">
 
-    <h2>
-      LOVE QUIZ ❤️
-    </h2>
+    <h2>LOVE QUIZ ❤️</h2>
 
     <p id="quizQuestion"></p>
 
@@ -1576,9 +1150,7 @@ p{
       id="quizNext"
       class="btn hidden"
       onclick="nextQuiz()">
-
       LANJUT →
-
     </button>
 
   </div>
@@ -1590,15 +1162,11 @@ p{
      MASA DEPAN
 ========================================================= -->
 
-<section
-  class="screen"
-  id="masaDepan">
+<section class="screen" id="masaDepan">
 
   <div class="content">
 
-    <h2>
-      MISSION 08
-    </h2>
+    <h2>MISSION 08</h2>
 
     <p>
       Kalau perjalanan kita sampai di sini,
@@ -1617,9 +1185,7 @@ p{
       <div
         class="runner-character"
         id="runnerCharacter">
-
         🧑🏻
-
       </div>
 
       <div class="runner-goal">
@@ -1631,19 +1197,14 @@ p{
     <button
       class="btn"
       onclick="runTogether()">
-
       JALAN BARENG →
-
     </button>
-
 
     <button
       class="btn hidden"
       id="futureNext"
       onclick="go('pesan')">
-
       LANJUT →
-
     </button>
 
   </div>
@@ -1655,15 +1216,11 @@ p{
      PESAN
 ========================================================= -->
 
-<section
-  class="screen"
-  id="pesan">
+<section class="screen" id="pesan">
 
   <div class="content">
 
-    <h2>
-      UNTUK MAMAS ❤️
-    </h2>
+    <h2>UNTUK MAMAS ❤️</h2>
 
     <p>
       Terima kasih sudah menjadi bagian
@@ -1689,12 +1246,8 @@ p{
       untuk tersenyum bersama.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('pilihan')">
-
+    <button class="btn" onclick="go('pilihan')">
       SATU PERTANYAAN TERAKHIR ❤️
-
     </button>
 
   </div>
@@ -1706,15 +1259,11 @@ p{
      PILIHAN
 ========================================================= -->
 
-<section
-  class="screen"
-  id="pilihan">
+<section class="screen" id="pilihan">
 
   <div class="content">
 
-    <div class="big-heart">
-      ❤️
-    </div>
+    <div class="big-heart">❤️</div>
 
     <h2>
       MAU LANJUT<br>
@@ -1728,20 +1277,14 @@ p{
     <button
       class="btn"
       onclick="finalAnswer(true)">
-
       MAU ❤️
-
     </button>
-
 
     <button
       class="btn"
       onclick="finalAnswer(false)">
-
       NGGAK 😭
-
     </button>
-
 
     <div
       id="finalFeedback"
@@ -1757,19 +1300,13 @@ p{
      ENDING
 ========================================================= -->
 
-<section
-  class="screen"
-  id="ending">
+<section class="screen" id="ending">
 
   <div class="content">
 
-    <div class="big-heart">
-      ❤️
-    </div>
+    <div class="big-heart">❤️</div>
 
-    <h1>
-      QUEST COMPLETE
-    </h1>
+    <h1>QUEST COMPLETE</h1>
 
     <h2>
       CERITA KITA DAN CINTA
@@ -1782,9 +1319,7 @@ p{
     </p>
 
     <p>
-      22 November 2025
-      —
-      22 November 2026
+      22 November 2025 — 22 November 2026
     </p>
 
     <p>
@@ -1796,9 +1331,7 @@ p{
     <button
       class="btn"
       onclick="heartExplosion()">
-
       ❤️ UNTUK MAMAS
-
     </button>
 
   </div>
@@ -1810,19 +1343,13 @@ p{
      GAME OVER
 ========================================================= -->
 
-<div
-  class="gameover"
-  id="gameOver">
+<div class="gameover" id="gameOver">
 
   <div class="gameover-box">
 
-    <div class="big-heart">
-      💔
-    </div>
+    <div class="big-heart">💔</div>
 
-    <h2>
-      GAME OVER
-    </h2>
+    <h2>GAME OVER</h2>
 
     <p>
       Hayoloo... nyawanya habis. 😭
@@ -1835,9 +1362,7 @@ p{
     <button
       class="btn"
       onclick="restartGame()">
-
       COBA LAGI ❤️
-
     </button>
 
   </div>
@@ -1851,28 +1376,19 @@ p{
    STARS
 ========================================================= */
 
-const stars =
-  document.getElementById("stars");
+const stars=document.getElementById("stars");
 
 for(let i=0;i<100;i++){
 
-  const star =
-    document.createElement("div");
+  const star=document.createElement("div");
 
-  star.className =
-    "star";
+  star.className="star";
 
-  star.style.left =
-    Math.random()*100 + "%";
-
-  star.style.top =
-    Math.random()*100 + "%";
-
-  star.style.animationDelay =
-    Math.random()*2 + "s";
+  star.style.left=Math.random()*100+"%";
+  star.style.top=Math.random()*100+"%";
+  star.style.animationDelay=Math.random()*2+"s";
 
   stars.appendChild(star);
-
 }
 
 
@@ -1880,35 +1396,24 @@ for(let i=0;i<100;i++){
    GAME VARIABLES
 ========================================================= */
 
-let currentScreen =
-  "prolog";
+let currentScreen="prolog";
+let lives=3;
 
-let lives =
-  3;
+let coffeeDone=false;
 
-let coffeeDone =
-  false;
+let puzzle1Done=false;
+let puzzle2Done=false;
 
-let puzzle1Done =
-  false;
+let quizIndex=0;
 
-let puzzle2Done =
-  false;
-
-let quizIndex =
-  0;
-
-let musicStarted =
-  false;
+let musicStarted=false;
 
 
 /* =========================================================
    MUSIC
 ========================================================= */
 
-const bgMusic =
-  document.getElementById("bgMusic");
-
+const bgMusic=document.getElementById("bgMusic");
 
 function startMusic(){
 
@@ -1916,32 +1421,22 @@ function startMusic(){
     return;
   }
 
-  bgMusic.volume =
-    0.45;
+  bgMusic.volume=.45;
 
   bgMusic.play()
     .then(()=>{
 
-      musicStarted =
-        true;
+      musicStarted=true;
 
-      document.getElementById(
-        "musicBtn"
-      ).textContent =
-        "🔊 MUSIC";
+      document.getElementById("musicBtn").textContent="🔊 MUSIC";
 
     })
     .catch(()=>{
 
-      document.getElementById(
-        "musicBtn"
-      ).textContent =
-        "🎵 MUSIC";
+      document.getElementById("musicBtn").textContent="🎵 MUSIC";
 
     });
-
 }
-
 
 function toggleMusic(){
 
@@ -1949,23 +1444,15 @@ function toggleMusic(){
 
     bgMusic.play();
 
-    document.getElementById(
-      "musicBtn"
-    ).textContent =
-      "🔊 MUSIC";
+    document.getElementById("musicBtn").textContent="🔊 MUSIC";
 
-  }
-  else{
+  }else{
 
     bgMusic.pause();
 
-    document.getElementById(
-      "musicBtn"
-    ).textContent =
-      "🔇 MUSIC";
+    document.getElementById("musicBtn").textContent="🔇 MUSIC";
 
   }
-
 }
 
 
@@ -1978,7 +1465,6 @@ function startGame(){
   startMusic();
 
   go("awal");
-
 }
 
 
@@ -1991,30 +1477,16 @@ function go(id){
   document
     .querySelectorAll(".screen")
     .forEach(screen=>{
-
-      screen.classList.remove(
-        "active"
-      );
-
+      screen.classList.remove("active");
     });
 
-
-  const target =
-    document.getElementById(id);
-
+  const target=document.getElementById(id);
 
   if(target){
-
-    target.classList.add(
-      "active"
-    );
-
+    target.classList.add("active");
   }
 
-
-  currentScreen =
-    id;
-
+  currentScreen=id;
 
   window.scrollTo({
     top:0,
@@ -2022,11 +1494,18 @@ function go(id){
   });
 
 
-  /*
-    PUZZLE 1
-  */
+  /* CARI SINOK */
 
-  if(id === "foto1"){
+  if(id==="cariSinok"){
+
+    createFindCards();
+
+  }
+
+
+  /* PUZZLE 1 */
+
+  if(id==="foto1"){
 
     if(!puzzle1Done){
 
@@ -2040,11 +1519,9 @@ function go(id){
   }
 
 
-  /*
-    PUZZLE 2
-  */
+  /* PUZZLE 2 */
 
-  if(id === "foto2"){
+  if(id==="foto2"){
 
     if(!puzzle2Done){
 
@@ -2058,19 +1535,15 @@ function go(id){
   }
 
 
-  /*
-    QUIZ
-  */
+  /* QUIZ */
 
-  if(id === "quiz"){
+  if(id==="quiz"){
 
-    quizIndex =
-      0;
+    quizIndex=0;
 
     showQuiz();
 
   }
-
 }
 
 
@@ -2080,36 +1553,19 @@ function go(id){
 
 function updateLives(){
 
-  let result =
-    "";
+  let result="";
 
-  for(
-    let i=0;
-    i<3;
-    i++
-  ){
+  for(let i=0;i<3;i++){
 
-    if(i < lives){
-
-      result +=
-        "❤️";
-
-    }
-    else{
-
-      result +=
-        "🖤";
-
+    if(i<lives){
+      result+="❤️";
+    }else{
+      result+="🖤";
     }
 
   }
 
-
-  document.getElementById(
-    "lives"
-  ).textContent =
-    result;
-
+  document.getElementById("lives").textContent=result;
 }
 
 
@@ -2117,62 +1573,41 @@ function updateLives(){
    WRONG ANSWER
 ========================================================= */
 
-function wrongAnswer(
-  message="Hayoloo..."
-){
+function wrongAnswer(message="Hayoloo..."){
 
   lives--;
 
   updateLives();
 
 
-  /*
-    GETARAN HANYA KETIKA SALAH
-  */
+  /* GETARAN HANYA SAAT SALAH */
 
-  document.body
-    .classList.remove(
-      "shake"
-    );
+  document.body.classList.remove("shake");
 
   void document.body.offsetWidth;
 
-  document.body
-    .classList.add(
-      "shake"
-    );
-
+  document.body.classList.add("shake");
 
   setTimeout(()=>{
 
-    document.body
-      .classList.remove(
-        "shake"
-      );
+    document.body.classList.remove("shake");
 
   },400);
 
 
-  /*
-    GAME OVER
-  */
+  /* GAME OVER */
 
-  if(lives <= 0){
+  if(lives<=0){
 
     setTimeout(()=>{
 
       document
-        .getElementById(
-          "gameOver"
-        )
-        .classList.add(
-          "active"
-        );
+        .getElementById("gameOver")
+        .classList.add("active");
 
     },400);
 
   }
-
 }
 
 
@@ -2182,463 +1617,403 @@ function wrongAnswer(
 
 function restartGame(){
 
-  lives =
-    3;
+  lives=3;
 
   updateLives();
 
+  coffeeDone=false;
 
-  coffeeDone =
-    false;
+  puzzle1Done=false;
+  puzzle2Done=false;
 
-  puzzle1Done =
-    false;
-
-  puzzle2Done =
-    false;
-
-  quizIndex =
-    0;
+  quizIndex=0;
 
 
   document
-    .getElementById(
-      "gameOver"
-    )
-    .classList.remove(
-      "active"
-    );
+    .getElementById("gameOver")
+    .classList.remove("active");
 
 
   document
-    .getElementById(
-      "coffeeFeedback"
-    )
-    .textContent =
-    "";
+    .getElementById("coffeeFeedback")
+    .textContent="";
 
 
   document
-    .getElementById(
-      "coffeeNext"
-    )
-    .classList.add(
-      "hidden"
-    );
+    .getElementById("coffeeNext")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("findFeedback")
+    .textContent="";
 
 
   go("prolog");
+}
+
+
+/* =========================================================
+   CARI SINOK
+========================================================= */
+
+function createFindCards(){
+
+  const grid=document.getElementById("findCards");
+
+  const feedback=document.getElementById("findFeedback");
+
+  if(!grid){
+    return;
+  }
+
+
+  grid.innerHTML="";
+
+  feedback.textContent="";
+
+
+  /*
+    1 SINOK
+    5 ARTIS
+  */
+
+  const images=[
+
+    "sinok.png?v=3",
+
+    "artis-1.png?v=3",
+    "artis-2.png?v=3",
+    "artis-3.png?v=3",
+    "artis-4.png?v=3",
+    "artis-5.png?v=3"
+
+  ];
+
+
+  /* ACAK KARTU */
+
+  images.sort(
+    ()=>Math.random()-.5
+  );
+
+
+  images.forEach(image=>{
+
+    const card=document.createElement("button");
+
+    card.className="find-card";
+
+    card.innerHTML=`
+
+      <span class="question">
+        ❤️
+      </span>
+
+      <img
+        src="${image}"
+        alt=""
+      >
+
+    `;
+
+
+    card.onclick=function(){
+
+      if(
+        card.classList.contains("revealed") ||
+        lives<=0
+      ){
+        return;
+      }
+
+
+      card.classList.add("revealed");
+
+
+      /* BENAR */
+
+      if(
+        image.startsWith("sinok")
+      ){
+
+        feedback.textContent=
+          "Nah, itu Sinok. ❤️";
+
+
+        setTimeout(()=>{
+
+          go("foto1");
+
+        },900);
+
+      }
+
+
+      /* SALAH */
+
+      else{
+
+        feedback.textContent=
+          "Hmph.. bukan Sinok 😤";
+
+        wrongAnswer();
+
+      }
+
+    };
+
+
+    grid.appendChild(card);
+
+  });
 
 }
 
 
 /* =========================================================
    PUZZLE
-   =========================================================
-
-   PENTING:
-
-   - SELALU 6 KEPING
-   - 2 KOLOM
-   - 3 BARIS
-   - FOTO TIDAK DIPAKSA JADI KOTAK
-   - RASIO PUZZLE OTOMATIS MENGIKUTI FOTO ASLI
-
 ========================================================= */
 
-function makePuzzle(
-  id,
-  image
-){
+function makePuzzle(id,image){
 
-  const container =
-    document.getElementById(id);
+  const container=document.getElementById(id);
 
+  container.innerHTML="";
 
-  container.innerHTML =
-    "";
+  container.className="puzzle";
 
 
-  container.className =
-    "puzzle";
+  const cols=2;
+  const rows=3;
+  const total=6;
 
 
   /*
-    JUMLAH TETAP
-
-    2 kolom × 3 baris
-    = 6 keping
+    Load gambar dulu supaya
+    rasio puzzle benar-benar
+    mengikuti foto asli.
   */
 
-  const cols =
-    2;
-
-  const rows =
-    3;
-
-  const total =
-    6;
+  const photo=new Image();
 
 
-  /*
-    Load foto terlebih dahulu.
+  photo.onload=function(){
 
-    Ini penting supaya ukuran puzzle
-    mengikuti rasio foto asli.
-  */
-
-  const photo =
-    new Image();
-
-
-  photo.onload =
-    function(){
-
-      /*
-        Ukuran puzzle mengikuti
-        ukuran foto asli.
-
-        Misalnya foto:
-        1080 × 1620
-
-        maka puzzle juga:
-        1080 × 1620
-
-        Bukan dipaksa menjadi kotak.
-      */
-
-      if(
-        photo.naturalWidth &&
-        photo.naturalHeight
-      ){
-
-        container.style.aspectRatio =
-          `${photo.naturalWidth}/${photo.naturalHeight}`;
-
-      }
-
-
-      createPuzzlePieces();
-
-    };
-
-
-  photo.onerror =
-    function(){
-
-      /*
-        Kalau foto gagal dibaca,
-        tetap buat puzzle.
-      */
-
-      container.style.aspectRatio =
-        "2 / 3";
-
-      createPuzzlePieces();
-
-    };
-
-
-  photo.src =
-    image;
-
-
-  /*
-    BUAT 6 KEPING
-  */
-
-  function createPuzzlePieces(){
-
-    let pieces =
-      [];
-
-    for(
-      let i=0;
-      i<total;
-      i++
+    if(
+      photo.naturalWidth &&
+      photo.naturalHeight
     ){
 
-      pieces.push(i);
+      container.style.aspectRatio=
+        `${photo.naturalWidth}/${photo.naturalHeight}`;
 
     }
 
+    createPieces();
+
+  };
+
+
+  photo.onerror=function(){
 
     /*
-      Acak.
+      fallback
+    */
 
-      Jangan sampai kebetulan
-      langsung tersusun.
+    container.style.aspectRatio="2 / 3";
+
+    createPieces();
+
+  };
+
+
+  photo.src=image;
+
+
+  function createPieces(){
+
+    let pieces=[
+      0,1,2,3,4,5
+    ];
+
+
+    /*
+      ACAK
+      Pastikan tidak langsung benar.
     */
 
     do{
 
       pieces.sort(
-        () =>
-          Math.random() - .5
+        ()=>Math.random()-.5
       );
 
-    }
-    while(
+    }while(
       pieces.every(
         (value,index)=>
-          value === index
+          value===index
       )
     );
 
 
-    let selected =
-      null;
+    let selected=null;
 
 
-    pieces.forEach(
-      pieceNumber=>{
+    pieces.forEach(pieceNumber=>{
 
-        const piece =
-          document.createElement(
-            "div"
-          );
+      const piece=document.createElement("div");
 
-
-        piece.className =
-          "puzzle-piece";
+      piece.className=
+        "puzzle-piece";
 
 
-        /*
-          Posisi asli:
+      /*
+        Nomor keping asli.
+      */
 
-          0 | 1
-          -------
-          2 | 3
-          -------
-          4 | 5
-        */
-
-        const originalRow =
-          Math.floor(
-            pieceNumber / cols
-          );
+      piece.dataset.number=
+        pieceNumber;
 
 
-        const originalCol =
-          pieceNumber % cols;
+      /*
+        class piece asli
+        menentukan bagian foto.
+      */
+
+      piece.classList.add(
+        "piece-"+pieceNumber
+      );
 
 
-        piece.dataset.number =
-          pieceNumber;
+      /*
+        Foto dimasukkan langsung
+        ke dalam keping.
+
+        Jadi tidak menggunakan
+        background-position lagi.
+      */
+
+      const img=document.createElement("img");
+
+      img.src=image;
+
+      img.alt="Potongan foto kenangan";
+
+      img.draggable=false;
 
 
-        /*
-          Gunakan foto sebagai
-          background.
-        */
-
-        piece.style.backgroundImage =
-          `url("${image}")`;
+      piece.appendChild(img);
 
 
-        /*
-          Karena 2 kolom,
-          foto diperbesar 200%.
-
-          Karena 3 baris,
-          foto diperbesar 300%.
-        */
-
-        piece.style.backgroundSize =
-          "200% 300%";
-
-
-        /*
-          Tentukan posisi gambar.
-
-          Kiri / kanan
-          Atas / tengah / bawah
-        */
-
-        let x;
-
-        let y;
-
+      piece.onclick=function(){
 
         if(
-          originalCol === 0
+          piece.classList.contains("correct")
         ){
-
-          x =
-            "0%";
-
+          return;
         }
-        else{
-
-          x =
-            "100%";
-
-        }
-
-
-        if(
-          originalRow === 0
-        ){
-
-          y =
-            "0%";
-
-        }
-        else if(
-          originalRow === 1
-        ){
-
-          y =
-            "50%";
-
-        }
-        else{
-
-          y =
-            "100%";
-
-        }
-
-
-        piece.style.backgroundPosition =
-          `${x} ${y}`;
 
 
         /*
-          KLIK KEPING
+          KLIK PERTAMA
         */
 
-        piece.onclick =
-          function(){
+        if(selected===null){
 
-            /*
-              Kalau sudah benar,
-              tidak bisa diganggu.
-            */
+          selected=piece;
 
-            if(
-              piece.classList.contains(
-                "correct"
-              )
-            ){
+          piece.classList.add("selected");
 
-              return;
+          return;
 
-            }
+        }
 
 
-            /*
-              KLIK PERTAMA
-            */
+        /*
+          KLIK KEPING YANG SAMA
+        */
 
-            if(
-              selected === null
-            ){
+        if(selected===piece){
 
-              selected =
-                piece;
+          piece.classList.remove("selected");
 
-              piece.classList.add(
-                "selected"
-              );
+          selected=null;
 
-              return;
+          return;
 
-            }
+        }
 
 
-            /*
-              KLIK KEPING YANG SAMA
-            */
+        /*
+          SIMPAN NOMOR
+        */
 
-            if(
-              selected === piece
-            ){
+        const firstNumber=
+          Number(selected.dataset.number);
 
-              piece.classList.remove(
-                "selected"
-              );
-
-              selected =
-                null;
-
-              return;
-
-            }
+        const secondNumber=
+          Number(piece.dataset.number);
 
 
-            /*
-              SIMPAN DATA
-            */
+        /*
+          SIMPAN CLASS POSISI FOTO
+        */
 
-            const firstNumber =
-              selected.dataset.number;
+        const firstClass=
+          [...selected.classList]
+            .find(c=>c.startsWith("piece-"));
 
-            const secondNumber =
-              piece.dataset.number;
-
-
-            /*
-              TUKAR NOMOR
-            */
-
-            selected.dataset.number =
-              secondNumber;
-
-            piece.dataset.number =
-              firstNumber;
+        const secondClass=
+          [...piece.classList]
+            .find(c=>c.startsWith("piece-"));
 
 
-            /*
-              TUKAR POSISI GAMBAR
-            */
+        /*
+          TUKAR DATA NOMOR
+        */
 
-            const firstPosition =
-              selected.style.backgroundPosition;
+        selected.dataset.number=
+          secondNumber;
 
-            const secondPosition =
-              piece.style.backgroundPosition;
-
-
-            selected.style.backgroundPosition =
-              secondPosition;
-
-            piece.style.backgroundPosition =
-              firstPosition;
+        piece.dataset.number=
+          firstNumber;
 
 
-            /*
-              Hilangkan highlight
-            */
+        /*
+          TUKAR POSISI FOTO
+        */
 
-            selected.classList.remove(
-              "selected"
-            );
+        selected.classList.remove(firstClass);
+        selected.classList.add(secondClass);
 
-
-            selected =
-              null;
+        piece.classList.remove(secondClass);
+        piece.classList.add(firstClass);
 
 
-            /*
-              CEK PUZZLE
-            */
+        /*
+          Hilangkan selected
+        */
 
-            checkPuzzle(id);
+        selected.classList.remove("selected");
 
-          };
+        selected=null;
 
 
-        container.appendChild(
-          piece
-        );
+        /*
+          Cek apakah sudah benar
+        */
 
-      });
+        checkPuzzle(id);
 
-    }
+      };
+
+
+      container.appendChild(piece);
+
+    });
 
   }
-
 }
 
 
@@ -2648,92 +2023,72 @@ function makePuzzle(
 
 function checkPuzzle(id){
 
-  const container =
+  const container=
     document.getElementById(id);
 
 
-  const pieces =
-    container.querySelectorAll(
-      ".puzzle-piece"
-    );
+  const pieces=
+    container.querySelectorAll(".puzzle-piece");
 
 
-  let benar =
-    true;
+  let benar=true;
 
 
-  /*
-    HARUS:
+  pieces.forEach((piece,index)=>{
 
-    posisi 0 = nomor 0
-    posisi 1 = nomor 1
-    posisi 2 = nomor 2
-    posisi 3 = nomor 3
-    posisi 4 = nomor 4
-    posisi 5 = nomor 5
-  */
+    if(
+      Number(piece.dataset.number)!==
+      index
+    ){
 
-  pieces.forEach(
-    (piece,index)=>{
-
-      if(
-        Number(
-          piece.dataset.number
-        )
-        !== index
-      ){
-
-        benar =
-          false;
-
-      }
+      benar=false;
 
     }
-  );
+
+  });
 
 
   if(!benar){
-
     return;
-
   }
 
 
   /*
-    SEMUA BENAR
+    PUZZLE SELESAI
   */
 
-  pieces.forEach(
-    piece=>{
+  pieces.forEach(piece=>{
 
-      piece.classList.add(
-        "correct"
-      );
+    piece.classList.add("correct");
 
-    }
-  );
+  });
+
+
+  const feedbackId=
+    id==="puzzle1"
+    ? "puzzleFeedback1"
+    : "puzzleFeedback2";
+
+
+  document.getElementById(
+    feedbackId
+  ).textContent=
+    "Kenangan berhasil disusun. ❤️";
 
 
   /*
     PUZZLE 1
   */
 
-  if(
-    id === "puzzle1"
-  ){
+  if(id==="puzzle1"){
 
-    puzzle1Done =
-      true;
+    puzzle1Done=true;
 
+    setTimeout(()=>{
 
-    setTimeout(
-      ()=>{
+      go("pantai");
 
-        go("pantai");
-
-      },
-      700
-    );
+    },900);
 
   }
 
@@ -2742,229 +2097,43 @@ function checkPuzzle(id){
     PUZZLE 2
   */
 
-  if(
-    id === "puzzle2"
-  ){
+  if(id==="puzzle2"){
 
-    puzzle2Done =
-      true;
+    puzzle2Done=true;
 
+    setTimeout(()=>{
 
-    setTimeout(
-      ()=>{
+      go("keluarga");
 
-        go("keluarga");
-
-      },
-      700
-    );
+    },900);
 
   }
-
-}
-
-
-/* =========================================================
-   CARI SINOK
-   =========================================================
-
-   Sistem ini tetap disiapkan.
-   Kartu tertutup hanya untuk
-   bagian pencarian Sinok.
-========================================================= */
-
-function createFindCards(){
-
-  const grid =
-    document.getElementById(
-      "findCards"
-    );
-
-
-  if(!grid){
-
-    return;
-
-  }
-
-
-  grid.innerHTML =
-    "";
-
-
-  const images = [
-
-    "sinok.png?v=3",
-
-    "artis-1.png?v=3",
-
-    "artis-2.png?v=3",
-
-    "artis-3.png?v=3",
-
-    "artis-4.png?v=3",
-
-    "artis-5.png?v=3"
-
-  ];
-
-
-  images.sort(
-    () =>
-      Math.random() - .5
-  );
-
-
-  images.forEach(
-    image=>{
-
-      const card =
-        document.createElement(
-          "button"
-        );
-
-
-      card.className =
-        "find-card";
-
-
-      card.innerHTML = `
-
-        <span class="question">
-          ❤️
-        </span>
-
-        <img
-          src="${image}"
-          alt=""
-        >
-
-      `;
-
-
-      card.onclick =
-        function(){
-
-          if(
-            card.classList.contains(
-              "revealed"
-            )
-          ){
-
-            return;
-
-          }
-
-
-          card.classList.add(
-            "revealed"
-          );
-
-
-          /*
-            SINOK
-          */
-
-          if(
-            image.startsWith(
-              "sinok"
-            )
-          ){
-
-            setTimeout(
-              ()=>{
-
-                const feedback =
-                  document.getElementById(
-                    "findFeedback"
-                  );
-
-
-                if(feedback){
-
-                  feedback.textContent =
-                    "Nah, itu Sinok. ❤️";
-
-                }
-
-
-                setTimeout(
-                  ()=>{
-
-                    go("pertemuan");
-
-                  },
-                  700
-                );
-
-              },
-              500
-            );
-
-          }
-
-
-          /*
-            SALAH
-          */
-
-          else{
-
-            wrongAnswer(
-              "Hmph.. bukan Sinok 😤"
-            );
-
-          }
-
-        };
-
-
-      grid.appendChild(
-        card
-      );
-
-    }
-  );
-
 }
 
 
 /* =========================================================
    COFFEE
-   SEMUANYA BENAR
 ========================================================= */
 
-function coffeeCorrect(
-  choice
-){
+function coffeeCorrect(choice){
 
   if(coffeeDone){
-
     return;
-
   }
 
 
-  coffeeDone =
-    true;
+  coffeeDone=true;
 
 
-  document
-    .getElementById(
-      "coffeeFeedback"
-    )
-    .textContent =
+  document.getElementById(
+    "coffeeFeedback"
+  ).textContent=
     `Pilihan ${choice}. Semuanya cocok buat Sinok. ❤️`;
 
 
-  document
-    .getElementById(
-      "coffeeNext"
-    )
-    .classList.remove(
-      "hidden"
-    );
-
+  document.getElementById(
+    "coffeeNext"
+  ).classList.remove("hidden");
 }
 
 
@@ -2972,7 +2141,7 @@ function coffeeCorrect(
    QUIZ
 ========================================================= */
 
-const quizData = [
+const quizData=[
 
   {
     question:
@@ -3053,122 +2222,85 @@ const quizData = [
 
 function showQuiz(){
 
-  const data =
-    quizData[
-      quizIndex
-    ];
+  const data=quizData[quizIndex];
 
 
   document.getElementById(
     "quizQuestion"
-  ).textContent =
+  ).textContent=
     data.question;
 
 
-  const options =
+  const options=
     document.getElementById(
       "quizOptions"
     );
 
 
-  const feedback =
+  const feedback=
     document.getElementById(
       "quizFeedback"
     );
 
 
-  const next =
+  const next=
     document.getElementById(
       "quizNext"
     );
 
 
-  options.innerHTML =
-    "";
+  options.innerHTML="";
+
+  feedback.textContent="";
+
+  next.classList.add("hidden");
 
 
-  feedback.textContent =
-    "";
+  data.options.forEach((option,index)=>{
+
+    const button=
+      document.createElement("button");
 
 
-  next.classList.add(
-    "hidden"
-  );
+    button.className="quiz-option";
+
+    button.textContent=option;
 
 
-  data.options.forEach(
-    (option,index)=>{
+    button.onclick=function(){
 
-      const button =
-        document.createElement(
-          "button"
-        );
+      if(index===data.correct){
 
-
-      button.className =
-        "quiz-option";
+        feedback.textContent=
+          "Benar! ❤️";
 
 
-      button.textContent =
-        option;
+        options
+          .querySelectorAll("button")
+          .forEach(btn=>{
+            btn.disabled=true;
+          });
 
 
-      button.onclick =
-        function(){
+        next.classList.remove("hidden");
 
-          /*
-            BENAR
-          */
+      }
 
-          if(
-            index === data.correct
-          ){
+      else{
 
-            feedback.textContent =
-              "Benar! ❤️";
+        feedback.textContent=
+          "Hmph.. coba ingat lagi 😤";
 
+        wrongAnswer();
 
-            options
-              .querySelectorAll(
-                "button"
-              )
-              .forEach(
-                btn=>{
-                  btn.disabled =
-                    true;
-                }
-              );
+      }
+
+    };
 
 
-            next.classList.remove(
-              "hidden"
-            );
+    options.appendChild(button);
 
-          }
-
-
-          /*
-            SALAH
-          */
-
-          else{
-
-            wrongAnswer(
-              "Hmph.. coba ingat lagi 😤"
-            );
-
-          }
-
-        };
-
-
-      options.appendChild(
-        button
-      );
-
-    }
-  );
-
+  });
 }
 
 
@@ -3178,21 +2310,16 @@ function nextQuiz(){
 
 
   if(
-    quizIndex >=
-    quizData.length
+    quizIndex>=quizData.length
   ){
 
-    go(
-      "masaDepan"
-    );
+    go("masaDepan");
 
-  }
-  else{
+  }else{
 
     showQuiz();
 
   }
-
 }
 
 
@@ -3202,31 +2329,25 @@ function nextQuiz(){
 
 function runTogether(){
 
-  const character =
+  const character=
     document.getElementById(
       "runnerCharacter"
     );
 
 
-  character.style.left =
+  character.style.left=
     "calc(100% - 100px)";
 
 
-  setTimeout(
-    ()=>{
+  setTimeout(()=>{
 
-      document
-        .getElementById(
-          "futureNext"
-        )
-        .classList.remove(
-          "hidden"
-        );
+    document
+      .getElementById(
+        "futureNext"
+      )
+      .classList.remove("hidden");
 
-    },
-    1000
-  );
-
+  },1000);
 }
 
 
@@ -3234,11 +2355,9 @@ function runTogether(){
    FINAL ANSWER
 ========================================================= */
 
-function finalAnswer(
-  answer
-){
+function finalAnswer(answer){
 
-  const feedback =
+  const feedback=
     document.getElementById(
       "finalFeedback"
     );
@@ -3246,27 +2365,22 @@ function finalAnswer(
 
   if(answer){
 
-    feedback.textContent =
+    feedback.textContent=
       "Sinok juga mau terus sama Mamas. ❤️";
 
 
-    setTimeout(
-      ()=>{
+    setTimeout(()=>{
 
-        go("ending");
+      go("ending");
 
-      },
-      1000
-    );
+    },1000);
 
-  }
-  else{
+  }else{
 
-    feedback.textContent =
+    feedback.textContent=
       "Hayoloo... jawabannya nggak boleh itu 😭❤️";
 
   }
-
 }
 
 
@@ -3276,34 +2390,24 @@ function finalAnswer(
 
 function heartExplosion(){
 
-  for(
-    let i=0;
-    i<35;
-    i++
-  ){
+  for(let i=0;i<35;i++){
 
-    const heart =
-      document.createElement(
-        "div"
-      );
+    const heart=
+      document.createElement("div");
 
 
-    heart.className =
+    heart.className=
       "explosion-heart";
 
 
-    heart.textContent =
-      Math.random() > .5
+    heart.textContent=
+      Math.random()>.5
       ? "❤️"
       : "💕";
 
 
-    heart.style.left =
-      "50%";
-
-
-    heart.style.top =
-      "50%";
+    heart.style.left="50%";
+    heart.style.top="50%";
 
 
     heart.style.setProperty(
@@ -3318,22 +2422,16 @@ function heartExplosion(){
     );
 
 
-    document.body.appendChild(
-      heart
-    );
+    document.body.appendChild(heart);
 
 
-    setTimeout(
-      ()=>{
+    setTimeout(()=>{
 
-        heart.remove();
+      heart.remove();
 
-      },
-      1000
-    );
+    },1000);
 
   }
-
 }
 
 
