@@ -1,2447 +1,326 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MAMAS QUEST: CERITA KITA</title>
-
+<meta name="theme-color" content="#17152f">
+<title>Cerita Kita dan Cinta yang Terus Bertumbuh — Sinok & Mamas</title>
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#020208;
-  color:white;
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(255,0,130,.12),transparent 28%),
-    radial-gradient(circle at 80% 70%,rgba(80,0,255,.14),transparent 32%),
-    radial-gradient(circle at 50% 50%,rgba(255,255,255,.025),transparent 50%);
-  pointer-events:none;
-  z-index:-3;
-}
-
-/* STARS */
-.stars{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:-2;
-}
-
-.star{
-  position:absolute;
-  width:2px;
-  height:2px;
-  border-radius:50%;
-  background:white;
-  opacity:.7;
-  animation:twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle{
-  from{
-    opacity:.2;
-    transform:scale(.7);
-  }
-  to{
-    opacity:1;
-    transform:scale(1.4);
-  }
-}
-
-/* HUD */
-.hud{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:65px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 18px;
-  background:rgba(0,0,0,.78);
-  border-bottom:1px solid rgba(255,255,255,.14);
-  backdrop-filter:blur(12px);
-  z-index:100;
-}
-
-.logo{
-  font-size:13px;
-  font-weight:bold;
-  letter-spacing:1px;
-}
-
-.lives{
-  display:flex;
-  gap:4px;
-  font-size:22px;
-  min-width:90px;
-  justify-content:center;
-}
-
-.music-btn{
-  border:1px solid rgba(255,255,255,.25);
-  background:rgba(255,255,255,.07);
-  color:white;
-  border-radius:20px;
-  padding:7px 12px;
-  cursor:pointer;
-  font-size:12px;
-}
-
-/* SCREEN */
-.screen{
-  display:none;
-  min-height:100vh;
-  padding:95px 20px 50px;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.screen.active{
-  display:flex;
-}
-
-.content{
-  width:min(720px,94vw);
-  margin:auto;
-}
-
-h1{
-  font-size:clamp(30px,7vw,58px);
-  line-height:1.1;
-  margin-bottom:18px;
-}
-
-h2{
-  font-size:clamp(25px,6vw,42px);
-  line-height:1.2;
-  margin-bottom:18px;
-}
-
-p{
-  font-size:17px;
-  line-height:1.7;
-  color:#ddd;
-  margin-bottom:18px;
-}
-
-.small{
-  font-size:13px;
-  color:#aaa;
-}
-
-/* BUTTON */
-.btn{
-  border:none;
-  background:linear-gradient(135deg,#ff3f91,#7b3cff);
-  color:white;
-  padding:13px 25px;
-  border-radius:30px;
-  font-weight:bold;
-  cursor:pointer;
-  margin:8px;
-  box-shadow:0 0 20px rgba(255,50,150,.25);
-  transition:.2s;
-}
-
-.btn:hover{
-  transform:translateY(-2px) scale(1.02);
-}
-
-.btn:active{
-  transform:scale(.96);
-}
-
-/* HEART */
-.big-heart{
-  font-size:85px;
-  margin-bottom:20px;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.12)}
-}
-
-/* CHAT */
-.chat{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin:25px auto;
-  text-align:left;
-}
-
-.chat-bubble{
-  padding:12px 15px;
-  border-radius:17px;
-  max-width:80%;
-  line-height:1.5;
-}
-
-.chat-left{
-  align-self:flex-start;
-  background:#222;
-}
-
-.chat-right{
-  align-self:flex-end;
-  background:#7735a8;
-}
-
-/* STICKER */
-.sticker-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin:25px auto;
-}
-
-.sticker{
-  min-height:90px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:18px;
-  font-size:35px;
-}
-
-/* STORY PHOTO */
-.story-photo{
-  width:min(500px,90vw);
-  max-height:65vh;
-  object-fit:contain;
-  border-radius:20px;
-  border:3px solid rgba(255,255,255,.2);
-  box-shadow:0 0 35px rgba(255,50,150,.25);
-  margin:20px auto;
-  display:block;
-}
-
-/* =========================================================
-   CARI SINOK
-========================================================= */
-
-.card-grid{
-  width:min(600px,94vw);
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin:25px auto;
-}
-
-.find-card{
-  aspect-ratio:1;
-  border:none;
-  border-radius:18px;
-  cursor:pointer;
-  background:linear-gradient(135deg,#27114c,#09091a);
-  color:white;
-  font-size:38px;
-  overflow:hidden;
-  position:relative;
-  border:2px solid rgba(255,255,255,.15);
-  padding:0;
-}
-
-.find-card .question{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:42px;
-  background:
-    radial-gradient(circle at 30% 25%,rgba(255,80,170,.22),transparent 30%),
-    linear-gradient(135deg,#27114c,#09091a);
-  z-index:2;
-}
-
-.find-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-
-.find-card.revealed img{
-  display:block;
-}
-
-.find-card.revealed .question{
-  display:none;
-}
-
-.find-card.revealed{
-  cursor:default;
-}
-
-/* =========================================================
-   PUZZLE
-   FOTO TERBUKA
-   TEPAT 6 KEPING
-   2 KOLOM × 3 BARIS
-========================================================= */
-
-.puzzle{
-  width:min(500px,90vw);
-
-  display:grid;
-
-  grid-template-columns:repeat(2,1fr);
-  grid-template-rows:repeat(3,1fr);
-
-  gap:4px;
-
-  margin:22px auto;
-
-  border:3px solid rgba(255,255,255,.35);
-  border-radius:16px;
-
-  overflow:hidden;
-
-  background:#111;
-
-  box-shadow:0 0 25px rgba(255,80,150,.3);
-}
-
-.puzzle-piece{
-  position:relative;
-  width:100%;
-  height:100%;
-  cursor:pointer;
-  overflow:hidden;
-
-  border:2px solid rgba(255,255,255,.35);
-
-  background:#111;
-
-  transition:
-    transform .2s,
-    box-shadow .2s,
-    outline .2s;
-}
-
-.puzzle-piece:hover{
-  transform:scale(.98);
-  box-shadow:0 0 15px rgba(255,255,255,.3);
-}
-
-.puzzle-piece.selected{
-  outline:4px solid #ff4f9a;
-  z-index:5;
-  box-shadow:0 0 20px rgba(255,79,154,.7);
-}
-
-.puzzle-piece.correct{
-  outline:2px solid #55ff99;
-}
-
-.puzzle-piece img{
-  position:absolute;
-
-  width:200%;
-  height:300%;
-
-  max-width:none;
-  max-height:none;
-
-  object-fit:fill;
-
-  user-select:none;
-  pointer-events:none;
-}
-
-/*
-  Posisi gambar di setiap keping.
-  Karena keping = 1/2 lebar dan 1/3 tinggi
-  dari puzzle, gambar diperbesar 200% × 300%.
-*/
-
-.piece-0 img{
-  left:0;
-  top:0;
-}
-
-.piece-1 img{
-  left:-100%;
-  top:0;
-}
-
-.piece-2 img{
-  left:0;
-  top:-100%;
-}
-
-.piece-3 img{
-  left:-100%;
-  top:-100%;
-}
-
-.piece-4 img{
-  left:0;
-  top:-200%;
-}
-
-.piece-5 img{
-  left:-100%;
-  top:-200%;
-}
-
-/* RUNNER */
-.runner{
-  width:min(600px,94vw);
-  height:180px;
-  border:2px solid rgba(255,255,255,.15);
-  border-radius:20px;
-  background:
-    linear-gradient(
-      to top,
-      rgba(255,255,255,.06) 2px,
-      transparent 2px
-    );
-  position:relative;
-  overflow:hidden;
-  margin:25px auto;
-}
-
-.runner-character{
-  position:absolute;
-  bottom:20px;
-  left:40px;
-  font-size:55px;
-  transition:left 1s linear;
-}
-
-.runner-goal{
-  position:absolute;
-  right:30px;
-  bottom:20px;
-  font-size:40px;
-}
-
-/* COFFEE */
-.coffee-options{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  width:min(650px,94vw);
-  margin:25px auto;
-}
-
-.coffee{
-  min-height:130px;
-  border:2px solid rgba(255,255,255,.15);
-  border-radius:20px;
-  background:rgba(255,255,255,.07);
-  color:white;
-  cursor:pointer;
-  font-size:45px;
-  transition:.2s;
-}
-
-.coffee:hover{
-  transform:translateY(-4px);
-  border-color:#ff4f9a;
-}
-
-.coffee small{
-  display:block;
-  font-size:14px;
-  margin-top:10px;
-}
-
-/* QUIZ */
-.quiz-options{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  width:min(550px,94vw);
-  margin:25px auto;
-}
-
-.quiz-option{
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(255,255,255,.07);
-  color:white;
-  padding:15px;
-  border-radius:15px;
-  cursor:pointer;
-}
-
-.quiz-option:hover{
-  background:rgba(255,255,255,.13);
-}
-
-.quiz-option:disabled{
-  opacity:.75;
-  cursor:default;
-}
-
-/* FEEDBACK */
-.feedback{
-  min-height:30px;
-  margin:15px 0;
-  font-weight:bold;
-  color:#ff7eb8;
-}
-
-.hidden{
-  display:none !important;
-}
-
-/* SHAKE */
-.shake{
-  animation:shake .35s;
-}
-
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-12px)}
-  40%{transform:translateX(12px)}
-  60%{transform:translateX(-8px)}
-  80%{transform:translateX(8px)}
-}
-
-/* GAME OVER */
-.gameover{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.92);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  z-index:999;
-  padding:20px;
-}
-
-.gameover.active{
-  display:flex;
-}
-
-.gameover-box{
-  width:min(450px,90vw);
-  padding:35px 25px;
-  border-radius:25px;
-  border:1px solid rgba(255,255,255,.2);
-  background:linear-gradient(145deg,#120818,#05050b);
-  box-shadow:0 0 40px rgba(255,0,100,.2);
-}
-
-/* HEART EXPLOSION */
-.explosion-heart{
-  position:fixed;
-  pointer-events:none;
-  font-size:30px;
-  animation:explode 1s forwards;
-  z-index:500;
-}
-
-@keyframes explode{
-  0%{
-    transform:translate(0,0) scale(.5);
-    opacity:1;
-  }
-
-  100%{
-    transform:translate(var(--x),var(--y)) scale(1.5);
-    opacity:0;
-  }
-}
-
-/* MOBILE */
-@media(max-width:600px){
-
-  .hud{
-    padding:8px 10px;
-  }
-
-  .logo{
-    font-size:10px;
-  }
-
-  .lives{
-    font-size:19px;
-  }
-
-  .music-btn{
-    font-size:11px;
-    padding:6px 9px;
-  }
-
-  .sticker-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .card-grid{
-    gap:8px;
-  }
-
-  .coffee-options{
-    grid-template-columns:1fr;
-  }
-
-  .coffee{
-    min-height:100px;
-  }
-
-  .puzzle{
-    width:min(420px,88vw);
-  }
-}
+:root{
+  --night:#111128;--night2:#201b42;--plum:#5c3976;--pink:#ff9dc9;--pink2:#ffd1e6;
+  --cream:#fff7f0;--gold:#ffd78c;--mint:#a8f0dc;--muted:#c9c4e1;--glass:rgba(255,255,255,.09);
+  --line:rgba(255,255,255,.16);--shadow:0 24px 70px rgba(0,0,0,.32);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:
+ radial-gradient(ellipse at 18% 10%,rgba(116,79,160,.42),transparent 34%),
+ radial-gradient(ellipse at 88% 30%,rgba(215,110,168,.18),transparent 32%),
+ linear-gradient(145deg,var(--night),var(--night2) 60%,#2d2049);
+ color:var(--cream);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;overflow-x:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.stars,.stars:before,.stars:after{position:fixed;inset:0;pointer-events:none;content:"";z-index:0;background-image:
+ radial-gradient(2px 2px at 20px 30px,rgba(255,255,255,.9) 50%,transparent 60%),
+ radial-gradient(1px 1px at 80px 120px,rgba(255,255,255,.7) 50%,transparent 60%),
+ radial-gradient(2px 2px at 180px 70px,rgba(255,210,233,.9) 50%,transparent 60%),
+ radial-gradient(1px 1px at 270px 180px,rgba(255,255,255,.8) 50%,transparent 60%);
+ background-size:310px 230px;opacity:.45;animation:twinkle 7s ease-in-out infinite alternate}
+.stars:before{opacity:.28;transform:translate(60px,90px) scale(1.2);animation-delay:-3s}
+.stars:after{opacity:.2;transform:translate(-40px,-30px) scale(.8);animation-delay:-5s}
+@keyframes twinkle{from{opacity:.18}to{opacity:.55}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 18px rgba(255,157,201,.16)}50%{box-shadow:0 0 35px rgba(255,157,201,.42)}}
+@keyframes pop{0%{transform:scale(.94);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes drift{0%{transform:translateY(15px) rotate(-8deg);opacity:0}20%{opacity:.9}100%{transform:translateY(-110vh) rotate(20deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.floating-hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.floating-hearts span{position:absolute;bottom:-50px;font-size:18px;opacity:0;animation:drift 12s linear infinite}
+.app{position:relative;z-index:2;max-width:1100px;margin:auto;padding:20px 18px 70px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink2);font-weight:900}
+.brand-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid #ffffff35;border-radius:14px;background:linear-gradient(145deg,#ffb7d7,#9467bd);color:#2b1d45;font-size:20px;box-shadow:0 0 24px #ff9dc933}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.ghost-btn,.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--cream);border-radius:999px;padding:9px 13px;font-size:.8rem;font-weight:800}
+.ghost-btn:hover,.icon-btn:hover{background:rgba(255,255,255,.13)}
+.statusbar{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px;margin:14px 0 20px}
+.stat{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:12px 15px;backdrop-filter:blur(10px)}
+.stat-label{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;font-weight:900}
+.stat-value{font-size:1.08rem;font-weight:950;margin-top:4px}
+.hearts{letter-spacing:3px;color:#ff8dbd;text-shadow:0 0 15px #ff8dbd55}
+.progress-track{height:7px;background:#ffffff19;border-radius:99px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#ff94c5,#ffd78c);border-radius:99px;transition:width .5s}
+.screen{display:none;animation:pop .35s ease both}
+.screen.active{display:block}
+.hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:30px;padding:clamp(25px,6vw,62px);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.035));box-shadow:var(--shadow);text-align:center}
+.hero:before{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:#f7a3d01c;filter:blur(8px);top:-140px;right:-70px}
+.hero:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:#9b8aff18;filter:blur(8px);bottom:-150px;left:-50px}
+.hero>*{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid #ffbadb55;background:#ff9dc912;color:var(--pink2);font-size:.76rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2.2rem,6.6vw,5rem);line-height:1.02;letter-spacing:-.055em;margin:23px auto 16px;max-width:850px}
+.gradient-text{background:linear-gradient(100deg,#fff7f0,#ffc0dc,#ffdc9c,#fff7f0);background-size:200% auto;color:transparent;background-clip:text;-webkit-background-clip:text;animation:shimmer 8s linear infinite}
+.lead{max-width:650px;margin:0 auto 24px;color:#e4dff4;line-height:1.8;font-size:clamp(.98rem,2.2vw,1.13rem)}
+.hero-art{height:180px;display:flex;align-items:center;justify-content:center;gap:12px;margin:8px auto 20px;position:relative}
+.orbit{width:142px;height:142px;border:1px solid #ffd1e655;border-radius:50%;display:grid;place-items:center;position:relative;animation:float 4s ease-in-out infinite;background:radial-gradient(circle,#ffb7dc2b,transparent 68%)}
+.orbit:before,.orbit:after{content:"";position:absolute;inset:12px;border:1px dashed #ffffff25;border-radius:50%;animation:twinkle 5s infinite alternate}
+.orbit:after{inset:-13px;border-color:#ffd78c55}
+.big-heart{font-size:76px;filter:drop-shadow(0 0 20px #ff8cbd8c)}
+.sparkle{position:absolute;color:var(--gold);font-size:25px}
+.sparkle.s1{top:8px;left:20%}.sparkle.s2{right:18%;top:28px}.sparkle.s3{right:25%;bottom:8px}
+.btn-row{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin-top:22px}
+.primary-btn,.secondary-btn,.danger-btn{border:0;border-radius:15px;padding:14px 21px;font-weight:950;transition:transform .18s,filter .18s;display:inline-flex;align-items:center;justify-content:center;gap:9px}
+.primary-btn{color:#2b193c;background:linear-gradient(120deg,#ffacd0,#ffd99b);box-shadow:0 9px 25px #ff9dc92a}
+.primary-btn:hover,.secondary-btn:hover,.danger-btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.secondary-btn{color:var(--cream);background:#ffffff10;border:1px solid var(--line)}
+.danger-btn{background:#ff789d;color:#3a1427}
+.fineprint{color:#bcb5d7;font-size:.78rem;line-height:1.7;margin:17px auto 0}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:24px 0 13px}
+.section-heading h2{font-size:1.4rem;margin:0;letter-spacing:-.03em}
+.section-heading p{color:var(--muted);font-size:.83rem;margin:4px 0 0}
+.map-panel,.panel{background:rgba(255,255,255,.065);border:1px solid var(--line);border-radius:24px;padding:clamp(17px,3vw,28px);box-shadow:0 15px 45px #00000012}
+.map-path{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative}
+.level-card{position:relative;min-height:168px;text-align:left;color:var(--cream);background:linear-gradient(145deg,#ffffff12,#ffffff05);border:1px solid var(--line);border-radius:20px;padding:17px;overflow:hidden;transition:.2s}
+.level-card:hover:not(:disabled){transform:translateY(-4px);border-color:#ffb8d9a8}
+.level-card:disabled{opacity:.47;cursor:not-allowed;filter:saturate(.55)}
+.level-card.completed{border-color:#a8f0dc99;background:linear-gradient(145deg,#a8f0dc1a,#ffffff05)}
+.level-card.current{border-color:#ffacd0;box-shadow:inset 0 0 0 1px #ffacd022,0 0 22px #ff9dc918}
+.level-num{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink2);font-weight:900}
+.level-icon{font-size:30px;margin:12px 0 8px}
+.level-title{font-size:1rem;font-weight:950;line-height:1.25}
+.level-desc{font-size:.78rem;color:#c9c4e1;line-height:1.5;margin-top:7px}
+.level-state{position:absolute;right:12px;top:12px;font-size:17px}
+.game-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:16px;align-items:start}
+.story-panel{background:linear-gradient(150deg,#ffffff12,#ffffff06);border:1px solid var(--line);border-radius:25px;padding:clamp(18px,3.5vw,30px);box-shadow:var(--shadow)}
+.story-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.level-pill{background:#ff9dc91c;border:1px solid #ff9dc955;color:var(--pink2);border-radius:999px;padding:7px 10px;font-size:.73rem;font-weight:950}
+.story-panel h2{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.1;letter-spacing:-.04em;margin:10px 0 12px}
+.story-copy{color:#e0daef;line-height:1.8}
+.photo-slot{position:relative;min-height:210px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;border:1px dashed #ffb6d455;border-radius:21px;background:linear-gradient(135deg,#ff9dc911,#a78bfa10);margin:18px 0}
+.photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.photo-slot.has-image img{display:block}
+.photo-slot.has-image .photo-placeholder{display:none}
+.photo-placeholder{padding:25px;max-width:330px}
+.photo-placeholder .photo-icon{font-size:34px;margin-bottom:8px}
+.photo-placeholder strong{display:block;margin-bottom:6px}
+.photo-placeholder span{display:block;color:var(--muted);font-size:.78rem;line-height:1.5}
+.photo-controls{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.upload-label{display:inline-flex;align-items:center;gap:8px;background:#ffffff0d;border:1px solid var(--line);border-radius:12px;padding:10px 13px;font-size:.8rem;font-weight:900;cursor:pointer}
+.upload-label input{display:none}
+.small-note{color:#a9a2c8;font-size:.73rem;line-height:1.55;text-align:center;margin:10px 0 0}
+.side-panel{display:grid;gap:14px}
+.side-card{background:#ffffff08;border:1px solid var(--line);border-radius:21px;padding:18px}
+.side-card h3{font-size:.98rem;margin:0 0 10px}
+.side-card p{font-size:.83rem;line-height:1.7;color:#d0cae5;margin:0}
+.objective{display:flex;gap:10px;align-items:flex-start}
+.objective-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#ff9dc91a;flex-shrink:0}
+.quiz-options{display:grid;gap:10px;margin-top:20px}
+.option-btn{display:flex;align-items:center;gap:12px;text-align:left;padding:13px 15px;background:#ffffff08;color:var(--cream);border:1px solid var(--line);border-radius:15px;transition:.18s}
+.option-btn:hover{background:#ffffff12;border-color:#ffb6d4a8}
+.option-letter{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#ff9dc91d;color:var(--pink2);font-weight:950;flex-shrink:0}
+.option-btn.correct{border-color:#8de7c4;background:#6ed9b41b}
+.option-btn.wrong{border-color:#ff789d;background:#ff789d15;animation:shake .25s}
+.option-btn:disabled{cursor:default}
+.feedback{display:none;padding:13px 15px;border-radius:15px;margin-top:14px;line-height:1.6;font-size:.9rem}
+.feedback.show{display:block;animation:pop .2s}
+.feedback.good{background:#8de7c41a;border:1px solid #8de7c455;color:#c6ffeb}
+.feedback.bad{background:#ff789d17;border:1px solid #ff789d55;color:#ffd1df}
+.inline-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.inline-actions>*{flex:1}
+.challenge-area{margin-top:20px;padding:18px;border-radius:19px;border:1px solid #ffffff1b;background:#100f281c}
+.challenge-title{font-weight:950;margin-bottom:6px}
+.collector-board{height:170px;border-radius:16px;background:radial-gradient(circle at 50% 50%,#6c4a86,#252044 70%);position:relative;overflow:hidden;border:1px solid #ffffff20}
+.collect-heart{position:absolute;border:0;background:transparent;font-size:28px;filter:drop-shadow(0 0 8px #ff9dc9);animation:float 2s infinite;transition:transform .15s}
+.collect-heart:hover{transform:scale(1.25)}
+.collector-hint{color:var(--muted);font-size:.8rem;margin:9px 0 0;line-height:1.6}
+.memory-choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.memory-choice button{background:#ffffff08;color:var(--cream);border:1px solid var(--line);padding:14px;border-radius:14px;line-height:1.45}
+.memory-choice button:hover{border-color:#ffacd0;background:#ff9dc910}
+.memory-choice button.selected{border-color:var(--gold);background:#ffd78c17}
+.letter{background:linear-gradient(145deg,#fff7f0,#ffe2ef);color:#39233f;border-radius:24px;padding:clamp(22px,5vw,42px);box-shadow:0 20px 60px #0003;position:relative;overflow:hidden}
+.letter:after{content:"✦";position:absolute;right:20px;top:8px;color:#e8a1c6;font-size:65px;opacity:.35}
+.letter h2{font-family:Georgia,serif;font-size:clamp(1.8rem,5vw,3rem);line-height:1.1}
+.letter p{line-height:1.9;color:#5b405c}
+.coupon{border:2px dashed #f3a5c9;border-radius:22px;background:linear-gradient(135deg,#fff4fa,#fffaf0);color:#3b2345;padding:24px;text-align:center;position:relative;overflow:hidden}
+.coupon:before,.coupon:after{content:"";position:absolute;width:35px;height:35px;border-radius:50%;background:#211b42;top:50%;transform:translateY(-50%)}
+.coupon:before{left:-20px}.coupon:after{right:-20px}
+.coupon-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.2em;font-weight:950;color:#a54d7c}
+.coupon h2{font-size:clamp(1.8rem,5vw,3.2rem);margin:12px 0;color:#4b2a59}
+.coupon p{color:#694d6b;line-height:1.7}
+.coupon-photo{position:relative;min-height:180px;border:1px dashed #d68ab2;border-radius:14px;margin:18px 0 12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f9e8f2}
+.coupon-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}
+.coupon-photo.has-image img{display:block}
+.coupon-photo.has-image .coupon-placeholder{display:none}
+.coupon-placeholder{padding:22px;color:#855f84;font-size:.85rem;line-height:1.6}
+.footer{text-align:center;color:#a9a2c8;font-size:.75rem;line-height:1.7;margin:30px 0 0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:#fff7f0;color:#34203f;padding:12px 18px;border-radius:14px;box-shadow:var(--shadow);z-index:30;font-size:.88rem;font-weight:900;transition:.25s;max-width:calc(100vw - 28px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-backdrop{position:fixed;inset:0;background:#090817c9;z-index:40;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(8px)}
+.modal-backdrop.show{display:flex}
+.modal{width:min(520px,100%);background:linear-gradient(145deg,#292044,#17152f);border:1px solid #ffffff24;border-radius:27px;padding:28px;text-align:center;box-shadow:var(--shadow);animation:pop .25s}
+.modal-icon{font-size:52px;margin-bottom:8px}
+.modal h2{font-size:1.8rem;margin-bottom:10px}
+.modal p{color:#d3cce8;line-height:1.75}
+.vn-box{padding:15px;border-radius:17px;background:#ff9dc912;border:1px solid #ff9dc944;margin:17px 0;text-align:left}
+.vn-box strong{display:block;color:var(--pink2);margin-bottom:7px}
+.vn-box span{font-size:.86rem;line-height:1.65;color:#e0d8ef}
+.hidden{display:none!important}
+@media(max-width:760px){
+ .app{padding:14px 12px 48px}.topbar{align-items:flex-start}.brand{font-size:.68rem;letter-spacing:.08em}.brand-mark{width:32px;height:32px}
+ .top-actions .ghost-btn{padding:8px 10px;font-size:.72rem}.statusbar{grid-template-columns:1fr 1fr}.stat:first-child{grid-column:1/-1}
+ .map-path{grid-template-columns:1fr 1fr}.game-layout{grid-template-columns:1fr}.hero-art{height:145px}.orbit{width:120px;height:120px}.big-heart{font-size:63px}
+}
+@media(max-width:420px){.map-path{grid-template-columns:1fr}.level-card{min-height:130px}.memory-choice{grid-template-columns:1fr}.btn-row>*{width:100%}.topbar{flex-direction:column}.top-actions{justify-content:flex-start}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
-
 <body>
+<div class="stars"></div><div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">♡</span><span>Petualangan Sinok &amp; Mamas</span></div>
+    <div class="top-actions">
+      <button class="ghost-btn" id="musicBtn" type="button" aria-pressed="false">♫ Musik: mati</button>
+      <button class="ghost-btn" id="resetBtn" type="button">↻ Ulang permainan</button>
+    </div>
+  </header>
 
-<!-- STARS -->
-<div class="stars" id="stars"></div>
+  <section class="statusbar" aria-label="Status permainan">
+    <div class="stat"><div class="stat-label">Nyawa Mamas</div><div class="stat-value hearts" id="livesDisplay">❤️❤️❤️</div></div>
+    <div class="stat"><div class="stat-label">Poin cinta</div><div class="stat-value"><span id="scoreDisplay">0</span> ✦</div></div>
+    <div class="stat"><div class="stat-label">Perjalanan</div><div class="stat-value"><span id="progressText">0 dari 6</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div></div>
+  </section>
 
-<!-- HUD -->
-<div class="hud">
+  <main>
+    <section class="screen active" id="welcomeScreen">
+      <div class="hero">
+        <span class="eyebrow">✦ 22 November 2025 — selamanya ✦</span>
+        <div class="hero-art" aria-hidden="true"><span class="sparkle s1">✧</span><span class="sparkle s2">✦</span><span class="sparkle s3">✧</span><div class="orbit"><span class="big-heart">💗</span></div></div>
+        <p class="eyebrow">Misi khusus untuk Mamas</p>
+        <h1 class="gradient-text">Cerita Kita dan Cinta yang Terus Bertumbuh</h1>
+        <p class="lead">Hai, Mamas. Ada sebuah petualangan kecil yang Sinok siapkan untuk merayakan satu tahun perjalanan kita. Lewati tantangannya, temukan kembali kenangan kita, dan buka hadiah rahasia di ujung perjalanan.</p>
+        <div class="btn-row"><button class="primary-btn" id="startBtn" type="button">Mulai Petualangan <span>➜</span></button><button class="secondary-btn" id="howBtn" type="button">Cara Bermain</button></div>
+        <p class="fineprint">Satu perjalanan • Enam tahap • Tiga nyawa • Satu hadiah yang disiapkan dengan cinta</p>
+      </div>
+      <div class="section-heading"><div><h2>Sebelum memulai…</h2><p>Pesan kecil dari Sinok untuk teman seperjalanan terbaiknya.</p></div></div>
+      <div class="panel"><p style="line-height:1.9;color:#e1dbef;margin:0">Kita mungkin tidak pernah punya satu momen resmi untuk berkata, “kita pacaran, ya.” Kita hanya terus mengobrol, bercanda, merasa nyambung, lalu memilih untuk tetap berjalan bersama. Dan lihat, sekarang kita sampai di sini. Yuk, kita mainkan kembali cerita kita. 💌</p></div>
+    </section>
 
-  <div class="logo">
-    MAMAS QUEST ❤️
-  </div>
+    <section class="screen" id="mapScreen">
+      <div class="section-heading"><div><span class="eyebrow">Peta perjalanan</span><h2 style="margin-top:12px">Jejak cinta kita</h2><p>Selesaikan satu tahap untuk membuka tahap berikutnya.</p></div><button class="secondary-btn" id="mapContinueBtn" type="button">Lanjutkan ➜</button></div>
+      <div class="map-panel"><div class="map-path" id="mapPath"></div><p class="fineprint">Petunjuk: kalau jawaban salah, satu nyawa akan berkurang. Jika ketiga nyawa habis, Mamas perlu mengirim voice note kepada Sinok untuk mendapatkan tiga nyawa baru. 😉</p></div>
+    </section>
 
-  <div class="lives" id="lives">
-    ❤️❤️❤️
-  </div>
+    <section class="screen" id="gameScreen">
+      <div class="game-layout">
+        <article class="story-panel">
+          <div class="story-top"><span class="level-pill" id="levelPill">TAHAP 1</span><button class="ghost-btn" id="backMapBtn" type="button">← Peta</button></div>
+          <div id="storyContent"></div>
+          <div class="inline-actions" id="storyActions"></div>
+        </article>
+        <aside class="side-panel">
+          <div class="side-card"><div class="objective"><div class="objective-icon">🎯</div><div><h3>Misi saat ini</h3><p id="objectiveText">Selesaikan tantangan untuk membuka kenangan.</p></div></div></div>
+          <div class="side-card"><div class="objective"><div class="objective-icon">💌</div><div><h3>Catatan Sinok</h3><p id="sideNote">Setiap kenangan punya tempatnya sendiri di hati Sinok.</p></div></div></div>
+          <div class="side-card"><h3>Aturan petualangan</h3><p>❤️ Tiga nyawa di awal.<br>✦ Jawaban benar menambah poin.<br>🔓 Tahap berikutnya terbuka setelah misi selesai.<br>🎙️ Nyawa habis? Kirim VN ke Sinok untuk lanjut.</p></div>
+        </aside>
+      </div>
+    </section>
 
-  <button
-    class="music-btn"
-    onclick="toggleMusic()"
-    id="musicBtn">
-    🎵 MUSIC
-  </button>
-
+    <section class="screen" id="endingScreen">
+      <div class="letter">
+        <span class="eyebrow" style="color:#9b4d7b;border-color:#e8a3c9">✦ Petualangan selesai ✦</span>
+        <h2 style="margin-top:18px">Untuk Mamas, rumah yang ingin Sinok tuju. 💗</h2>
+        <p>Selamat, Mamas. Kamu berhasil melewati semua tahap perjalanan kita. Tapi sebenarnya, hadiah terbesar Sinok bukanlah sesuatu yang bisa dibungkus atau disimpan di dalam kotak.</p>
+        <p>Hadiah terbesar Sinok adalah kamu—yang hadir dari obrolan sederhana, yang membuat hari-hari terasa lebih seru, yang mau mendengarkan cerita Sinok, menenangkan Sinok saat keras kepala, dan merawat Sinok bahkan saat keadaan sedang tidak mudah.</p>
+        <p>Terima kasih sudah menerima Sinok apa adanya. Maaf kalau Sinok kadang masih egois, belum selalu bisa memahami, atau terlalu banyak bercerita. Semoga kita terus belajar menjadi lebih baik, saling menjaga, dan saling memilih—bukan hanya hari ini, tetapi juga pada hari-hari yang belum kita kenal.</p>
+        <p>Semoga suatu hari nanti kita bisa melihat kembali perjalanan ini dari rumah yang kita bangun bersama, mengingat betapa jauh kita sudah melangkah, lalu tersenyum karena ternyata doa-doa kecil kita tumbuh menjadi nyata. Semoga Allah menjaga langkah kita, melapangkan rezeki kita, memberi kesempatan untuk berkunjung ke Makkah dan Madinah, dan mengizinkan kita menua bersama.</p>
+        <p style="font-family:Georgia,serif;font-size:1.18rem;color:#8c4773">Selamat anniversary pertama, Mamas. Kalau hidup kita adalah sebuah permainan, Sinok tetap ingin satu tim dengan Mamas—sampai layar terakhir, bahkan setelah semua level selesai. ❤️</p>
+        <p style="font-weight:900;color:#5b365e">Dengan seluruh sayang yang Sinok punya,<br>Sinok ♡</p>
+      </div>
+      <div class="section-heading"><div><h2>Hadiah terakhir terbuka!</h2><p>Kupon cinta khusus dari Sinok untuk Mamas.</p></div></div>
+      <div class="coupon">
+        <div class="coupon-kicker">Kupon cinta eksklusif</div>
+        <h2>♡ Kupon Sayang dari Sinok ♡</h2>
+        <p>Kupon ini dibuat dengan cinta dan hanya bisa ditukar oleh Mamas.</p>
+        <div class="coupon-photo" id="couponPhoto"><img id="couponImg" alt="Gambar kupon cinta dari Sinok"><div class="coupon-placeholder">🎟️<br><strong>Tempat gambar kupon cinta</strong><br>Unggah gambar kupon yang sudah Sinok siapkan. Gambar akan ditampilkan di area ini.</div></div>
+        <label class="upload-label">＋ Unggah gambar kupon<input type="file" id="couponUpload" accept="image/*"></label>
+        <p style="font-size:.82rem;margin:14px 0 0">Nomor kupon: <strong>22-11-SINOK-MAMAS</strong><br>Berlaku: selama kita saling menyayangi dan menjaga. ✨</p>
+      </div>
+      <div class="btn-row"><button class="primary-btn" id="finalReplayBtn" type="button">Main Lagi dari Awal ↻</button><button class="secondary-btn" id="finalMapBtn" type="button">Lihat Peta Kenangan</button></div>
+    </section>
+  </main>
+  <footer class="footer">Dibuat dengan cinta oleh Sinok untuk Mamas · 22 November 2026<br>“Cerita kita masih terus bertumbuh.”</footer>
 </div>
 
-<!-- MUSIC -->
-<audio id="bgMusic" loop preload="auto">
-  <source src="music.mp3?v=3" type="audio/mpeg">
-</audio>
-
-
-<!-- =========================================================
-     PROLOG
-========================================================= -->
-
-<section class="screen active" id="prolog">
-
-  <div class="content">
-
-    <div class="big-heart">❤️</div>
-
-    <h1>MAMAS QUEST</h1>
-
-    <p>
-      Sebuah perjalanan kecil tentang dua manusia
-      yang bertemu, mengenal, lalu memilih untuk
-      terus berjalan bersama.
-    </p>
-
-    <p class="small">
-      22 November 2025 — 22 November 2026
-    </p>
-
-    <button class="btn" onclick="startGame()">
-      MULAI CERITA ❤️
-    </button>
-
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">💌</div><h2 id="modalTitle">Cara Bermain</h2><div id="modalText"></div><div class="btn-row" id="modalButtons"></div>
   </div>
-
-</section>
-
-
-<!-- =========================================================
-     AWAL
-========================================================= -->
-
-<section class="screen" id="awal">
-
-  <div class="content">
-
-    <h2>MISSION 01</h2>
-
-    <p>
-      Semua bermula dari sebuah perkenalan sederhana.
-    </p>
-
-    <p>
-      Waktu itu kita pertama kali saling mengenal
-      lewat Leo Telegram.
-    </p>
-
-    <p>
-      Tidak ada yang menyangka bahwa percakapan
-      sederhana itu akan membawa kita sejauh ini.
-    </p>
-
-    <button class="btn" onclick="go('obrolan')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     OBROLAN
-========================================================= -->
-
-<section class="screen" id="obrolan">
-
-  <div class="content">
-
-    <h2>MISSION 02</h2>
-
-    <p>
-      Awalnya cuma ngobrol biasa...
-      tapi ternyata semakin lama semakin nyaman.
-    </p>
-
-    <div class="chat">
-
-      <div class="chat-bubble chat-left">
-        "Hai..."
-      </div>
-
-      <div class="chat-bubble chat-right">
-        "Hai juga 😄"
-      </div>
-
-      <div class="chat-bubble chat-left">
-        "Lagi apa?"
-      </div>
-
-      <div class="chat-bubble chat-right">
-        "Lagi santai. Kamu?"
-      </div>
-
-      <div class="chat-bubble chat-left">
-        "Sama..."
-      </div>
-
-    </div>
-
-    <p>
-      Dari obrolan kecil, perlahan muncul rasa ingin
-      mengenal satu sama lain lebih jauh.
-    </p>
-
-    <button class="btn" onclick="go('sticker')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     STICKER
-========================================================= -->
-
-<section class="screen" id="sticker">
-
-  <div class="content">
-
-    <h2>MISSION 03</h2>
-
-    <p>
-      Kadang hubungan dimulai dari hal-hal kecil.
-    </p>
-
-    <div class="sticker-grid">
-
-      <div class="sticker">❤️</div>
-      <div class="sticker">😊</div>
-      <div class="sticker">🥰</div>
-      <div class="sticker">💬</div>
-      <div class="sticker">✨</div>
-      <div class="sticker">💕</div>
-
-    </div>
-
-    <p>
-      Sampai akhirnya kita memutuskan untuk bertemu.
-    </p>
-
-    <button class="btn" onclick="go('pertemuan')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PERTEMUAN
-========================================================= -->
-
-<section class="screen" id="pertemuan">
-
-  <div class="content">
-
-    <h2>MISSION 04</h2>
-
-    <p>
-      Setelah kurang lebih dua bulan mengenal,
-      akhirnya tiba waktunya untuk bertemu.
-    </p>
-
-    <p>
-      Mamas menjemput Sinok menggunakan motor.
-    </p>
-
-    <p>
-      Walaupun Mamas sempat terlambat,
-      ternyata pertemuan itu menjadi salah satu
-      awal paling berarti dalam cerita kita.
-    </p>
-
-    <button class="btn" onclick="go('cariSinok')">
-      CARI SINOK ❤️
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     CARI SINOK
-========================================================= -->
-
-<section class="screen" id="cariSinok">
-
-  <div class="content">
-
-    <h2>CARI SINOK ❤️</h2>
-
-    <p>
-      Sebelum membuka kenangan pertama,
-      temukan dulu Sinok di antara enam kartu ini.
-    </p>
-
-    <p class="small">
-      Hati-hati... kalau salah, satu nyawa hilang. 😤
-    </p>
-
-    <div
-      class="card-grid"
-      id="findCards">
-    </div>
-
-    <div
-      class="feedback"
-      id="findFeedback">
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PUZZLE 1
-========================================================= -->
-
-<section class="screen" id="foto1">
-
-  <div class="content">
-
-    <h2>SUSUN KENANGAN</h2>
-
-    <p>
-      Foto ini langsung terlihat.
-      Susun keenam kepingnya sampai kembali menjadi
-      satu foto utuh. ❤️
-    </p>
-
-    <div id="puzzle1"></div>
-
-    <div
-      id="puzzleFeedback1"
-      class="feedback">
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PANTAI
-========================================================= -->
-
-<section class="screen" id="pantai">
-
-  <div class="content">
-
-    <h2>MEMORY UNLOCKED ❤️</h2>
-
-    <p>
-      Setelah itu, banyak hal kecil yang kita lalui.
-    </p>
-
-    <p>
-      Ada perjalanan, ada cerita,
-      ada tawa, dan ada banyak momen
-      yang perlahan menjadi kenangan.
-    </p>
-
-    <p>
-      Salah satunya adalah waktu kita bersama
-      menikmati suasana pantai.
-    </p>
-
-    <button class="btn" onclick="go('foto2')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PUZZLE 2
-========================================================= -->
-
-<section class="screen" id="foto2">
-
-  <div class="content">
-
-    <h2>SUSUN KENANGAN</h2>
-
-    <p>
-      Satu kenangan lagi.
-      Enam keping besar menunggu untuk disatukan. ❤️
-    </p>
-
-    <div id="puzzle2"></div>
-
-    <div
-      id="puzzleFeedback2"
-      class="feedback">
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     KELUARGA
-========================================================= -->
-
-<section class="screen" id="keluarga">
-
-  <div class="content">
-
-    <h2>MISSION 05</h2>
-
-    <p>
-      Dalam perjalanan ini bukan hanya tentang
-      kita berdua.
-    </p>
-
-    <p>
-      Ada keluarga, orang-orang yang kita sayangi,
-      dan kehidupan yang perlahan mulai kita kenal.
-    </p>
-
-    <img
-      src="foto-sinok.jpg?v=3"
-      class="story-photo"
-      alt="Kenangan">
-
-    <button class="btn" onclick="go('imam')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     IMAM
-========================================================= -->
-
-<section class="screen" id="imam">
-
-  <div class="content">
-
-    <h2>MISSION 06</h2>
-
-    <p>
-      Ada juga momen sederhana yang terasa begitu berarti.
-    </p>
-
-    <p>
-      Saat Mamas memimpin salat di mushola
-      di alun-alun.
-    </p>
-
-    <p>
-      Mungkin terlihat sederhana,
-      tapi bagi Sinok, momen seperti itu
-      selalu punya tempat tersendiri.
-    </p>
-
-    <button class="btn" onclick="go('tetapAda')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     TETAP ADA
-========================================================= -->
-
-<section class="screen" id="tetapAda">
-
-  <div class="content">
-
-    <div class="big-heart">❤️</div>
-
-    <h2>TETAP ADA</h2>
-
-    <p>
-      Hubungan bukan selalu tentang hari-hari yang sempurna.
-    </p>
-
-    <p>
-      Kadang ada capek.
-      Kadang ada salah paham.
-      Kadang ada hari yang tidak mudah.
-    </p>
-
-    <p>
-      Tapi yang paling penting adalah
-      tetap memilih untuk ada.
-    </p>
-
-    <button class="btn" onclick="go('kopi')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     KOPI
-========================================================= -->
-
-<section class="screen" id="kopi">
-
-  <div class="content">
-
-    <h2>MISSION 07</h2>
-
-    <p>
-      Sekarang waktunya memilih minuman
-      untuk Sinok. ☕
-    </p>
-
-    <p class="small">
-      Tenang... semuanya benar. 😆❤️
-    </p>
-
-    <div class="coffee-options">
-
-      <button
-        class="coffee"
-        onclick="coffeeCorrect('Americano')">
-        ☕
-        <small>Americano</small>
-      </button>
-
-      <button
-        class="coffee"
-        onclick="coffeeCorrect('Ice Cream')">
-        🍨
-        <small>Ice Cream</small>
-      </button>
-
-      <button
-        class="coffee"
-        onclick="coffeeCorrect('Jus Buah')">
-        🧃
-        <small>Jus Buah</small>
-      </button>
-
-    </div>
-
-    <div
-      id="coffeeFeedback"
-      class="feedback">
-    </div>
-
-    <button
-      id="coffeeNext"
-      class="btn hidden"
-      onclick="go('quiz')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     QUIZ
-========================================================= -->
-
-<section class="screen" id="quiz">
-
-  <div class="content">
-
-    <h2>LOVE QUIZ ❤️</h2>
-
-    <p id="quizQuestion"></p>
-
-    <div
-      class="quiz-options"
-      id="quizOptions">
-    </div>
-
-    <div
-      class="feedback"
-      id="quizFeedback">
-    </div>
-
-    <button
-      id="quizNext"
-      class="btn hidden"
-      onclick="nextQuiz()">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     MASA DEPAN
-========================================================= -->
-
-<section class="screen" id="masaDepan">
-
-  <div class="content">
-
-    <h2>MISSION 08</h2>
-
-    <p>
-      Kalau perjalanan kita sampai di sini,
-      tentu masih banyak halaman yang belum ditulis.
-    </p>
-
-    <p>
-      Masih banyak tempat yang ingin dikunjungi,
-      makanan yang ingin dicoba,
-      cerita yang ingin dibuat,
-      dan hari-hari yang ingin dilewati bersama.
-    </p>
-
-    <div class="runner">
-
-      <div
-        class="runner-character"
-        id="runnerCharacter">
-        🧑🏻
-      </div>
-
-      <div class="runner-goal">
-        ❤️
-      </div>
-
-    </div>
-
-    <button
-      class="btn"
-      onclick="runTogether()">
-      JALAN BARENG →
-    </button>
-
-    <button
-      class="btn hidden"
-      id="futureNext"
-      onclick="go('pesan')">
-      LANJUT →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PESAN
-========================================================= -->
-
-<section class="screen" id="pesan">
-
-  <div class="content">
-
-    <h2>UNTUK MAMAS ❤️</h2>
-
-    <p>
-      Terima kasih sudah menjadi bagian
-      dari perjalanan Sinok.
-    </p>
-
-    <p>
-      Terima kasih untuk setiap perhatian,
-      kesabaran, tawa, cerita,
-      dan semua hal kecil yang mungkin
-      kadang tidak sempat Sinok ucapkan.
-    </p>
-
-    <p>
-      Satu tahun mungkin terdengar singkat,
-      tapi ternyata sudah begitu banyak
-      cerita yang kita punya.
-    </p>
-
-    <p>
-      Semoga setelah ini,
-      kita masih terus menemukan alasan
-      untuk tersenyum bersama.
-    </p>
-
-    <button class="btn" onclick="go('pilihan')">
-      SATU PERTANYAAN TERAKHIR ❤️
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PILIHAN
-========================================================= -->
-
-<section class="screen" id="pilihan">
-
-  <div class="content">
-
-    <div class="big-heart">❤️</div>
-
-    <h2>
-      MAU LANJUT<br>
-      CERITA INI BARENG SINOK?
-    </h2>
-
-    <p>
-      Pilih jawabanmu dengan jujur. 😆
-    </p>
-
-    <button
-      class="btn"
-      onclick="finalAnswer(true)">
-      MAU ❤️
-    </button>
-
-    <button
-      class="btn"
-      onclick="finalAnswer(false)">
-      NGGAK 😭
-    </button>
-
-    <div
-      id="finalFeedback"
-      class="feedback">
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     ENDING
-========================================================= -->
-
-<section class="screen" id="ending">
-
-  <div class="content">
-
-    <div class="big-heart">❤️</div>
-
-    <h1>QUEST COMPLETE</h1>
-
-    <h2>
-      CERITA KITA DAN CINTA
-      YANG TERUS BERTUMBUH
-    </h2>
-
-    <p>
-      Happy 1st Anniversary,
-      Mamas. ❤️
-    </p>
-
-    <p>
-      22 November 2025 — 22 November 2026
-    </p>
-
-    <p>
-      Dari Sinok,
-      yang masih ingin terus berjalan
-      bersama Mamas.
-    </p>
-
-    <button
-      class="btn"
-      onclick="heartExplosion()">
-      ❤️ UNTUK MAMAS
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     GAME OVER
-========================================================= -->
-
-<div class="gameover" id="gameOver">
-
-  <div class="gameover-box">
-
-    <div class="big-heart">💔</div>
-
-    <h2>GAME OVER</h2>
-
-    <p>
-      Hayoloo... nyawanya habis. 😭
-    </p>
-
-    <p>
-      Coba lagi dari awal.
-    </p>
-
-    <button
-      class="btn"
-      onclick="restartGame()">
-      COBA LAGI ❤️
-    </button>
-
-  </div>
-
 </div>
-
 
 <script>
-
-/* =========================================================
-   STARS
-========================================================= */
-
-const stars=document.getElementById("stars");
-
-for(let i=0;i<100;i++){
-
-  const star=document.createElement("div");
-
-  star.className="star";
-
-  star.style.left=Math.random()*100+"%";
-  star.style.top=Math.random()*100+"%";
-  star.style.animationDelay=Math.random()*2+"s";
-
-  stars.appendChild(star);
-}
-
-
-/* =========================================================
-   GAME VARIABLES
-========================================================= */
-
-let currentScreen="prolog";
-let lives=3;
-
-let coffeeDone=false;
-
-let puzzle1Done=false;
-let puzzle2Done=false;
-
-let quizIndex=0;
-
-let musicStarted=false;
-
-
-/* =========================================================
-   MUSIC
-========================================================= */
-
-const bgMusic=document.getElementById("bgMusic");
-
-function startMusic(){
-
-  if(musicStarted){
-    return;
-  }
-
-  bgMusic.volume=.45;
-
-  bgMusic.play()
-    .then(()=>{
-
-      musicStarted=true;
-
-      document.getElementById("musicBtn").textContent="🔊 MUSIC";
-
-    })
-    .catch(()=>{
-
-      document.getElementById("musicBtn").textContent="🎵 MUSIC";
-
-    });
-}
-
-function toggleMusic(){
-
-  if(bgMusic.paused){
-
-    bgMusic.play();
-
-    document.getElementById("musicBtn").textContent="🔊 MUSIC";
-
-  }else{
-
-    bgMusic.pause();
-
-    document.getElementById("musicBtn").textContent="🔇 MUSIC";
-
-  }
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-function startGame(){
-
-  startMusic();
-
-  go("awal");
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function go(id){
-
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen=>{
-      screen.classList.remove("active");
-    });
-
-  const target=document.getElementById(id);
-
-  if(target){
-    target.classList.add("active");
-  }
-
-  currentScreen=id;
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-
-  /* CARI SINOK */
-
-  if(id==="cariSinok"){
-
-    createFindCards();
-
-  }
-
-
-  /* PUZZLE 1 */
-
-  if(id==="foto1"){
-
-    if(!puzzle1Done){
-
-      makePuzzle(
-        "puzzle1",
-        "foto-1.jpg?v=3"
-      );
-
-    }
-
-  }
-
-
-  /* PUZZLE 2 */
-
-  if(id==="foto2"){
-
-    if(!puzzle2Done){
-
-      makePuzzle(
-        "puzzle2",
-        "foto-2.jpg?v=3"
-      );
-
-    }
-
-  }
-
-
-  /* QUIZ */
-
-  if(id==="quiz"){
-
-    quizIndex=0;
-
-    showQuiz();
-
-  }
-}
-
-
-/* =========================================================
-   UPDATE LIVES
-========================================================= */
-
-function updateLives(){
-
-  let result="";
-
-  for(let i=0;i<3;i++){
-
-    if(i<lives){
-      result+="❤️";
-    }else{
-      result+="🖤";
-    }
-
-  }
-
-  document.getElementById("lives").textContent=result;
-}
-
-
-/* =========================================================
-   WRONG ANSWER
-========================================================= */
-
-function wrongAnswer(message="Hayoloo..."){
-
-  lives--;
-
-  updateLives();
-
-
-  /* GETARAN HANYA SAAT SALAH */
-
-  document.body.classList.remove("shake");
-
-  void document.body.offsetWidth;
-
-  document.body.classList.add("shake");
-
-  setTimeout(()=>{
-
-    document.body.classList.remove("shake");
-
-  },400);
-
-
-  /* GAME OVER */
-
-  if(lives<=0){
-
-    setTimeout(()=>{
-
-      document
-        .getElementById("gameOver")
-        .classList.add("active");
-
-    },400);
-
-  }
-}
-
-
-/* =========================================================
-   RESTART
-========================================================= */
-
-function restartGame(){
-
-  lives=3;
-
-  updateLives();
-
-  coffeeDone=false;
-
-  puzzle1Done=false;
-  puzzle2Done=false;
-
-  quizIndex=0;
-
-
-  document
-    .getElementById("gameOver")
-    .classList.remove("active");
-
-
-  document
-    .getElementById("coffeeFeedback")
-    .textContent="";
-
-
-  document
-    .getElementById("coffeeNext")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("findFeedback")
-    .textContent="";
-
-
-  go("prolog");
-}
-
-
-/* =========================================================
-   CARI SINOK
-========================================================= */
-
-function createFindCards(){
-
-  const grid=document.getElementById("findCards");
-
-  const feedback=document.getElementById("findFeedback");
-
-  if(!grid){
-    return;
-  }
-
-
-  grid.innerHTML="";
-
-  feedback.textContent="";
-
-
-  /*
-    1 SINOK
-    5 ARTIS
-  */
-
-  const images=[
-
-    "sinok.png?v=3",
-
-    "artis-1.png?v=3",
-    "artis-2.png?v=3",
-    "artis-3.png?v=3",
-    "artis-4.png?v=3",
-    "artis-5.png?v=3"
-
-  ];
-
-
-  /* ACAK KARTU */
-
-  images.sort(
-    ()=>Math.random()-.5
-  );
-
-
-  images.forEach(image=>{
-
-    const card=document.createElement("button");
-
-    card.className="find-card";
-
-    card.innerHTML=`
-
-      <span class="question">
-        ❤️
-      </span>
-
-      <img
-        src="${image}"
-        alt=""
-      >
-
-    `;
-
-
-    card.onclick=function(){
-
-      if(
-        card.classList.contains("revealed") ||
-        lives<=0
-      ){
-        return;
-      }
-
-
-      card.classList.add("revealed");
-
-
-      /* BENAR */
-
-      if(
-        image.startsWith("sinok")
-      ){
-
-        feedback.textContent=
-          "Nah, itu Sinok. ❤️";
-
-
-        setTimeout(()=>{
-
-          go("foto1");
-
-        },900);
-
-      }
-
-
-      /* SALAH */
-
-      else{
-
-        feedback.textContent=
-          "Hmph.. bukan Sinok 😤";
-
-        wrongAnswer();
-
-      }
-
-    };
-
-
-    grid.appendChild(card);
-
-  });
-
-}
-
-
-/* =========================================================
-   PUZZLE
-========================================================= */
-
-function makePuzzle(id,image){
-
-  const container=document.getElementById(id);
-
-  container.innerHTML="";
-
-  container.className="puzzle";
-
-
-  const cols=2;
-  const rows=3;
-  const total=6;
-
-
-  /*
-    Load gambar dulu supaya
-    rasio puzzle benar-benar
-    mengikuti foto asli.
-  */
-
-  const photo=new Image();
-
-
-  photo.onload=function(){
-
-    if(
-      photo.naturalWidth &&
-      photo.naturalHeight
-    ){
-
-      container.style.aspectRatio=
-        `${photo.naturalWidth}/${photo.naturalHeight}`;
-
-    }
-
-    createPieces();
-
-  };
-
-
-  photo.onerror=function(){
-
-    /*
-      fallback
-    */
-
-    container.style.aspectRatio="2 / 3";
-
-    createPieces();
-
-  };
-
-
-  photo.src=image;
-
-
-  function createPieces(){
-
-    let pieces=[
-      0,1,2,3,4,5
-    ];
-
-
-    /*
-      ACAK
-      Pastikan tidak langsung benar.
-    */
-
-    do{
-
-      pieces.sort(
-        ()=>Math.random()-.5
-      );
-
-    }while(
-      pieces.every(
-        (value,index)=>
-          value===index
-      )
-    );
-
-
-    let selected=null;
-
-
-    pieces.forEach(pieceNumber=>{
-
-      const piece=document.createElement("div");
-
-      piece.className=
-        "puzzle-piece";
-
-
-      /*
-        Nomor keping asli.
-      */
-
-      piece.dataset.number=
-        pieceNumber;
-
-
-      /*
-        class piece asli
-        menentukan bagian foto.
-      */
-
-      piece.classList.add(
-        "piece-"+pieceNumber
-      );
-
-
-      /*
-        Foto dimasukkan langsung
-        ke dalam keping.
-
-        Jadi tidak menggunakan
-        background-position lagi.
-      */
-
-      const img=document.createElement("img");
-
-      img.src=image;
-
-      img.alt="Potongan foto kenangan";
-
-      img.draggable=false;
-
-
-      piece.appendChild(img);
-
-
-      piece.onclick=function(){
-
-        if(
-          piece.classList.contains("correct")
-        ){
-          return;
-        }
-
-
-        /*
-          KLIK PERTAMA
-        */
-
-        if(selected===null){
-
-          selected=piece;
-
-          piece.classList.add("selected");
-
-          return;
-
-        }
-
-
-        /*
-          KLIK KEPING YANG SAMA
-        */
-
-        if(selected===piece){
-
-          piece.classList.remove("selected");
-
-          selected=null;
-
-          return;
-
-        }
-
-
-        /*
-          SIMPAN NOMOR
-        */
-
-        const firstNumber=
-          Number(selected.dataset.number);
-
-        const secondNumber=
-          Number(piece.dataset.number);
-
-
-        /*
-          SIMPAN CLASS POSISI FOTO
-        */
-
-        const firstClass=
-          [...selected.classList]
-            .find(c=>c.startsWith("piece-"));
-
-        const secondClass=
-          [...piece.classList]
-            .find(c=>c.startsWith("piece-"));
-
-
-        /*
-          TUKAR DATA NOMOR
-        */
-
-        selected.dataset.number=
-          secondNumber;
-
-        piece.dataset.number=
-          firstNumber;
-
-
-        /*
-          TUKAR POSISI FOTO
-        */
-
-        selected.classList.remove(firstClass);
-        selected.classList.add(secondClass);
-
-        piece.classList.remove(secondClass);
-        piece.classList.add(firstClass);
-
-
-        /*
-          Hilangkan selected
-        */
-
-        selected.classList.remove("selected");
-
-        selected=null;
-
-
-        /*
-          Cek apakah sudah benar
-        */
-
-        checkPuzzle(id);
-
-      };
-
-
-      container.appendChild(piece);
-
-    });
-
-  }
-}
-
-
-/* =========================================================
-   CHECK PUZZLE
-========================================================= */
-
-function checkPuzzle(id){
-
-  const container=
-    document.getElementById(id);
-
-
-  const pieces=
-    container.querySelectorAll(".puzzle-piece");
-
-
-  let benar=true;
-
-
-  pieces.forEach((piece,index)=>{
-
-    if(
-      Number(piece.dataset.number)!==
-      index
-    ){
-
-      benar=false;
-
-    }
-
-  });
-
-
-  if(!benar){
-    return;
-  }
-
-
-  /*
-    PUZZLE SELESAI
-  */
-
-  pieces.forEach(piece=>{
-
-    piece.classList.add("correct");
-
-  });
-
-
-  const feedbackId=
-    id==="puzzle1"
-    ? "puzzleFeedback1"
-    : "puzzleFeedback2";
-
-
-  document.getElementById(
-    feedbackId
-  ).textContent=
-    "Kenangan berhasil disusun. ❤️";
-
-
-  /*
-    PUZZLE 1
-  */
-
-  if(id==="puzzle1"){
-
-    puzzle1Done=true;
-
-    setTimeout(()=>{
-
-      go("pantai");
-
-    },900);
-
-  }
-
-
-  /*
-    PUZZLE 2
-  */
-
-  if(id==="puzzle2"){
-
-    puzzle2Done=true;
-
-    setTimeout(()=>{
-
-      go("keluarga");
-
-    },900);
-
-  }
-}
-
-
-/* =========================================================
-   COFFEE
-========================================================= */
-
-function coffeeCorrect(choice){
-
-  if(coffeeDone){
-    return;
-  }
-
-
-  coffeeDone=true;
-
-
-  document.getElementById(
-    "coffeeFeedback"
-  ).textContent=
-    `Pilihan ${choice}. Semuanya cocok buat Sinok. ❤️`;
-
-
-  document.getElementById(
-    "coffeeNext"
-  ).classList.remove("hidden");
-}
-
-
-/* =========================================================
-   QUIZ
-========================================================= */
-
-const quizData=[
-
-  {
-    question:
-      "Siapa yang pertama kali mengajak bertemu?",
-
-    options:[
-      "Mamas",
-      "Sinok",
-      "Teman",
-      "Tidak ingat"
-    ],
-
-    correct:0
-  },
-
-
-  {
-    question:
-      "Mamas menjemput Sinok menggunakan apa?",
-
-    options:[
-      "Mobil",
-      "Motor",
-      "Sepeda",
-      "Bus"
-    ],
-
-    correct:1
-  },
-
-
-  {
-    question:
-      "Berapa lama kira-kira kita saling mengenal sebelum bertemu?",
-
-    options:[
-      "1 minggu",
-      "1 bulan",
-      "2 bulan",
-      "1 tahun"
-    ],
-
-    correct:2
-  },
-
-
-  {
-    question:
-      "Apa yang paling penting dalam perjalanan kita?",
-
-    options:[
-      "Selalu sempurna",
-      "Tidak pernah bertengkar",
-      "Tetap memilih untuk ada",
-      "Selalu pergi jalan-jalan"
-    ],
-
-    correct:2
-  },
-
-
-  {
-    question:
-      "Tanggal anniversary kita?",
-
-    options:[
-      "22 November",
-      "17 Agustus",
-      "14 Februari",
-      "1 Januari"
-    ],
-
-    correct:0
-  }
-
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const SAVE_KEY = "sinokMamasAnniversaryGame_v1";
+const PHOTO_KEYS = ["photo_stasiun","photo_pantai","photo_keluarga","photo_imam","photo_merawat","photo_kita","photo_kupon"];
+const levels = [
+ {title:"Awal Pertemuan Kita",short:"Pertemuan di stasiun",icon:"🚉",desc:"Dua bulan obrolan akhirnya menjadi pertemuan nyata.",objective:"Jawab kuis tentang pertemuan pertama kalian.",note:"Kadang pertemuan yang paling berkesan dimulai dengan sedikit terlambat.",kind:"quiz1"},
+ {title:"Senja di Pantai Tirang",short:"Mengejar senja",icon:"🌅",desc:"Obrolan, lari-larian, dan senja yang ingin diingat.",objective:"Kumpulkan 5 hati yang bertebaran di pantai.",note:"Di antara warna langit sore, ada tawa yang ingin Sinok simpan.",kind:"collect"},
+ {title:"Memasuki Dunia Mamas",short:"Bersama keluarga",icon:"🏊",desc:"Hari pertama berenang dan berkenalan dengan keluarga.",objective:"Pilih kenangan yang paling sesuai dengan cerita ini.",note:"Diperkenalkan ke keluarga adalah bagian kecil yang terasa berarti.",kind:"memory"},
+ {title:"Calon Imamku",short:"Mushola alun-alun",icon:"🌙",desc:"Sebuah momen sederhana yang menyimpan harapan besar.",objective:"Selesaikan pertanyaan tentang masakan pertama Sinok.",note:"Sinok ingin terus tumbuh bersama seseorang yang juga mau memperbaiki diri.",kind:"quiz2"},
+ {title:"Saat Mamas Merawatku",short:"Saling menjaga",icon:"🫶",desc:"Ketika Sinok sedang tidak baik-baik saja, Mamas hadir merawat.",objective:"Pilih tindakan yang paling menggambarkan kasih sayang dalam cerita kalian.",note:"Cinta juga terlihat dari hal-hal kecil yang dilakukan saat keadaan tidak mudah.",kind:"care"},
+ {title:"Hadiah dari Sinok",short:"Peti rahasia",icon:"🎁",desc:"Semua perjalanan membawa Mamas ke sebuah hadiah khusus.",objective:"Buka hadiah terakhir yang Sinok siapkan.",note:"Hadiah ini kecil, tetapi harapannya besar: semoga kita terus bertumbuh bersama.",kind:"final"}
 ];
-
-
-function showQuiz(){
-
-  const data=quizData[quizIndex];
-
-
-  document.getElementById(
-    "quizQuestion"
-  ).textContent=
-    data.question;
-
-
-  const options=
-    document.getElementById(
-      "quizOptions"
-    );
-
-
-  const feedback=
-    document.getElementById(
-      "quizFeedback"
-    );
-
-
-  const next=
-    document.getElementById(
-      "quizNext"
-    );
-
-
-  options.innerHTML="";
-
-  feedback.textContent="";
-
-  next.classList.add("hidden");
-
-
-  data.options.forEach((option,index)=>{
-
-    const button=
-      document.createElement("button");
-
-
-    button.className="quiz-option";
-
-    button.textContent=option;
-
-
-    button.onclick=function(){
-
-      if(index===data.correct){
-
-        feedback.textContent=
-          "Benar! ❤️";
-
-
-        options
-          .querySelectorAll("button")
-          .forEach(btn=>{
-            btn.disabled=true;
-          });
-
-
-        next.classList.remove("hidden");
-
-      }
-
-      else{
-
-        feedback.textContent=
-          "Hmph.. coba ingat lagi 😤";
-
-        wrongAnswer();
-
-      }
-
-    };
-
-
-    options.appendChild(button);
-
-  });
+let state = {lives:3,score:0,completed:[],unlocked:0,current:0,finished:false,voiceNotes:0};
+let toastTimer;
+function loadState(){
+ try{const saved=JSON.parse(localStorage.getItem(SAVE_KEY)||"null");if(saved&&saved.v===1){state={...state,...saved.state};state.lives=Math.max(0,Math.min(3,state.lives));state.score=Math.max(0,state.score);state.completed=Array.isArray(state.completed)?state.completed:[];state.unlocked=Math.max(0,Math.min(levels.length-1,state.unlocked));state.current=Math.max(0,Math.min(levels.length-1,state.current));}}catch(e){}
 }
-
-
-function nextQuiz(){
-
-  quizIndex++;
-
-
-  if(
-    quizIndex>=quizData.length
-  ){
-
-    go("masaDepan");
-
-  }else{
-
-    showQuiz();
-
-  }
+function saveState(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({v:1,state}));}catch(e){}}
+function toast(message){const t=$("toast");t.textContent=message;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2600);}
+function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});updateStatus();}
+function updateStatus(){
+ $("livesDisplay").textContent="❤️".repeat(state.lives)+"🖤".repeat(3-state.lives);
+ $("scoreDisplay").textContent=state.score;
+ $("progressText").textContent=state.completed.length+" dari "+levels.length;
+ $("progressFill").style.width=(state.completed.length/levels.length*100)+"%";
 }
-
-
-/* =========================================================
-   FUTURE RUNNER
-========================================================= */
-
-function runTogether(){
-
-  const character=
-    document.getElementById(
-      "runnerCharacter"
-    );
-
-
-  character.style.left=
-    "calc(100% - 100px)";
-
-
-  setTimeout(()=>{
-
-    document
-      .getElementById(
-        "futureNext"
-      )
-      .classList.remove("hidden");
-
-  },1000);
+function openModal(icon,title,html,buttons){
+ $("modalIcon").textContent=icon;$("modalTitle").textContent=title;$("modalText").innerHTML=html;$("modalButtons").innerHTML="";
+ buttons.forEach(b=>{const el=document.createElement("button");el.type="button";el.className=b.class||"primary-btn";el.textContent=b.label;el.addEventListener("click",()=>{closeModal();if(b.action)b.action();});$("modalButtons").appendChild(el);});
+ $("modalBackdrop").classList.add("show");
 }
-
-
-/* =========================================================
-   FINAL ANSWER
-========================================================= */
-
-function finalAnswer(answer){
-
-  const feedback=
-    document.getElementById(
-      "finalFeedback"
-    );
-
-
-  if(answer){
-
-    feedback.textContent=
-      "Sinok juga mau terus sama Mamas. ❤️";
-
-
-    setTimeout(()=>{
-
-      go("ending");
-
-    },1000);
-
-  }else{
-
-    feedback.textContent=
-      "Hayoloo... jawabannya nggak boleh itu 😭❤️";
-
-  }
+function closeModal(){$("modalBackdrop").classList.remove("show");}
+function howToPlay(){openModal("🎮","Cara Bermain",'<p>Petualangan ini punya enam tahap. Selesaikan tantangan untuk membuka kenangan berikutnya.</p><div class="vn-box"><strong>❤️ Nyawa</strong><span>Kamu punya tiga nyawa. Setiap jawaban salah atau kegagalan tantangan mengurangi satu nyawa. Saat nyawa habis, Mamas harus mengirim voice note kepada Sinok untuk mendapat tiga nyawa baru.</span></div><p>Jawaban benar memberi poin. Kamu juga bisa mengunggah foto di setiap tahap. Foto yang diunggah disimpan di peramban pada perangkat ini.</p>',[{label:"Mengerti, ayo main!",action:()=>{showScreen("mapScreen");renderMap();}}]);}
+function renderMap(){
+ const wrap=$("mapPath");wrap.innerHTML="";
+ levels.forEach((l,i)=>{
+  const unlocked=i<=state.unlocked||state.completed.includes(i);
+  const done=state.completed.includes(i);
+  const btn=document.createElement("button");btn.type="button";btn.className="level-card"+(done?" completed":"")+(i===state.unlocked&&!done?" current":"");btn.disabled=!unlocked;
+  btn.innerHTML='<span class="level-state">'+(done?"✓":unlocked?"✧":"🔒")+'</span><div class="level-num">Tahap '+(i+1)+'</div><div class="level-icon">'+l.icon+'</div><div class="level-title">'+l.title+'</div><div class="level-desc">'+l.desc+'</div>';
+  btn.addEventListener("click",()=>startLevel(i));wrap.appendChild(btn);
+ });
+ $("mapContinueBtn").onclick=()=>startLevel(Math.min(state.unlocked,levels.length-1));
 }
-
-
-/* =========================================================
-   HEART EXPLOSION
-========================================================= */
-
-function heartExplosion(){
-
-  for(let i=0;i<35;i++){
-
-    const heart=
-      document.createElement("div");
-
-
-    heart.className=
-      "explosion-heart";
-
-
-    heart.textContent=
-      Math.random()>.5
-      ? "❤️"
-      : "💕";
-
-
-    heart.style.left="50%";
-    heart.style.top="50%";
-
-
-    heart.style.setProperty(
-      "--x",
-      `${(Math.random()-.5)*500}px`
-    );
-
-
-    heart.style.setProperty(
-      "--y",
-      `${(Math.random()-.5)*500}px`
-    );
-
-
-    document.body.appendChild(heart);
-
-
-    setTimeout(()=>{
-
-      heart.remove();
-
-    },1000);
-
-  }
+function startLevel(i){
+ if(i>state.unlocked&&!state.completed.includes(i)){toast("Tahap ini masih terkunci. Selesaikan tahap sebelumnya dulu!");return;}
+ if(state.lives<=0){showGameOver();return;}
+ state.current=i;saveState();renderLevel();showScreen("gameScreen");
 }
-
-
-/* =========================================================
-   INITIAL LIVES
-========================================================= */
-
-updateLives();
-
-</script>
-
-</body>
-</html>
+function photoSlot(key,caption){
+ const id="upload_"+key, imgId="img_"+key;
+ return '<div class="photo-slot" id="slot_'+key+'"><img id="'+imgId+'" alt="'+caption+'"><div class="photo-placeholder"><div class="photo-icon">📷</div><strong>'+caption+'</strong><span>Tempat foto kenangan. Unggah foto kalian sendiri kapan saja.</span></div></div><div class="photo-controls"><label class="upload-label">＋ Unggah foto<input type="file" id="'+id+'" accept="image/*"></label><button class="ghost-btn" type="button" id="remove_'+key+'">Hapus foto</button></div><p class="small-note">Foto disimpan di peramban perangkat ini. Untuk hasil terbaik, gunakan gambar yang tidak terlalu besar.</p>';
+}
+function bindPhoto(key){
+ const input=$("upload_"+key);if(!input)return;
+ input.addEventListener("change",async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(!f.type.startsWith("image/")){toast("Pilih berkas gambar, ya.");return;}
+  try{const data=await compressImage(f);try{localStorage.setItem(key,data);}catch(err){toast("Penyimpanan penuh. Coba gambar yang lebih kecil.");return;}displayPhoto(key,data);toast("Foto kenangan berhasil dipasang! 💗");}catch(err){toast("Foto belum bisa dibuka. Coba gambar lain.");}
+ });
+ const rm=$("remove_"+key);if(rm)rm.addEventListener("click",()=>{try{localStorage.removeItem
